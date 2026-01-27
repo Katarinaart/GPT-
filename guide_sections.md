@@ -1606,6 +1606,210 @@ PDF, DOCX и другие файлы (не Google Docs/Sheets) нужно пер
 **Папки/Проекты** | ✅ Folders (организация чатов) | ✅ Projects (изолированные среды) | ❌ Нет папок  
 **Лучше для** | Публичные боты, интеграции, монетизация | Долгосрочные проекты, изоляция контекстов | Быстрые боты, Google Workspace  
   
+### Психология моделей
+
+<p class="section-subtitle">Как "думают" разные AI</p>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3 class="card-title">Claude — Философ-Перфекционист</h3>
+    <div class="badge-group">
+      <span class="badge">Осторожный</span>
+      <span class="badge">Вдумчивый</span>
+      <span class="badge">Надёжный</span>
+    </div>
+    <p class="card-text">Философия: Constitutional AI — следует принципам, а не жёстким правилам</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">GPT-4 — Энтузиаст-Помощник</h3>
+    <div class="badge-group">
+      <span class="badge">Энергичный</span>
+      <span class="badge">Позитивный</span>
+      <span class="badge">Креативный</span>
+    </div>
+    <p class="card-text">Философия: RLHF — обучен на человеческих предпочтениях, угадывает что понравится</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">Gemini — Экспериментатор-Перестраховщик</h3>
+    <div class="badge-group">
+      <span class="badge">Формальный</span>
+      <span class="badge">Осторожный</span>
+      <span class="badge">Структурный</span>
+    </div>
+    <p class="card-text">Философия: Maximum Safety — избегает ЛЮБЫХ рисков. Лучше отказать, чем ошибиться.</p>
+  </div>
+</div>
+
+### Сравнительная таблица личностей
+
+<div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Аспект</th>
+      <th>Claude</th>
+      <th>GPT-4</th>
+      <th>Gemini</th>
+    </tr>
+    <tr>
+      <td><strong>Тон</strong></td>
+      <td>Вдумчивый, осторожный, verbose</td>
+      <td>Энергичный, позитивный, confident</td>
+      <td>Информативный, сухой, формальный</td>
+    </tr>
+    <tr>
+      <td><strong>Уверенность</strong></td>
+      <td>Низкая (много "возможно")</td>
+      <td>Высокая (уверенные утверждения)</td>
+      <td>Средняя</td>
+    </tr>
+    <tr>
+      <td><strong>Креативность</strong></td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Надёжность фактов</strong></td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Галлюцинации</strong></td>
+      <td>Редко (5%)</td>
+      <td>Иногда (15%)</td>
+      <td>Редко (7%)</td>
+    </tr>
+    <tr>
+      <td><strong>Отказы</strong></td>
+      <td>Твёрдые, но вежливые</td>
+      <td>Ищет способы помочь</td>
+      <td>Часто отказывает</td>
+    </tr>
+    <tr>
+      <td><strong>Форматирование</strong></td>
+      <td>Минимальное</td>
+      <td>Активное (списки, bold)</td>
+      <td>Структурированное (таблицы)</td>
+    </tr>
+    <tr>
+      <td><strong>Эмодзи</strong></td>
+      <td>Редко</td>
+      <td>Часто</td>
+      <td>Почти никогда</td>
+    </tr>
+  </table>
+</div>
+
+### Когда использовать какую модель
+
+<div class="cards-grid">
+  <div class="card">
+    <h3 class="card-title">Используй Claude для:</h3>
+    <p class="card-text">✅ Анализа больших документов (50+ страниц)</p>
+    <p class="card-text">✅ Долгосрочных проектов (неделя+)</p>
+    <p class="card-text">✅ Задач где важна надёжность</p>
+    <p class="card-text">✅ Глубокого исследования темы</p>
+    <p class="card-text">✅ Когда нужна честность о неопределённости</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">Используй GPT-4 для:</h3>
+    <p class="card-text">✅ Быстрых задач (ответ нужен сейчас)</p>
+    <p class="card-text">✅ Креативных проектов (brainstorming)</p>
+    <p class="card-text">✅ Мультимодальных запросов (текст+картинки)</p>
+    <p class="card-text">✅ Программирования с Code Interpreter</p>
+    <p class="card-text">✅ Когда нужен энергичный позитивный тон</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">Используй Gemini для:</h3>
+    <p class="card-text">✅ Актуальной информации из интернета</p>
+    <p class="card-text">✅ Проверки фактов через Google Search</p>
+    <p class="card-text">✅ Работы с Google Workspace</p>
+    <p class="card-text">✅ Огромных документов (если контекст стабилен)</p>
+    <p class="card-text">✅ Когда нужна максимальная безопасность</p>
+  </div>
+</div>
+
+### Технические различия
+
+<p class="section-subtitle">Как модели хранят файлы и почему это важно</p>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3 class="card-title">Claude: "Переваривание"</h3>
+    <p class="card-text"><strong>Как работает:</strong></p>
+    <p class="card-text">1. Ты загружаешь PDF</p>
+    <p class="card-text">2. Claude извлекает текст</p>
+    <p class="card-text">3. Текст становится частью истории чата</p>
+    <p class="card-text">4. Исходный файл больше не нужен</p>
+    <p class="card-text">Минусы: Не поддерживает .docx напрямую</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">GPT-4: Гибридный подход</h3>
+    <p class="card-text"><strong>Как работает:</strong></p>
+    <p class="card-text">• Текстовые файлы → конвертируются в текст → хранятся долго ✅</p>
+    <p class="card-text">• Изображения → временная ссылка на Vision API → удаляются через 6-12 часов ❌</p>
+    <p class="card-text">Минусы: Изображения временные</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">Gemini: Временное хранилище</h3>
+    <p class="card-text"><strong>Как работает:</strong></p>
+    <p class="card-text">1. Файл сохраняется на временный сервер Google</p>
+    <p class="card-text">2. В чат добавляется ссылка на файл</p>
+    <p class="card-text">3. Через 24-48 часов файл автоматически удаляется</p>
+    <p class="card-text">Минусы: Нужно загружать заново</p>
+  </div>
+</div>
+
+#### Поддержка форматов
+
+<div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Формат</th>
+      <th>Claude</th>
+      <th>GPT-4</th>
+      <th>Gemini</th>
+    </tr>
+    <tr>
+      <td><strong>PDF (текст)</strong></td>
+      <td>✅ Отлично</td>
+      <td>✅ Хорошо</td>
+      <td>✅ Хорошо</td>
+    </tr>
+    <tr>
+      <td><strong>PDF (скан)</strong></td>
+      <td>⚠️ Средне</td>
+      <td>⚠️ Средне</td>
+      <td>⚠️ Средне</td>
+    </tr>
+    <tr>
+      <td><strong>.docx</strong></td>
+      <td>❌ Нет</td>
+      <td>✅ Да</td>
+      <td>✅ Да</td>
+    </tr>
+    <tr>
+      <td><strong>Изображения</strong></td>
+      <td>✅ Долго</td>
+      <td>⚠️ 6-12ч</td>
+      <td>⚠️ 24-48ч</td>
+    </tr>
+    <tr>
+      <td><strong>.txt, .csv</strong></td>
+      <td>✅ Да</td>
+      <td>✅ Да</td>
+      <td>✅ Да</td>
+    </tr>
+    <tr>
+      <td><strong>Excel</strong></td>
+      <td>⚠️ Базово</td>
+      <td>✅ Code Interpreter</td>
+      <td>⚠️ Средне</td>
+    </tr>
+  </table>
+</div>
+
 ### 🎯 Какую платформу выбрать?
 
 #### ChatGPT если:
