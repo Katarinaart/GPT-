@@ -503,14 +503,19 @@ footer {
     --accent: #7F7BC1;
     --accent-soft: rgba(127, 123, 193, 0.18);
     --accent-glow: rgba(127, 123, 193, 0.35);
+    --accent-bg-start: rgba(127, 123, 193, 0.4);
+    --accent-bg-end: rgba(213, 166, 200, 0.4);
     --accent-border: rgba(127, 123, 193, 0.45);
     position: relative;
     overflow: hidden;
     padding: 4.1rem 1.75rem 1.75rem;
     border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
     background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.35) 60%),
-        linear-gradient(135deg, rgba(127, 123, 193, 0.38) 0%, rgba(213, 166, 200, 0.38) 100%),
+        linear-gradient(135deg, var(--accent-bg-start) 0%, var(--accent-bg-end) 100%),
         radial-gradient(circle at 15% 0%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 55%),
         radial-gradient(circle at 80% 15%, rgba(127, 123, 193, 0.45) 0%, rgba(255, 255, 255, 0) 60%);
     border: 1px solid rgba(255, 255, 255, 0.85);
@@ -559,7 +564,8 @@ footer {
 }
 
 .section3-card h3 {
-    margin-top: 0.4rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.2rem;
 }
 
 .section3-card-icon {
@@ -581,7 +587,13 @@ footer {
         0 0 18px var(--accent-glow),
         inset 0 1px 2px rgba(255, 255, 255, 0.9),
         inset 0 -3px 6px rgba(0, 0, 0, 0.12);
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.section3-card-icon svg {
+    width: 26px;
+    height: 26px;
+    filter: drop-shadow(0 6px 12px rgba(63, 45, 98, 0.3))
+            drop-shadow(0 0 12px var(--accent-glow));
 }
 
 .section3-card-icon::before {
@@ -674,6 +686,8 @@ footer {
     --accent: #D4966B;
     --accent-soft: rgba(212, 150, 107, 0.2);
     --accent-glow: rgba(212, 150, 107, 0.35);
+    --accent-bg-start: rgba(212, 150, 107, 0.4);
+    --accent-bg-end: rgba(213, 166, 200, 0.35);
     --accent-border: rgba(212, 150, 107, 0.55);
 }
 
@@ -681,6 +695,8 @@ footer {
     --accent: #10A37F;
     --accent-soft: rgba(16, 163, 127, 0.2);
     --accent-glow: rgba(16, 163, 127, 0.35);
+    --accent-bg-start: rgba(16, 163, 127, 0.35);
+    --accent-bg-end: rgba(155, 126, 222, 0.38);
     --accent-border: rgba(16, 163, 127, 0.55);
 }
 
@@ -688,7 +704,45 @@ footer {
     --accent: #4285F4;
     --accent-soft: rgba(66, 133, 244, 0.2);
     --accent-glow: rgba(66, 133, 244, 0.35);
+    --accent-bg-start: rgba(66, 133, 244, 0.35);
+    --accent-bg-end: rgba(127, 123, 193, 0.35);
     --accent-border: rgba(66, 133, 244, 0.55);
+}
+
+.section3-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.section3-icon-3d svg {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 8px 18px rgba(63, 45, 98, 0.35))
+            drop-shadow(0 0 18px rgba(181, 101, 189, 0.35));
+}
+
+.section3-glass--center {
+    text-align: center;
+    align-items: center;
+}
+
+.section3-glass--center .section3-card-header {
+    justify-content: center;
+}
+
+.section3-glass--center ul {
+    text-align: left;
+    margin: 0 auto;
+    max-width: 360px;
+}
+
+.section3-button {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
 }
 
 </style>
@@ -2798,7 +2852,13 @@ def hello():
 
                 <div class="agent-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
                     <div class="section3-card section3-card--claude">
-                        <div class="section3-card-icon">🧠</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" fill="#B565BD" opacity="0.15"></circle>
+                                <circle cx="12" cy="12" r="10" stroke="#8B4F9D" stroke-width="2.5"></circle>
+                                <path d="M12 16v-4M12 8h.01" stroke="#8B4F9D" stroke-width="2.5" stroke-linecap="round"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">Claude — Философ-Перфекционист</h3>
                         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0;">
                             <span style="background: rgba(212, 150, 107, 0.12); color: #D4966B; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Осторожный</span>
@@ -2808,7 +2868,12 @@ def hello():
                         <p style="margin: 0;">Философия: Constitutional AI — следует принципам, а не жёстким правилам.</p>
                     </div>
                     <div class="section3-card section3-card--gpt">
-                        <div class="section3-card-icon">⚡</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#9B7EDE" opacity="0.2"></path>
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#9B7EDE" stroke-width="2.5" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">GPT-4 — Энтузиаст-Помощник</h3>
                         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0;">
                             <span style="background: rgba(16, 163, 127, 0.12); color: #10A37F; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Энергичный</span>
@@ -2818,7 +2883,12 @@ def hello():
                         <p style="margin: 0;">Философия: RLHF — обучен на человеческих предпочтениях, угадывает что понравится.</p>
                     </div>
                     <div class="section3-card section3-card--gemini">
-                        <div class="section3-card-icon">🧪</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="3" fill="#45CAFF" opacity="0.3" stroke="#45CAFF" stroke-width="2.5"></circle>
+                                <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" stroke="#45CAFF" stroke-width="2" stroke-linecap="round"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">Gemini — Экспериментатор-Перестраховщик</h3>
                         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0;">
                             <span style="background: rgba(66, 133, 244, 0.12); color: #4285F4; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Формальный</span>
@@ -2898,7 +2968,11 @@ def hello():
 
                 <div class="agent-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
                     <div class="section3-card section3-card--claude">
-                        <div class="section3-card-icon">🧭</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" fill="#9B7EDE" opacity="0.15" stroke="#9B7EDE" stroke-width="2.5"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">Используй Claude для:</h3>
                         <p style="margin-bottom: 0.5rem;">✅ Анализа больших документов (50+ страниц)</p>
                         <p style="margin-bottom: 0.5rem;">✅ Долгосрочных проектов (неделя+)</p>
@@ -2907,7 +2981,12 @@ def hello():
                         <p style="margin: 0;">✅ Когда нужна честность о неопределённости</p>
                     </div>
                     <div class="section3-card section3-card--gpt">
-                        <div class="section3-card-icon">🚀</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#9B7EDE" opacity="0.2"></path>
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#9B7EDE" stroke-width="2.5" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">Используй GPT-4 для:</h3>
                         <p style="margin-bottom: 0.5rem;">✅ Быстрых задач (ответ нужен сейчас)</p>
                         <p style="margin-bottom: 0.5rem;">✅ Креативных проектов (brainstorming)</p>
@@ -2916,7 +2995,12 @@ def hello():
                         <p style="margin: 0;">✅ Когда нужен энергичный позитивный тон</p>
                     </div>
                     <div class="section3-card section3-card--gemini">
-                        <div class="section3-card-icon">🛡️</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="13" r="7" fill="#45CAFF" opacity="0.15" stroke="#45CAFF" stroke-width="2.5"></circle>
+                                <path d="M12 9v4l3 2" stroke="#45CAFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">Используй Gemini для:</h3>
                         <p style="margin-bottom: 0.5rem;">✅ Актуальной информации из интернета</p>
                         <p style="margin-bottom: 0.5rem;">✅ Проверки фактов через Google Search</p>
@@ -2931,7 +3015,12 @@ def hello():
 
                 <div class="agent-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
                     <div class="section3-card section3-card--claude">
-                        <div class="section3-card-icon">📚</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" fill="#8B4F9D" opacity="0.15" stroke="#8B4F9D" stroke-width="2.5"></path>
+                                <path d="M17 21v-8H7v8M7 3v5h8" stroke="#8B4F9D" stroke-width="2"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">Claude: "Переваривание"</h3>
                         <p style="margin-bottom: 0.5rem;"><strong>Как работает:</strong></p>
                         <p style="margin-bottom: 0.5rem;">1. Ты загружаешь PDF</p>
@@ -2941,7 +3030,12 @@ def hello():
                         <p style="margin: 0;">Минусы: Не поддерживает .docx напрямую</p>
                     </div>
                     <div class="section3-card section3-card--gpt">
-                        <div class="section3-card-icon">🔄</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="3" fill="#45CAFF" opacity="0.3" stroke="#45CAFF" stroke-width="2.5"></circle>
+                                <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" stroke="#45CAFF" stroke-width="2" stroke-linecap="round"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">GPT-4: Гибридный подход</h3>
                         <p style="margin-bottom: 0.5rem;"><strong>Как работает:</strong></p>
                         <p style="margin-bottom: 0.5rem;">• Текстовые файлы → конвертируются в текст → хранятся долго ✅</p>
@@ -2949,7 +3043,12 @@ def hello():
                         <p style="margin: 0;">Минусы: Изображения временные</p>
                     </div>
                     <div class="section3-card section3-card--gemini">
-                        <div class="section3-card-icon">⏳</div>
+                        <div class="section3-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="13" r="7" fill="#45CAFF" opacity="0.15" stroke="#45CAFF" stroke-width="2.5"></circle>
+                                <path d="M12 9v4l3 2" stroke="#45CAFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
                         <h3 style="margin-top: 0;">Gemini: Временное хранилище</h3>
                         <p style="margin-bottom: 0.5rem;"><strong>Как работает:</strong></p>
                         <p style="margin-bottom: 0.5rem;">1. Файл сохраняется на временный сервер Google</p>
@@ -3272,7 +3371,7 @@ RULES:
 
 <div class="agent-grid">
     <!-- Карточка 1: Базовые шаблоны -->
-    <div class="section3-glass" style="background: linear-gradient(135deg, rgba(127, 123, 193, 0.32) 0%, rgba(213, 166, 200, 0.32) 100%);
+    <div class="section3-glass section3-glass--center" style="background: linear-gradient(135deg, rgba(127, 123, 193, 0.32) 0%, rgba(213, 166, 200, 0.32) 100%);
                 border: 1px solid rgba(127, 123, 193, 0.35);
                 border-radius: 20px;
                 padding: 2rem;
@@ -3282,8 +3381,13 @@ RULES:
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-            <div style="font-size: 3rem; line-height: 1;">📋</div>
+        <div class="section3-card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+            <div class="section3-icon-3d">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" fill="#8B4F9D" opacity="0.15" stroke="#8B4F9D" stroke-width="2.5"></path>
+                    <path d="M17 21v-8H7v8M7 3v5h8" stroke="#8B4F9D" stroke-width="2"></path>
+                </svg>
+            </div>
             <div>
                 <h4 style="margin: 0; font-size: 1.5rem; color: var(--text-primary);">Универсальный шаблон + 2 готовых инструкции</h4>
                 <p style="margin: 0.5rem 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
@@ -3300,7 +3404,7 @@ RULES:
             </ul>
         </div>
         <div style="margin-top: auto;">
-            <a href="https://drive.google.com/file/d/1_dAlyZwMc6xoyRDK81fXiV3a9yQU1sB-/view?usp=sharing" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; min-width: 260px; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; padding: 0.9rem 2rem; 
+            <a class="section3-button" href="https://drive.google.com/file/d/1_dAlyZwMc6xoyRDK81fXiV3a9yQU1sB-/view?usp=sharing" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; min-width: 260px; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; padding: 0.9rem 2rem; 
                       border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;
                       box-shadow: var(--shadow-1);">
                 📥 Скачать шаблоны
@@ -3309,7 +3413,7 @@ RULES:
     </div>
     
     <!-- Карточка 2: Продвинутый шаблон -->
-    <div class="section3-glass" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.32) 0%, rgba(168, 85, 247, 0.32) 100%);
+    <div class="section3-glass section3-glass--center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.32) 0%, rgba(168, 85, 247, 0.32) 100%);
                 border: 1px solid rgba(168, 85, 247, 0.35);
                 border-radius: 20px;
                 padding: 2rem;
@@ -3319,8 +3423,13 @@ RULES:
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-            <div style="font-size: 3rem; line-height: 1;">🚀</div>
+        <div class="section3-card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+            <div class="section3-icon-3d">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#9B7EDE" opacity="0.2"></path>
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#9B7EDE" stroke-width="2.5" stroke-linejoin="round"></path>
+                </svg>
+            </div>
             <div>
                 <h4 style="margin: 0; font-size: 1.5rem; color: var(--text-primary);">Шаблон для продвинутых + Исследователь-аналитик</h4>
                 <p style="margin: 0.5rem 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
@@ -3337,7 +3446,7 @@ RULES:
             </ul>
         </div>
         <div style="margin-top: auto;">
-            <a href="https://drive.google.com/file/d/1X9caaLPjI-R2ghpRAcDGGUcgKYEkc8OS/view?usp=sharing" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; min-width: 260px; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
+            <a class="section3-button" href="https://drive.google.com/file/d/1X9caaLPjI-R2ghpRAcDGGUcgKYEkc8OS/view?usp=sharing" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; min-width: 260px; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
                       color: white; padding: 0.9rem 2rem; border-radius: 12px; text-decoration: none; 
                       font-weight: 600; transition: all 0.3s; box-shadow: var(--shadow-1);">
                 📥 Скачать продвинутый шаблон
@@ -3361,8 +3470,13 @@ RULES:
                                 padding: 2rem;
                                 transition: all 0.3s;
                                 box-shadow: var(--shadow-1);">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                            <div style="font-size: 3rem;">🎨</div>
+                        <div class="section3-card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="section3-icon-3d">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <circle cx="9" cy="7" r="4" fill="#8B4F9D" opacity="0.2" stroke="#8B4F9D" stroke-width="2.5"></circle>
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#8B4F9D" stroke-width="2.5" stroke-linecap="round"></path>
+                                </svg>
+                            </div>
                             <h4 style="margin: 0; font-size: 1.5rem; color: var(--text-primary);">МЕТА-КРЕАТОР</h4>
                         </div>
                         
@@ -3395,8 +3509,14 @@ RULES:
                                 padding: 2rem;
                                 transition: all 0.3s;
                                 box-shadow: var(--shadow-1);">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                            <div style="font-size: 3rem;">🏗️</div>
+                        <div class="section3-card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="section3-icon-3d">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" fill="#45CAFF" opacity="0.2" stroke="#45CAFF" stroke-width="2.5"></path>
+                                    <path d="M2 17l10 5 10-5" stroke="#45CAFF" stroke-width="2.5"></path>
+                                    <path d="M2 12l10 5 10-5" stroke="#45CAFF" stroke-width="2.5"></path>
+                                </svg>
+                            </div>
                             <h4 style="margin: 0; font-size: 1.5rem; color: var(--text-primary);">НЕЙРО-АРХИТЕКТОР</h4>
                         </div>
                         
