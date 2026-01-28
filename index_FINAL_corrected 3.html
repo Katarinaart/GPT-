@@ -498,6 +498,93 @@ footer {
     margin: 2rem 0;
 }
 
+/* Section 3 highlight cards */
+.section3-card {
+    --accent: #7F7BC1;
+    --accent-soft: rgba(127, 123, 193, 0.18);
+    --accent-border: rgba(127, 123, 193, 0.45);
+    position: relative;
+    overflow: hidden;
+    padding: 1.75rem;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(127, 123, 193, 0.12) 100%);
+    border: 1px solid var(--accent-border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section3-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.45) 0%, transparent 50%),
+                radial-gradient(circle at 100% 20%, rgba(255, 255, 255, 0.25) 0%, transparent 55%);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.section3-card::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.section3-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.section3-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(127, 123, 193, 0.25);
+}
+
+.section3-card-icon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--accent-border);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme=dark] .section3-card-icon {
+    background: rgba(25, 25, 35, 0.65);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.section3-card--claude {
+    --accent: #D4966B;
+    --accent-soft: rgba(212, 150, 107, 0.2);
+    --accent-border: rgba(212, 150, 107, 0.55);
+}
+
+.section3-card--gpt {
+    --accent: #10A37F;
+    --accent-soft: rgba(16, 163, 127, 0.2);
+    --accent-border: rgba(16, 163, 127, 0.55);
+}
+
+.section3-card--gemini {
+    --accent: #4285F4;
+    --accent-soft: rgba(66, 133, 244, 0.2);
+    --accent-border: rgba(66, 133, 244, 0.55);
+}
+
 </style>
 </head>
 <body>
@@ -2604,7 +2691,8 @@ def hello():
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Как "думают" разные AI</p>
 
                 <div class="agent-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-                    <div style="background: linear-gradient(135deg, rgba(212, 150, 107, 0.18) 0%, rgba(127, 123, 193, 0.18) 100%); border: 1px solid rgba(212, 150, 107, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--claude">
+                        <div class="section3-card-icon">🧠</div>
                         <h3 style="margin-top: 0;">Claude — Философ-Перфекционист</h3>
                         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0;">
                             <span style="background: rgba(212, 150, 107, 0.12); color: #D4966B; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Осторожный</span>
@@ -2613,7 +2701,8 @@ def hello():
                         </div>
                         <p style="margin: 0;">Философия: Constitutional AI — следует принципам, а не жёстким правилам.</p>
                     </div>
-                    <div style="background: linear-gradient(135deg, rgba(16, 163, 127, 0.18) 0%, rgba(213, 166, 200, 0.18) 100%); border: 1px solid rgba(16, 163, 127, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--gpt">
+                        <div class="section3-card-icon">⚡</div>
                         <h3 style="margin-top: 0;">GPT-4 — Энтузиаст-Помощник</h3>
                         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0;">
                             <span style="background: rgba(16, 163, 127, 0.12); color: #10A37F; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Энергичный</span>
@@ -2622,7 +2711,8 @@ def hello():
                         </div>
                         <p style="margin: 0;">Философия: RLHF — обучен на человеческих предпочтениях, угадывает что понравится.</p>
                     </div>
-                    <div style="background: linear-gradient(135deg, rgba(66, 133, 244, 0.18) 0%, rgba(127, 123, 193, 0.18) 100%); border: 1px solid rgba(66, 133, 244, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--gemini">
+                        <div class="section3-card-icon">🧪</div>
                         <h3 style="margin-top: 0;">Gemini — Экспериментатор-Перестраховщик</h3>
                         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0;">
                             <span style="background: rgba(66, 133, 244, 0.12); color: #4285F4; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Формальный</span>
@@ -2701,7 +2791,8 @@ def hello():
                 <h3>Когда использовать какую модель</h3>
 
                 <div class="agent-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-                    <div style="background: linear-gradient(135deg, rgba(212, 150, 107, 0.18) 0%, rgba(127, 123, 193, 0.18) 100%); border: 1px solid rgba(212, 150, 107, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--claude">
+                        <div class="section3-card-icon">🧭</div>
                         <h3 style="margin-top: 0;">Используй Claude для:</h3>
                         <p style="margin-bottom: 0.5rem;">✅ Анализа больших документов (50+ страниц)</p>
                         <p style="margin-bottom: 0.5rem;">✅ Долгосрочных проектов (неделя+)</p>
@@ -2709,7 +2800,8 @@ def hello():
                         <p style="margin-bottom: 0.5rem;">✅ Глубокого исследования темы</p>
                         <p style="margin: 0;">✅ Когда нужна честность о неопределённости</p>
                     </div>
-                    <div style="background: linear-gradient(135deg, rgba(16, 163, 127, 0.18) 0%, rgba(213, 166, 200, 0.18) 100%); border: 1px solid rgba(16, 163, 127, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--gpt">
+                        <div class="section3-card-icon">🚀</div>
                         <h3 style="margin-top: 0;">Используй GPT-4 для:</h3>
                         <p style="margin-bottom: 0.5rem;">✅ Быстрых задач (ответ нужен сейчас)</p>
                         <p style="margin-bottom: 0.5rem;">✅ Креативных проектов (brainstorming)</p>
@@ -2717,7 +2809,8 @@ def hello():
                         <p style="margin-bottom: 0.5rem;">✅ Программирования с Code Interpreter</p>
                         <p style="margin: 0;">✅ Когда нужен энергичный позитивный тон</p>
                     </div>
-                    <div style="background: linear-gradient(135deg, rgba(66, 133, 244, 0.18) 0%, rgba(127, 123, 193, 0.18) 100%); border: 1px solid rgba(66, 133, 244, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--gemini">
+                        <div class="section3-card-icon">🛡️</div>
                         <h3 style="margin-top: 0;">Используй Gemini для:</h3>
                         <p style="margin-bottom: 0.5rem;">✅ Актуальной информации из интернета</p>
                         <p style="margin-bottom: 0.5rem;">✅ Проверки фактов через Google Search</p>
@@ -2731,7 +2824,8 @@ def hello():
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Как модели хранят файлы и почему это важно</p>
 
                 <div class="agent-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-                    <div style="background: linear-gradient(135deg, rgba(212, 150, 107, 0.18) 0%, rgba(127, 123, 193, 0.18) 100%); border: 1px solid rgba(212, 150, 107, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--claude">
+                        <div class="section3-card-icon">📚</div>
                         <h3 style="margin-top: 0;">Claude: "Переваривание"</h3>
                         <p style="margin-bottom: 0.5rem;"><strong>Как работает:</strong></p>
                         <p style="margin-bottom: 0.5rem;">1. Ты загружаешь PDF</p>
@@ -2740,14 +2834,16 @@ def hello():
                         <p style="margin-bottom: 0.5rem;">4. Исходный файл больше не нужен</p>
                         <p style="margin: 0;">Минусы: Не поддерживает .docx напрямую</p>
                     </div>
-                    <div style="background: linear-gradient(135deg, rgba(16, 163, 127, 0.18) 0%, rgba(213, 166, 200, 0.18) 100%); border: 1px solid rgba(16, 163, 127, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--gpt">
+                        <div class="section3-card-icon">🔄</div>
                         <h3 style="margin-top: 0;">GPT-4: Гибридный подход</h3>
                         <p style="margin-bottom: 0.5rem;"><strong>Как работает:</strong></p>
                         <p style="margin-bottom: 0.5rem;">• Текстовые файлы → конвертируются в текст → хранятся долго ✅</p>
                         <p style="margin-bottom: 0.5rem;">• Изображения → временная ссылка на Vision API → удаляются через 6-12 часов ❌</p>
                         <p style="margin: 0;">Минусы: Изображения временные</p>
                     </div>
-                    <div style="background: linear-gradient(135deg, rgba(66, 133, 244, 0.18) 0%, rgba(127, 123, 193, 0.18) 100%); border: 1px solid rgba(66, 133, 244, 0.35); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);">
+                    <div class="section3-card section3-card--gemini">
+                        <div class="section3-card-icon">⏳</div>
                         <h3 style="margin-top: 0;">Gemini: Временное хранилище</h3>
                         <p style="margin-bottom: 0.5rem;"><strong>Как работает:</strong></p>
                         <p style="margin-bottom: 0.5rem;">1. Файл сохраняется на временный сервер Google</p>
