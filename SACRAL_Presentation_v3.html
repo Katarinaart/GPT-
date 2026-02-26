@@ -123,6 +123,15 @@ body::before{
   font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.15em;
   color:var(--gold);white-space:nowrap;
 }
+.music-mini-controls{display:flex;align-items:center;gap:6px;}
+.music-btn{
+  width:22px;height:22px;border-radius:50%;border:1px solid var(--border-strong);
+  background:rgba(201,168,76,0.12);color:var(--gold);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;padding:0;line-height:1;transition:background .2s,border-color .2s,opacity .2s;
+}
+.music-btn:hover{background:rgba(201,168,76,0.2);border-color:var(--gold);}
+.music-btn:disabled{opacity:0.45;cursor:not-allowed;}
+.music-btn svg{width:10px;height:10px;fill:currentColor;}
 .music-waves{display:flex;align-items:center;gap:2px;height:14px;}
 .music-waves span{
   display:block;width:2px;background:var(--gold);border-radius:2px;
@@ -498,12 +507,20 @@ footer{
   
   <div class="nav-right">
     <!-- MUSIC MINI -->
-    <div class="music-mini" onclick="toggleMusic()">
+    <div class="music-mini" role="group" aria-label="Управление музыкой">
       <div class="music-mini-icon">
         <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         <svg class="pause-icon" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
       </div>
       <span class="music-mini-label" id="musicMiniLabel">Слушать трек</span>
+      <div class="music-mini-controls">
+        <button class="music-btn" id="musicPlayBtn" onclick="playMusicFromChip()" aria-label="Play">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="music-btn" id="musicPauseBtn" onclick="pauseMusicFromChip()" aria-label="Pause">
+          <svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+        </button>
+      </div>
       <div class="music-waves">
         <span></span><span></span><span></span><span></span><span></span>
       </div>
@@ -994,8 +1011,12 @@ function setMusicStatus(text){
 function updateMusicButton(isPlaying){
   const mini = document.querySelector('.music-mini');
   const lbl = document.getElementById('musicMiniLabel');
+  const playBtn = document.getElementById('musicPlayBtn');
+  const pauseBtn = document.getElementById('musicPauseBtn');
   if(mini) mini.classList.toggle('playing', !!isPlaying);
-  if(lbl) lbl.textContent = isPlaying ? 'Пауза' : 'Слушать трек';
+  if(lbl) lbl.textContent = isPlaying ? 'Играет' : 'Слушать трек';
+  if(playBtn) playBtn.disabled = !!isPlaying;
+  if(pauseBtn) pauseBtn.disabled = !isPlaying;
 }
 function applyTrack(index){
   const audio = document.getElementById('musicTrack');
@@ -1028,12 +1049,21 @@ function startTrack(){
     });
   }
 }
+function playMusicFromChip(){
+  ensureTrackReady();
+  startTrack();
+}
+function pauseMusicFromChip(){
+  const audio = document.getElementById('musicTrack');
+  if(!audio) return;
+  audio.pause();
+  setMusicStatus('Пауза');
+}
 function toggleMusic(){
   const audio = document.getElementById('musicTrack');
   if(!audio) return;
-  ensureTrackReady();
-  if(audio.paused) startTrack();
-  else { audio.pause(); setMusicStatus('Пауза'); }
+  if(audio.paused) playMusicFromChip();
+  else pauseMusicFromChip();
 }
 window.addEventListener('DOMContentLoaded', function(){
   ensureTrackReady();
