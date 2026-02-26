@@ -132,6 +132,7 @@ body::before{
 .music-btn:hover{background:rgba(201,168,76,0.2);border-color:var(--gold);}
 .music-btn:disabled{opacity:0.45;cursor:not-allowed;}
 .music-btn svg{width:10px;height:10px;fill:currentColor;}
+.music-btn.active{background:rgba(201,168,76,0.24);border-color:var(--gold);}
 .music-waves{display:flex;align-items:center;gap:2px;height:14px;}
 .music-waves span{
   display:block;width:2px;background:var(--gold);border-radius:2px;
@@ -542,7 +543,7 @@ footer{
   </div>
 </nav>
 
-<audio id="musicTrack" preload="auto" style="display:none"></audio>
+<audio id="musicTrack" preload="metadata" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none"></audio>
 <div id="musicStatus" class="music-status" style="display:none"></div>
 
 <!-- HERO -->
@@ -998,10 +999,12 @@ function toggleTheme() {
 })();
 
 const TRACK_URLS = [
+  './assets/audio/sacral-track.mp3',
   'https://drive.google.com/uc?export=download&id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t',
   'https://drive.usercontent.google.com/download?id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t&export=download&confirm=t'
 ];
 let currentTrackIndex = 0;
+let playToken = 0;
 
 function setMusicStatus(text){
   const el = document.getElementById('musicStatus');
@@ -1015,8 +1018,8 @@ function updateMusicButton(isPlaying){
   const pauseBtn = document.getElementById('musicPauseBtn');
   if(mini) mini.classList.toggle('playing', !!isPlaying);
   if(lbl) lbl.textContent = isPlaying ? 'Играет' : 'Слушать трек';
-  if(playBtn) playBtn.disabled = !!isPlaying;
-  if(pauseBtn) pauseBtn.disabled = !isPlaying;
+  if(playBtn) playBtn.classList.toggle('active', !isPlaying);
+  if(pauseBtn) pauseBtn.classList.toggle('active', !!isPlaying);
 }
 function applyTrack(index){
   const audio = document.getElementById('musicTrack');
@@ -1031,33 +1034,56 @@ function ensureTrackReady(){
   if(!audio || audio.src) return;
   applyTrack(0);
 }
-function startTrack(){
+function tryPlayWithFallback(token){
   const audio = document.getElementById('musicTrack');
-  if(!audio) return;
-  setMusicStatus('Загрузка трека...');
+  if(!audio || token !== playToken) return;
   const attempt = audio.play();
-  if(attempt && typeof attempt.then === 'function') attempt.then(() => { setMusicStatus('Трек играет.'); updateMusicButton(true); });
+  if(attempt && typeof attempt.then === 'function'){
+    attempt.then(() => {
+      if(token !== playToken) return;
+      setMusicStatus('Трек играет.');
+      updateMusicButton(true);
+    });
+  }
   if(attempt && typeof attempt.catch === 'function'){
     attempt.catch(() => {
+      if(token !== playToken) return;
       if(currentTrackIndex < TRACK_URLS.length - 1){
         applyTrack(currentTrackIndex + 1);
-        const retry = audio.play();
-        if(retry && typeof retry.catch === 'function') retry.catch(() => {
-          setMusicStatus('Не удалось воспроизвести трек. Проверьте интернет и нажмите снова.');
-        });
+        tryPlayWithFallback(token);
+      } else {
+        setMusicStatus('Не удалось воспроизвести трек. Проверьте интернет и нажмите Play снова.');
+        updateMusicButton(false);
       }
     });
   }
 }
-function playMusicFromChip(){
+function startTrack(){
   ensureTrackReady();
+  playToken += 1;
+  const token = playToken;
+  setMusicStatus('Загрузка трека...');
+  tryPlayWithFallback(token);
+  // fallback if source hangs without error on iOS/webview
+  setTimeout(() => {
+    const audio = document.getElementById('musicTrack');
+    if(!audio || token !== playToken) return;
+    if(audio.paused && currentTrackIndex < TRACK_URLS.length - 1){
+      applyTrack(currentTrackIndex + 1);
+      tryPlayWithFallback(token);
+    }
+  }, 3000);
+}
+function playMusicFromChip(){
   startTrack();
 }
 function pauseMusicFromChip(){
   const audio = document.getElementById('musicTrack');
   if(!audio) return;
+  playToken += 1;
   audio.pause();
   setMusicStatus('Пауза');
+  updateMusicButton(false);
 }
 function toggleMusic(){
   const audio = document.getElementById('musicTrack');
@@ -1070,12 +1096,16 @@ window.addEventListener('DOMContentLoaded', function(){
   const audio = document.getElementById('musicTrack');
   if(audio){
     audio.addEventListener('error', function(){
-      if(currentTrackIndex < TRACK_URLS.length - 1) applyTrack(currentTrackIndex + 1);
-      else setMusicStatus('Все источники трека недоступны.');
+      if(currentTrackIndex < TRACK_URLS.length - 1){
+        applyTrack(currentTrackIndex + 1);
+      } else {
+        setMusicStatus('Все источники трека недоступны.');
+      }
+      updateMusicButton(false);
     });
     audio.addEventListener('play', function(){ updateMusicButton(true); });
     audio.addEventListener('pause', function(){ updateMusicButton(false); });
-    audio.addEventListener('ended', function(){ updateMusicButton(false); });
+    audio.addEventListener('ended', function(){ updateMusicButton(false); setMusicStatus('Трек завершен.'); });
   }
   updateMusicButton(false);
 });
