@@ -347,7 +347,7 @@ body::before{
 }
 .scene-table th{
   background:var(--table-head-bg);
-  font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:0.2em;
+  font-family:'Cinzel',serif;font-size:12.5px;letter-spacing:0.16em;
   text-transform:uppercase;color:var(--gold);
   padding:14px 18px;text-align:left;
   border-bottom:1px solid var(--border-strong);
@@ -358,7 +358,7 @@ body::before{
   padding:18px 18px;vertical-align:top;
   border-bottom:1px solid var(--border);
   border-right:1px solid var(--border);
-  font-size:15px;line-height:1.8;color:var(--text-muted);
+  font-size:18px;line-height:1.9;color:var(--text-muted);
   background:var(--card-bg);
   transition:background 0.2s;
 }
@@ -370,13 +370,13 @@ body::before{
 /* Scene name cell */
 .scene-table .td-tc{
   background:rgba(10,6,3,0.9) !important;
-  font-family:'Cinzel',serif;font-size:11.5px;color:var(--gold);
+  font-family:'Cinzel',serif;font-size:13px;color:var(--gold);
   letter-spacing:0.05em;white-space:nowrap;
   width:90px;
 }
 [data-theme="light"] .scene-table .td-tc{background:rgba(26,13,7,0.12) !important;}
 .scene-table .td-name{
-  font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;
+  font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;
   color:var(--heading);background:var(--card-bg) !important;
   border-bottom:1px solid var(--border-strong);
 }
@@ -393,9 +393,9 @@ body::before{
   padding:2px 8px;border-radius:6px;background:var(--gold-pale);
   margin-left:10px;vertical-align:middle;
 }
-.vo-text{white-space:pre-line;font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--text);}
-.sound-text{font-family:'Jost',sans-serif;font-size:14px;color:var(--text-muted);white-space:pre-line;}
-.visual-text{font-size:15px;line-height:1.85;color:var(--text-muted);white-space:pre-line;}
+.vo-text{white-space:pre-line;font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:var(--text);}
+.sound-text{font-family:'Jost',sans-serif;font-size:17px;color:var(--text-muted);white-space:pre-line;}
+.visual-text{font-size:18px;line-height:1.92;color:var(--text-muted);white-space:pre-line;}
 
 /* ── CULTURAL CODE ── */
 .culture-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px;}
@@ -452,7 +452,7 @@ footer{
   .hero{padding:90px 24px 60px;}
   .big-quote{padding:36px 20px;}
   footer{flex-direction:column;text-align:center;padding:28px 20px;}
-  .scene-table{font-size:14px;}
+  .scene-table{font-size:16px;}
 }
 
 [data-theme="light"] .hero-orb-1{
@@ -516,10 +516,10 @@ footer{
     <button class="music-modal-close" onclick="closeMusic()">✕</button>
     <div class="music-modal-title">Музыкальный фон ролика</div>
     <div class="music-modal-sub">Включи перед прочтением — услышишь Алтай</div>
-    <iframe id="musicFrame" width="100%" height="120" scrolling="no" frameborder="no" allow="autoplay"
-      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/asheakhmin/the-great-cosmic-lotus-of-my-1&color=%23C9A84C&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_playcount=false&visual=false">
-    </iframe>
-    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Если автозапуск не сработал, нажми Play в плеере или открой оригинал: <a href="https://soundcloud.com/asheakhmin/the-great-cosmic-lotus-of-my-1" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
+    <audio id="musicTrack" controls preload="auto" style="width:100%;">
+      Ваш браузер не поддерживает аудио.
+    </audio>
+    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Если трек не стартовал автоматически, нажми Play на плеере или открой оригинал: <a href="https://on.soundcloud.com/fWHhPyMxDnl02l3L7X" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
   </div>
 </div>
 
@@ -971,25 +971,60 @@ function toggleTheme() {
   if(s) document.documentElement.setAttribute('data-theme', s);
 })();
 
-const SOUND_CLOUD_BASE = "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/asheakhmin/the-great-cosmic-lotus-of-my-1&color=%23C9A84C&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_playcount=false&visual=false";
+const TRACK_URLS = [
+  'https://drive.google.com/uc?export=download&id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t',
+  'https://drive.usercontent.google.com/download?id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t&export=download&confirm=t'
+];
+let currentTrackIndex = 0;
 
-function setMusicAutoplay(autoplay){
-  const frame = document.getElementById('musicFrame');
-  if(!frame) return;
-  frame.src = `${SOUND_CLOUD_BASE}&auto_play=${autoplay ? 'true' : 'false'}`;
-}
 function openMusic(){
   document.getElementById('musicModal').classList.add('open');
 }
 function closeMusic(){
   document.getElementById('musicModal').classList.remove('open');
-  setMusicAutoplay(false);
+  const audio = document.getElementById('musicTrack');
+  if(audio) audio.pause();
+}
+function applyTrack(index){
+  const audio = document.getElementById('musicTrack');
+  if(!audio) return;
+  currentTrackIndex = index;
+  audio.src = TRACK_URLS[index];
+  audio.load();
+}
+function ensureTrackReady(){
+  const audio = document.getElementById('musicTrack');
+  if(!audio || audio.src) return;
+  applyTrack(0);
+}
+function startTrack(){
+  const audio = document.getElementById('musicTrack');
+  if(!audio) return;
+  const attempt = audio.play();
+  if(attempt && typeof attempt.catch === 'function'){
+    attempt.catch(() => {
+      if(currentTrackIndex < TRACK_URLS.length - 1){
+        applyTrack(currentTrackIndex + 1);
+        const retry = audio.play();
+        if(retry && typeof retry.catch === 'function') retry.catch(() => {});
+      }
+    });
+  }
 }
 function toggleMusic(){
   openMusic();
-  setMusicAutoplay(true);
+  ensureTrackReady();
+  startTrack();
 }
-window.addEventListener('DOMContentLoaded', function(){ setMusicAutoplay(false); });
+window.addEventListener('DOMContentLoaded', function(){
+  ensureTrackReady();
+  const audio = document.getElementById('musicTrack');
+  if(audio){
+    audio.addEventListener('error', function(){
+      if(currentTrackIndex < TRACK_URLS.length - 1) applyTrack(currentTrackIndex + 1);
+    });
+  }
+});
 document.getElementById('musicModal').addEventListener('click', function(e){ if(e.target===this) closeMusic(); });
 
 const obs = new IntersectionObserver(entries => {
