@@ -115,7 +115,10 @@ body::before{
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-.music-mini-icon svg{width:12px;height:12px;fill:#1A0D07;margin-left:2px;}
+.music-mini-icon svg{width:12px;height:12px;fill:#1A0D07;}
+.music-mini-icon .pause-icon{display:none;}
+.music-mini.playing .music-mini-icon .play-icon{display:none;}
+.music-mini.playing .music-mini-icon .pause-icon{display:block;}
 .music-mini-label{
   font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.15em;
   color:var(--gold);white-space:nowrap;
@@ -164,23 +167,6 @@ body::before{
 .music-modal-sub{font-size:12px;color:var(--text-muted);margin-bottom:24px;}
 .music-modal iframe{border-radius:10px;}
 .music-status{font-size:11px;color:var(--text-dim);margin-top:10px;min-height:1.2em;}
-.music-inline-panel{
-  position:fixed;right:18px;bottom:18px;z-index:1500;
-  width:min(420px,calc(100vw - 24px));
-  background:var(--bg2);border:1px solid var(--border-strong);
-  border-radius:16px;padding:14px 14px 12px;
-  backdrop-filter:blur(10px);
-  transition:transform 0.28s ease,opacity 0.28s ease;
-}
-.music-inline-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;}
-.music-inline-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.14em;color:var(--gold);margin-bottom:0;}
-.music-panel-toggle{
-  border:1px solid var(--border-strong);background:var(--gold-pale);color:var(--gold);
-  border-radius:999px;padding:3px 10px;font-size:10px;letter-spacing:0.08em;cursor:pointer;
-}
-.music-panel-body{display:block;}
-.music-inline-panel.collapsed{padding:10px 12px;}
-.music-inline-panel.collapsed .music-panel-body{display:none;}
 
 /* THEME TOGGLE */
 .theme-toggle{display:flex;align-items:center;gap:8px;}
@@ -480,9 +466,7 @@ footer{
   footer{flex-direction:column;text-align:center;padding:28px 20px;}
   .scene-table-wrap{margin:0 -4px;padding:0 4px;}
   .scene-table{font-size:16px;min-width:760px;}
-  .music-inline-panel{left:12px;right:12px;bottom:12px;width:auto;}
-  .music-inline-panel.mobile-collapsed .music-panel-body{display:none;}
-  .music-inline-panel.mobile-collapsed{padding:10px 12px;}
+
 }
 
 [data-theme="light"] .hero-orb-1{
@@ -516,7 +500,8 @@ footer{
     <!-- MUSIC MINI -->
     <div class="music-mini" onclick="toggleMusic()">
       <div class="music-mini-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="pause-icon" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
       </div>
       <span class="music-mini-label" id="musicMiniLabel">Слушать трек</span>
       <div class="music-waves">
@@ -540,20 +525,8 @@ footer{
   </div>
 </nav>
 
-<!-- INLINE MUSIC PLAYER -->
-<div class="music-inline-panel" id="musicPanel">
-  <div class="music-inline-head">
-    <div class="music-inline-title">Музыкальный фон ролика</div>
-    <button class="music-panel-toggle" id="musicPanelToggle" onclick="toggleMusicPanel()">Свернуть</button>
-  </div>
-  <div class="music-panel-body">
-    <audio id="musicTrack" controls preload="auto" style="width:100%;">
-      Ваш браузер не поддерживает аудио.
-    </audio>
-    <div id="musicStatus" class="music-status"></div>
-    <div class="music-modal-sub" style="margin-top:8px;margin-bottom:0;">Если трек не стартовал — открой оригинал (без загрузки mp3 в репозиторий): <a href="https://on.soundcloud.com/fWHhPyMxDnl02l3L7X" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
-  </div>
-</div>
+<audio id="musicTrack" preload="auto" style="display:none"></audio>
+<div id="musicStatus" class="music-status" style="display:none"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1018,20 +991,6 @@ function setMusicStatus(text){
   if(el) el.textContent = text || '';
 }
 
-function updateMusicPanelToggle(){
-  const panel = document.getElementById('musicPanel');
-  const btn = document.getElementById('musicPanelToggle');
-  if(!panel || !btn) return;
-  const collapsed = panel.classList.contains('collapsed') || panel.classList.contains('mobile-collapsed');
-  btn.textContent = collapsed ? 'Развернуть' : 'Свернуть';
-}
-function toggleMusicPanel(){
-  const panel = document.getElementById('musicPanel');
-  if(!panel) return;
-  panel.classList.toggle('collapsed');
-  panel.classList.remove('mobile-collapsed');
-  updateMusicPanelToggle();
-}
 function updateMusicButton(isPlaying){
   const mini = document.querySelector('.music-mini');
   const lbl = document.getElementById('musicMiniLabel');
@@ -1063,7 +1022,7 @@ function startTrack(){
         applyTrack(currentTrackIndex + 1);
         const retry = audio.play();
         if(retry && typeof retry.catch === 'function') retry.catch(() => {
-          setMusicStatus('Не удалось воспроизвести трек. Нажмите Play в плеере или используйте ссылку SoundCloud ниже.');
+          setMusicStatus('Не удалось воспроизвести трек. Проверьте интернет и нажмите снова.');
         });
       }
     });
@@ -1079,15 +1038,10 @@ function toggleMusic(){
 window.addEventListener('DOMContentLoaded', function(){
   ensureTrackReady();
   const audio = document.getElementById('musicTrack');
-  const panel = document.getElementById('musicPanel');
-  if(panel && window.matchMedia('(max-width: 900px)').matches){
-    panel.classList.add('mobile-collapsed');
-  }
-  updateMusicPanelToggle();
   if(audio){
     audio.addEventListener('error', function(){
       if(currentTrackIndex < TRACK_URLS.length - 1) applyTrack(currentTrackIndex + 1);
-      else setMusicStatus('Все источники недоступны. Откройте ссылку SoundCloud ниже.');
+      else setMusicStatus('Все источники трека недоступны.');
     });
     audio.addEventListener('play', function(){ updateMusicButton(true); });
     audio.addEventListener('pause', function(){ updateMusicButton(false); });
