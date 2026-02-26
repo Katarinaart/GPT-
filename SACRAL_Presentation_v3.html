@@ -161,6 +161,7 @@ body::before{
 }
 .music-modal-sub{font-size:12px;color:var(--text-muted);margin-bottom:24px;}
 .music-modal iframe{border-radius:10px;}
+.music-status{font-size:11px;color:var(--text-dim);margin-top:10px;min-height:1.2em;}
 
 /* THEME TOGGLE */
 .theme-toggle{display:flex;align-items:center;gap:8px;}
@@ -339,9 +340,15 @@ body::before{
 .dir-note::before{content:'▸';color:var(--gold);flex-shrink:0;margin-top:2px;}
 
 /* ── SCENE TABLE ── */
+.scene-table-wrap{
+  position:relative;z-index:1;
+  width:100%;overflow-x:auto;overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  border-radius:14px;
+}
 .scene-table{
   position:relative;z-index:1;
-  width:100%;border-collapse:collapse;
+  width:100%;min-width:980px;border-collapse:collapse;
   border:1px solid var(--border-strong);
   border-radius:14px;overflow:hidden;
 }
@@ -452,7 +459,8 @@ footer{
   .hero{padding:90px 24px 60px;}
   .big-quote{padding:36px 20px;}
   footer{flex-direction:column;text-align:center;padding:28px 20px;}
-  .scene-table{font-size:16px;}
+  .scene-table-wrap{margin:0 -4px;padding:0 4px;}
+  .scene-table{font-size:16px;min-width:760px;}
 }
 
 [data-theme="light"] .hero-orb-1{
@@ -519,7 +527,8 @@ footer{
     <audio id="musicTrack" controls preload="auto" style="width:100%;">
       Ваш браузер не поддерживает аудио.
     </audio>
-    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Если локальный трек не найден, нажми Play на плеере или открой оригинал: <a href="https://on.soundcloud.com/fWHhPyMxDnl02l3L7X" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
+    <div id="musicStatus" class="music-status"></div>
+    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Рекомендуется загрузить mp3 в проект: <code>assets/audio/sacral-track.mp3</code>. Если временно недоступно — открой оригинал: <a href="https://on.soundcloud.com/fWHhPyMxDnl02l3L7X" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
   </div>
 </div>
 
@@ -677,6 +686,7 @@ footer{
       </div>
     </div>
 
+    <div class="scene-table-wrap">
     <table class="scene-table">
       <thead><tr>
         <th style="width:90px">Тайм-код</th>
@@ -772,6 +782,7 @@ VO:
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </section>
 
@@ -906,6 +917,7 @@ VO:
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </section>
 
@@ -971,13 +983,17 @@ function toggleTheme() {
   if(s) document.documentElement.setAttribute('data-theme', s);
 })();
 
-const LOCAL_TRACK_FILE = '[Maks Shore] The Great Cosmic Lotus Of My Soul Kestenbetsa 2.mp3';
 const TRACK_URLS = [
-  encodeURI(LOCAL_TRACK_FILE),
+  'assets/audio/sacral-track.mp3',
   'https://drive.google.com/uc?export=download&id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t',
   'https://drive.usercontent.google.com/download?id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t&export=download&confirm=t'
 ];
 let currentTrackIndex = 0;
+
+function setMusicStatus(text){
+  const el = document.getElementById('musicStatus');
+  if(el) el.textContent = text || '';
+}
 
 function openMusic(){
   document.getElementById('musicModal').classList.add('open');
@@ -993,6 +1009,7 @@ function applyTrack(index){
   currentTrackIndex = index;
   audio.src = TRACK_URLS[index];
   audio.load();
+  setMusicStatus(`Источник трека: ${index + 1}/${TRACK_URLS.length}`);
 }
 function ensureTrackReady(){
   const audio = document.getElementById('musicTrack');
@@ -1002,13 +1019,17 @@ function ensureTrackReady(){
 function startTrack(){
   const audio = document.getElementById('musicTrack');
   if(!audio) return;
+  setMusicStatus('Загрузка трека...');
   const attempt = audio.play();
+  if(attempt && typeof attempt.then === 'function') attempt.then(() => setMusicStatus('Трек готов к воспроизведению.'));
   if(attempt && typeof attempt.catch === 'function'){
     attempt.catch(() => {
       if(currentTrackIndex < TRACK_URLS.length - 1){
         applyTrack(currentTrackIndex + 1);
         const retry = audio.play();
-        if(retry && typeof retry.catch === 'function') retry.catch(() => {});
+        if(retry && typeof retry.catch === 'function') retry.catch(() => {
+          setMusicStatus('Не удалось воспроизвести трек. Нажмите Play в плеере или используйте ссылку SoundCloud ниже.');
+        });
       }
     });
   }
@@ -1024,6 +1045,7 @@ window.addEventListener('DOMContentLoaded', function(){
   if(audio){
     audio.addEventListener('error', function(){
       if(currentTrackIndex < TRACK_URLS.length - 1) applyTrack(currentTrackIndex + 1);
+      else setMusicStatus('Все источники недоступны. Откройте ссылку SoundCloud ниже.');
     });
   }
 });
