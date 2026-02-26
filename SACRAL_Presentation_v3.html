@@ -516,10 +516,10 @@ footer{
     <button class="music-modal-close" onclick="closeMusic()">✕</button>
     <div class="music-modal-title">Музыкальный фон ролика</div>
     <div class="music-modal-sub">Включи перед прочтением — услышишь Алтай</div>
-    <audio id="musicTrack" controls preload="auto" style="width:100%;">
-      Ваш браузер не поддерживает аудио.
-    </audio>
-    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Если трек не загрузился, открой оригинал: <a href="https://on.soundcloud.com/fWHhPyMxDnl02l3L7X" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
+    <iframe id="musicFrame" width="100%" height="120" scrolling="no" frameborder="no" allow="autoplay"
+      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/asheakhmin/the-great-cosmic-lotus-of-my-1&color=%23C9A84C&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_playcount=false&visual=false">
+    </iframe>
+    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Если автозапуск не сработал, нажми Play в плеере или открой оригинал: <a href="https://soundcloud.com/asheakhmin/the-great-cosmic-lotus-of-my-1" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
   </div>
 </div>
 
@@ -971,51 +971,25 @@ function toggleTheme() {
   if(s) document.documentElement.setAttribute('data-theme', s);
 })();
 
-const TRACK_SOURCES = [
-  'https://drive.google.com/uc?export=download&id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t',
-  'https://drive.usercontent.google.com/download?id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t&export=download&confirm=t'
-];
-let trackSourceIndex = 0;
+const SOUND_CLOUD_BASE = "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/asheakhmin/the-great-cosmic-lotus-of-my-1&color=%23C9A84C&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_playcount=false&visual=false";
 
-function openMusic(){ document.getElementById('musicModal').classList.add('open'); }
+function setMusicAutoplay(autoplay){
+  const frame = document.getElementById('musicFrame');
+  if(!frame) return;
+  frame.src = `${SOUND_CLOUD_BASE}&auto_play=${autoplay ? 'true' : 'false'}`;
+}
+function openMusic(){
+  document.getElementById('musicModal').classList.add('open');
+}
 function closeMusic(){
-  const modal = document.getElementById('musicModal');
-  const audio = document.getElementById('musicTrack');
-  modal.classList.remove('open');
-  if(audio){ audio.pause(); }
-}
-function applyTrackSource(index){
-  const audio = document.getElementById('musicTrack');
-  if(!audio) return;
-  trackSourceIndex = index;
-  audio.src = TRACK_SOURCES[index];
-  audio.load();
-}
-function primeTrack(){
-  const audio = document.getElementById('musicTrack');
-  if(!audio || audio.src) return;
-  applyTrackSource(0);
-}
-function playTrack(){
-  const audio = document.getElementById('musicTrack');
-  if(!audio) return;
-  const playAttempt = audio.play();
-  if(playAttempt && typeof playAttempt.catch === 'function'){
-    playAttempt.catch(() => {
-      if(trackSourceIndex < TRACK_SOURCES.length - 1){
-        applyTrackSource(trackSourceIndex + 1);
-        const retryAttempt = audio.play();
-        if(retryAttempt && typeof retryAttempt.catch === 'function') retryAttempt.catch(() => {});
-      }
-    });
-  }
+  document.getElementById('musicModal').classList.remove('open');
+  setMusicAutoplay(false);
 }
 function toggleMusic(){
   openMusic();
-  primeTrack();
-  playTrack();
+  setMusicAutoplay(true);
 }
-window.addEventListener('DOMContentLoaded', primeTrack);
+window.addEventListener('DOMContentLoaded', function(){ setMusicAutoplay(false); });
 document.getElementById('musicModal').addEventListener('click', function(e){ if(e.target===this) closeMusic(); });
 
 const obs = new IntersectionObserver(entries => {
