@@ -519,7 +519,7 @@ footer{
     <audio id="musicTrack" controls preload="auto" style="width:100%;">
       Ваш браузер не поддерживает аудио.
     </audio>
-    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Если трек не стартовал автоматически, нажми Play на плеере или открой оригинал: <a href="https://on.soundcloud.com/fWHhPyMxDnl02l3L7X" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
+    <div class="music-modal-sub" style="margin-top:12px;margin-bottom:0;">Если локальный трек не найден, нажми Play на плеере или открой оригинал: <a href="https://on.soundcloud.com/fWHhPyMxDnl02l3L7X" target="_blank" rel="noopener" style="color:var(--gold);">SoundCloud</a></div>
   </div>
 </div>
 
@@ -971,7 +971,9 @@ function toggleTheme() {
   if(s) document.documentElement.setAttribute('data-theme', s);
 })();
 
+const LOCAL_TRACK_FILE = '[Maks Shore] The Great Cosmic Lotus Of My Soul Kestenbetsa 2.mp3';
 const TRACK_URLS = [
+  encodeURI(LOCAL_TRACK_FILE),
   'https://drive.google.com/uc?export=download&id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t',
   'https://drive.usercontent.google.com/download?id=1mfN71jfx73SjxnN2EUPiKYrnm8scu82t&export=download&confirm=t'
 ];
