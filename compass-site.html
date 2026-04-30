@@ -1,42 +1,82 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>КОМПАС — сайт-презентация</title>
-<style>
-:root{--bg:#070b12;--fg:#eef2ff;--muted:#b0bbd4;--line:#263249;--accent:#ff7a2f;--card:#0e1422}
-body.light{--bg:#f5f7fc;--fg:#121722;--muted:#4b5975;--line:#d4dbea;--card:#fff}
-*{box-sizing:border-box}html,body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--fg);scroll-behavior:smooth}
-header{position:sticky;top:0;z-index:99;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav{max-width:1400px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:16px}.brand{font-weight:700;letter-spacing:.08em}.menu{display:flex;gap:14px;flex-wrap:wrap}.menu a{color:var(--fg);text-decoration:none;font-size:14px}.theme{margin-left:auto}
-.hero{min-height:86vh;display:grid;place-items:center;position:relative;overflow:hidden;text-align:center;padding:80px 20px}
-.compass{position:absolute;width:min(75vmin,700px);aspect-ratio:1;border:2px solid #ff7a2f55;border-radius:50%;animation:spin 24s linear infinite;opacity:.4}
-.compass:before,.compass:after{content:"";position:absolute;left:50%;top:50%;background:#ff7a2f;transform:translate(-50%,-50%)}
-.compass:before{width:3px;height:85%}.compass:after{height:3px;width:85%}
-@keyframes spin{to{transform:rotate(360deg)}}
-h1{font-size:clamp(42px,8vw,120px);margin:0;letter-spacing:.08em}.sub{color:var(--muted)}
-section{max-width:1400px;margin:auto;padding:70px 20px;border-top:1px solid var(--line)}
-.h2{font-size:clamp(28px,5vw,52px);margin:0 0 24px}
-.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.map{background:var(--card);border:1px solid var(--line);padding:10px;border-radius:12px;min-height:260px}
-.map svg{width:100%;height:240px}.dot{fill:#ff7a2f}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:var(--card);border:1px solid var(--line);padding:18px;border-radius:12px}
-iframe.embed{width:100%;height:780px;border:1px solid var(--line);border-radius:12px;background:#fff}
-.btn{padding:10px 16px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--fg)}
-@media (max-width:980px){.maps,.row{grid-template-columns:1fr}.menu{display:none}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>КОМПАС — презентация проекта</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0e0e0e;--fg:#c8c0b4;--accent:#E87722;--muted:#7a7060;--card:#151515}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:'Cormorant Garamond',serif;overflow-x:hidden}
+    body.light{--bg:#f6f2ea;--fg:#231f1c;--accent:#b65317;--muted:#5c5248;--card:#fff}
+    nav{position:fixed;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:color-mix(in srgb,var(--bg) 92%, transparent);border-bottom:1px solid color-mix(in srgb,var(--accent) 40%, transparent);z-index:30}
+    .brand{font-family:'Bebas Neue';font-size:30px;letter-spacing:3px;color:var(--accent)}
+    .toggle{background:none;border:1px solid var(--accent);color:var(--accent);padding:8px 12px;cursor:pointer}
+    .hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;padding:80px 20px 48px;overflow:hidden}
+    .compass-wrap{position:absolute;inset:0;display:grid;place-items:center;opacity:.25}
+    .ring{width:min(88vw,88vh);height:min(88vw,88vh);border:1px solid var(--accent);border-radius:50%;position:absolute;animation:spin 120s linear infinite}
+    .ring:nth-child(2){width:min(72vw,72vh);height:min(72vw,72vh);animation-direction:reverse;animation-duration:90s}
+    .ring:nth-child(3){width:min(54vw,54vh);height:min(54vw,54vh);animation-duration:60s}
+    .hero h1{font-family:'Bebas Neue';font-size:clamp(84px,18vw,240px);line-height:.9;margin:0;color:#f4f0ea}
+    .meta{font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.5;max-width:620px}
+    section{padding:64px 20px;border-top:1px solid color-mix(in srgb,var(--accent) 35%, transparent)}
+    h2{font-family:'Bebas Neue';font-size:clamp(34px,7vw,62px);margin:0 0 20px;letter-spacing:2px}
+    .maps{display:grid;grid-template-columns:repeat(3,minmax(240px,1fr));gap:18px}
+    .map{background:var(--card);border:1px solid color-mix(in srgb,var(--accent) 35%, transparent);padding:12px}
+    .map img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:contrast(1.1) saturate(.8)}
+    .dna{overflow:hidden;background:var(--card);border:1px solid color-mix(in srgb,var(--accent) 35%, transparent);padding:16px}
+    .dna-track{display:flex;gap:20px;width:max-content;animation:slide 28s linear infinite}
+    .helix{width:360px;height:220px;border:1px solid color-mix(in srgb,var(--accent) 60%, transparent);position:relative}
+    .helix:before,.helix:after{content:'';position:absolute;left:16px;right:16px;top:20px;bottom:20px;border-left:2px solid var(--accent);border-right:2px solid var(--accent)}
+    .grid{display:grid;gap:16px}
+    .btn{display:inline-block;text-decoration:none;color:var(--bg);background:var(--accent);padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes slide{to{transform:translateX(-50%)}}
+    @media(max-width:900px){.maps{grid-template-columns:1fr}.hero{padding-top:90px}}
+  </style>
 </head>
 <body>
-<header><div class="nav"><button id="t">◐</button><div class="brand">COMPASS INC</div><nav class="menu"><a href="#history">01 История</a><a href="#product">02 Продукт</a><a href="#business">03 Бизнес-архитектура</a></nav></div></header>
-<div class="hero"><div class="compass"></div><div><h1>КОМПАС</h1><p class="sub">Статус — Фаза</p></div></div>
-<section id="history"><h2 class="h2">01 — ИСТОРИЯ</h2>
-<div class="maps">
-<div class="map"><svg viewBox="0 0 400 240"><rect width="400" height="240" fill="#101725"/><path d="M20 80h130v60H20zM180 60h150v100H180zM320 90h60v70h-60z" fill="#2d3a56"/><circle cx="268" cy="95" r="6" class="dot"/><text x="278" y="100" fill="#fff" font-size="12">Россия</text></svg></div>
-<div class="map"><svg viewBox="0 0 400 240"><rect width="400" height="240" fill="#101725"/><path d="M30 120 L120 90 L200 100 L290 75 L370 95 L340 150 L250 165 L150 150 L70 160z" fill="#2d3a56"/><circle cx="180" cy="118" r="6" class="dot"/><text x="188" y="116" fill="#fff" font-size="12">Москва</text><circle cx="150" cy="104" r="6" class="dot"/><text x="158" y="102" fill="#fff" font-size="12">Санкт-Петербург</text></svg></div>
-<div class="map"><svg viewBox="0 0 400 240"><rect width="400" height="240" fill="#101725"/><g stroke="#3a4a6c"><path d="M20 20h360v200H20z"/><path d="M20 80h360M20 140h360M120 20v200M240 20v200"/></g><circle cx="210" cy="120" r="9" class="dot"/><text x="225" y="125" fill="#fff" font-size="12">Москва</text></svg></div>
-</div></section>
-<section id="dna"><h2 class="h2">01-1 — ДНК ИСТОРИИ</h2><div class="card"><iframe class="embed" src="Compass2.html#timeline"></iframe></div><h2 class="h2" style="margin-top:30px">03 — ШЕСТЬ ПОКОЛЕНИЙ</h2><div class="card"><iframe class="embed" src="Compass2.html#generations"></iframe></div></section>
-<section id="product"><h2 class="h2">02 — ПРОДУКТ</h2><h3>02-1 О проекте + разделы 01–05</h3><iframe class="embed" src="Compass-passport.html"></iframe><h3>02-2 Разделы 01–05</h3><iframe class="embed" src="Compass1.html"></iframe><h3>02-3 ГАЛЕРЕЯ ФИГУР (блок 04)</h3><iframe class="embed" src="Compass3.html#figures"></iframe></section>
-<section id="business"><div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap"><h2 class="h2" style="margin:0">03 — БИЗНЕС-АРХИТЕКТУРА</h2><a class="btn" href="https://docs.google.com/document/d/1ySg4QCVI5zEcuzEyTlM7N7E8Qdgo04kK/edit?usp=sharing&ouid=116029830846976357516&rtpof=true&sd=true" target="_blank">Архитектура продукта</a></div><p class="sub">Разделы 06–07 из Compass Passport:</p><iframe class="embed" src="Compass-passport.html"></iframe></section>
-<script>const b=document.body;document.getElementById('t').onclick=()=>b.classList.toggle('light')</script>
-</body></html>
+  <nav><button class="toggle" id="themeBtn">◐ ТЕМА</button><div class="brand">COMPASS INC</div></nav>
+
+  <header class="hero" id="top">
+    <div class="compass-wrap"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+    <div style="position:relative;z-index:2">
+      <h1>КОМПАС</h1>
+      <div class="meta">СТАТУС: В РАЗРАБОТКЕ · ФОРМАТ: САЙТ-ПРЕЗЕНТАЦИЯ · ПРОДУКТ: КУЛЬТУРНЫЙ ДИЗАЙН-КОД · ФАЗА: СБОРКА БЛОКОВ ИЗ MASTER-ПРЕЗЕНТАЦИЙ</div>
+    </div>
+  </header>
+
+  <section>
+    <h2>01 — ИСТОРИЯ</h2>
+    <div class="maps">
+      <figure class="map"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1280px-World_map_-_low_resolution.svg.png" alt="Карта мира"><figcaption>Мир → точка: Россия</figcaption></figure>
+      <figure class="map"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Russia_edcp_location_map.svg/1280px-Russia_edcp_location_map.svg.png" alt="Карта России"><figcaption>Россия → Москва / Санкт-Петербург</figcaption></figure>
+      <figure class="map"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Moscow_location_map.svg/1280px-Moscow_location_map.svg.png" alt="Карта Москвы"><figcaption>Москва</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>01-1 — ДНК ИСТОРИИ</h2>
+    <div class="dna"><div class="dna-track">
+      <div class="helix"></div><div class="helix"></div><div class="helix"></div><div class="helix"></div><div class="helix"></div><div class="helix"></div>
+    </div></div>
+    <h2 style="margin-top:28px">03 — ШЕСТЬ ПОКОЛЕНИЙ</h2>
+  </section>
+
+  <section><h2>02 — ПРОДУКТ</h2><div class="grid"><p><strong>02-1:</strong> Базовый продуктовый контур (из Compass-passport): секции 01–05 без блока «Референс — Stone Island».</p><p><strong>02-2:</strong> Секции 01–05 из Compass1.</p><p><strong>02-3:</strong> Галерея фигур (блок 04 из Compass3).</p></div></section>
+
+  <section>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <h2 style="margin:0">03 — АРХИТЕКТУРА ПРОДУКТА</h2>
+      <a class="btn" href="https://docs.google.com/document/d/1ySg4QCVI5zEcuzEyTlM7N7E8Qdgo04kK/edit?usp=sharing&ouid=116029830846976357516&rtpof=true&sd=true" target="_blank" rel="noopener">ОТКРЫТЬ ПОДРОБНЫЙ ДОКУМЕНТ</a>
+    </div>
+    <p>Ниже включаются разделы 06–07 из Compass-passport (бизнес-архитектура, рынки, каналы, модель масштабирования).</p>
+  </section>
+
+<script>
+  const b=document.body,btn=document.getElementById('themeBtn');
+  b.classList.remove('light');
+  btn.addEventListener('click',()=>b.classList.toggle('light'));
+</script>
+</body>
+</html>
