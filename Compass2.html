@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMPASS — Программа Возрождения · Инфографика поколений</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908;
+    --bg-2: #141210;
+    --bg-3: #1f1c19;
+    --bg-paper: #f5f1ec;
+    --fg: #f5f1ec;
+    --fg-muted: #b8aea3;
+    --fg-dim: #6b6359;
+    --orange: #d85a1f;
+    --orange-deep: #b54716;
+    --orange-bright: #ff6b2c;
+    --gold: #b08a4c;
+    --georgi: #c97a1a;
+    --line: rgba(245, 241, 236, 0.12);
+    --line-strong: rgba(245, 241, 236, 0.28);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Manrope', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+
+  .display { font-family: 'Unbounded', sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 0.95; text-transform: uppercase; }
+  .serif { font-family: 'Old Standard TT', serif; }
+  .mono { font-family: 'Manrope', sans-serif; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; font-size: 11px; color: var(--fg-muted); }
+  .accent { color: var(--orange); }
+  .gold { color: var(--gold); }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px 32px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 75% 35%, rgba(216, 90, 31, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(176, 138, 76, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+    z-index: 1;
+  }
+  .hero-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-mark svg { width: 56px; height: 56px; }
+  .hero-mark-text { font-family: 'Unbounded'; font-weight: 700; font-size: 18px; letter-spacing: 0.08em; }
+
+  .hero-meta {
+    text-align: right;
+    font-size: 11px;
+    color: var(--fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .hero-title { z-index: 1; margin-top: auto; }
+  .hero-title .pre {
+    font-family: 'Unbounded'; font-weight: 500; font-size: 14px;
+    letter-spacing: 0.3em; color: var(--orange); margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .hero-title h1 {
+    font-family: 'Unbounded';
+    font-weight: 900;
+    font-size: clamp(60px, 13vw, 180px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .hero-title .subtitle {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: clamp(18px, 2.4vw, 28px);
+    color: var(--fg-muted);
+    margin-top: 32px;
+    max-width: 800px;
+    line-height: 1.4;
+  }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+    z-index: 1;
+  }
+  .hero-stat .num {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 48px;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin-top: 8px;
+  }
+
+  /* === SECTION === */
+  section { padding: 120px 0; border-bottom: 1px solid var(--line); position: relative; }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: start;
+  }
+  .section-head .num {
+    font-family: 'Unbounded';
+    font-weight: 800;
+    font-size: 88px;
+    color: var(--orange);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .section-head h2 {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .section-head .desc {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 22px;
+    color: var(--fg-muted);
+    margin-top: 24px;
+    max-width: 640px;
+    line-height: 1.45;
+  }
+
+  /* === RENAISSANCE PILLARS === */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--line-strong);
+  }
+  .pillar {
+    padding: 56px 48px;
+    border-right: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    background: var(--bg-2);
+    transition: background 0.4s ease;
+    position: relative;
+  }
+  .pillar:nth-child(2n) { border-right: none; }
+  .pillar:nth-child(n+3) { border-bottom: none; }
+  .pillar:hover { background: var(--bg-3); }
+
+  .pillar-num {
+    font-family: 'Unbounded';
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--orange);
+    letter-spacing: 0.2em;
+    margin-bottom: 32px;
+  }
+  .pillar-title {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 44px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .pillar-glyph {
+    font-family: 'Old Standard TT';
+    font-size: 16px;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .pillar-body {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--fg-muted);
+  }
+  .pillar-body strong { color: var(--fg); font-weight: 600; }
+
+  /* ========== DNA TIMELINE — CORE INFOGRAPHIC ========== */
+  .timeline-wrap {
+    position: relative;
+    padding: 40px 0 60px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .timeline-scroll {
+    min-width: 1600px;
+    position: relative;
+  }
+  .timeline-svg {
+    width: 100%;
+    height: 700px;
+    display: block;
+  }
+
+  /* Era cards UNDER timeline */
+  .era-cards {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+    margin-top: 40px;
+    min-width: 1600px;
+  }
+  .era-card {
+    background: var(--bg-2);
+    padding: 32px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+  .era-card.future { background: var(--bg-3); }
+
+  .era-years {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--orange);
+    letter-spacing: 0;
+    line-height: 1;
+  }
+  .era-name {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    min-height: 38px;
+  }
+  .era-figure {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    line-height: 1.4;
+    min-height: 38px;
+  }
+  .era-pattern {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg-muted);
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    line-height: 1.4;
+  }
+  .era-pattern strong { color: var(--orange); font-weight: 600; }
+  .era-generation {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* === GENERATIONS BLOCK === */
+  .generations {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  .gen-card {
+    background: var(--bg-2);
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    min-height: 320px;
+  }
+  .gen-card.future { background: var(--bg-3); }
+  .gen-card .gen-icon {
+    width: 60px;
+    height: 60px;
+    color: var(--orange);
+  }
+  .gen-card .gen-icon svg { width: 100%; height: 100%; }
+  .gen-name {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .gen-years {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold);
+  }
+  .gen-desc {
+    font-size: 12px;
+    color: var(--fg-muted);
+    line-height: 1.55;
+    margin-top: auto;
+  }
+  .gen-desc strong { color: var(--fg); font-weight: 600; }
+
+  /* === AUDIENCE — PATTERN MATRIX === */
+  .audiences {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  .aud-card {
+    background: var(--bg-2);
+    padding: 0;
+    display: grid;
+    grid-template-rows: 200px auto;
+    overflow: hidden;
+    transition: background 0.4s ease;
+  }
+  .aud-card:hover { background: var(--bg-3); }
+
+  .aud-pattern-zone {
+    background: var(--bg);
+    color: var(--orange);
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .aud-pattern-zone svg { width: 100%; height: 100%; display: block; }
+  .aud-badge {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: var(--orange);
+    color: var(--bg);
+    padding: 5px 12px;
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .aud-body { padding: 36px 36px 32px; }
+  .aud-name {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .aud-tagline {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .aud-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 24px;
+    font-size: 12px;
+  }
+  .aud-meta-item {
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+  .aud-meta .label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-dim);
+    margin-bottom: 5px;
+    font-size: 10px;
+  }
+  .aud-meta .value {
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .aud-meta .value strong { color: var(--orange); font-weight: 600; }
+
+  /* === MATRIX TABLE === */
+  .matrix-wrap { overflow-x: auto; border: 1px solid var(--line-strong); }
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+    font-size: 13px;
+  }
+  .matrix th, .matrix td {
+    padding: 18px 14px;
+    text-align: center;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .matrix th {
+    background: var(--bg-2);
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .matrix th.row-head, .matrix td.row-head {
+    text-align: left;
+    padding-left: 24px;
+    background: var(--bg-2);
+    font-weight: 600;
+    color: var(--fg);
+    border-right: 1px solid var(--line-strong);
+    font-family: 'Unbounded';
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .matrix .star { font-weight: 700; font-size: 16px; letter-spacing: -1px; }
+  .matrix .s3 { color: var(--orange); }
+  .matrix .s2 { color: var(--gold); }
+  .matrix .s1 { color: var(--fg-dim); }
+  .matrix .dash { color: var(--fg-dim); }
+
+  /* === FOOTER === */
+  footer {
+    padding: 80px 32px 48px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  footer .footer-grid {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+  footer h3 {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  footer ul { list-style: none; }
+  footer li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--fg-muted);
+    border-bottom: 1px solid var(--line);
+  }
+  footer .col-label {
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  footer .footer-bottom {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-dim);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    padding: 24px 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    font-size: 12px;
+    color: var(--fg-muted);
+  }
+  .legend-item { display: flex; align-items: center; gap: 10px; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 980px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 32px 20px; }
+    .hero-bottom { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .hero-stat .num { font-size: 32px; }
+    .section-head { grid-template-columns: 1fr; gap: 32px; margin-bottom: 56px; }
+    .section-head h2 { font-size: 36px; }
+    .section-head .num { font-size: 56px; }
+    .section-head .desc { font-size: 18px; }
+    section { padding: 80px 0; }
+    .pillars { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid var(--line-strong); padding: 40px 28px; }
+    .pillar:last-child { border-bottom: none; }
+    .pillar-title { font-size: 32px; }
+    .generations { grid-template-columns: repeat(2, 1fr); }
+    .audiences { grid-template-columns: 1fr; }
+    .aud-name { font-size: 24px; }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .pulse { animation: pulseGlow 3s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <div class="hero-top">
+    <div class="hero-mark">
+      <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="30" cy="30" r="28"/>
+        <path d="M30 4 L34 30 L30 56 L26 30 Z" fill="currentColor"/>
+        <path d="M4 30 L30 26 L56 30 L30 34 Z" fill="none"/>
+        <circle cx="30" cy="30" r="3" fill="#d85a1f" stroke="none"/>
+        <path d="M30 12 L32 18 L38 18 L33 22 L35 28 L30 24 L25 28 L27 22 L22 18 L28 18 Z" fill="#d85a1f" stroke="none" transform="translate(0 -2)"/>
+      </svg>
+      <span class="hero-mark-text">COMPASS</span>
+    </div>
+    <div class="hero-meta">
+      Программа Возрождения · v4.0<br>
+      Инфографика поколений · ДНК-таймлайн<br>
+      Кураторы: Тим Витер · Катерина Арт<br>
+      Апрель 2026
+    </div>
+  </div>
+
+  <div class="hero-title">
+    <div class="pre">⏤ Программа возрождения</div>
+    <h1>Генетический<br>код<br><span class="accent">России</span></h1>
+    <p class="subtitle">Не плоская хронология. Не учебник истории. Цепь ДНК — вот живой носитель преемственности от Древней Руси (500 г.) до Мироэры (2126 г.). На каждом витке — поколение, фигура, паттерн, аудитория. Шарф = звено в цепи.</p>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-stat"><div class="num">7</div><div class="label">эпох · 1626 лет истории</div></div>
+    <div class="hero-stat"><div class="num">6</div><div class="label">поколений × ЦА</div></div>
+    <div class="hero-stat"><div class="num">8</div><div class="label">визуальных кодов</div></div>
+    <div class="hero-stat"><div class="num">15</div><div class="label">постулатов · ядро</div></div>
+  </div>
+</header>
+
+<!-- ========== 01 · RENAISSANCE PROGRAM ========== -->
+<section id="renaissance">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">01</div>
+      <div>
+        <h2>Программа<br>возрождения</h2>
+        <p class="desc">Не модный бренд. Не сувенирная марка. <strong style="color:var(--fg)">COMPASS</strong> — материальный носитель Программы Возрождения, разворачивающейся в четырёх столпах. Каждый шарф — фрагмент программы, который человек носит на теле. <span class="accent">Род — выше политики</span>; культура — непробиваемый щит, которому невозможно противопоставить идеологию.</p>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">— I —</div>
+        <h3 class="pillar-title">Память</h3>
+        <p class="pillar-glyph">Возрождение исторической глубины</p>
+        <p class="pillar-body">Семь эпох на одной нити: <strong>500 г. → 1700 → 1900 → 1941 → 1991 → 2026 → 2050 → 2126</strong>. Полководцы как маркеры времени: Невский, Донской, Пётр, Суворов, Кутузов, Жуков. Память — не «назад», а <strong>фундамент движения вперёд</strong>. Когда человек смотрит на эту шкалу, происходит «генетический щелчок»: «я не потребитель — я звено в цепи».</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">— II —</div>
+        <h3 class="pillar-title">Технология</h3>
+        <p class="pillar-glyph">Возрождение технологического суверенитета</p>
+        <p class="pillar-body">Микрофибра уровня люкса. Двусторонняя сублимационная печать. Био-полимерные тубусы. <strong>ДНК-спираль и сотовая структура</strong> — визуальные коды русского технологического языка. Шлейф МиГ-31 как графический манифест скорости и мощи. Соты — стабилизирующая сакральная геометрия из Древнего Египта; на солдата работает как энергозащита.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">— III —</div>
+        <h3 class="pillar-title">Код</h3>
+        <p class="pillar-glyph">Возрождение культурного языка</p>
+        <p class="pillar-body">Кириллическая каллиграфия в основе — уставная типографика в футуристическом исполнении («Компас Футур»). 15 постулатов как смысловой каркас. Знак Компас + Звезда как печать принадлежности. <strong>QR-код, вшитый в шарф</strong>, ведёт на storytelling-платформу: история не лекцией, а через ткань. История перепакована в «надевабельный артефакт».</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">— IV —</div>
+        <h3 class="pillar-title">Масштаб</h3>
+        <p class="pillar-glyph">Возрождение цивилизационной рамки</p>
+        <p class="pillar-body">Не Россия — <strong>Род</strong>. Не нация — <strong>Континент</strong>. Уход от «русский» в архетипы: культура · искусство · народ · преемственность поколений. С культурой и кровным родством спорить невозможно — это «непробиваемый щит». От Москвы до Сеула, от Зарядья до Пхеньяна. Korea Bridge, делегационные дары, протокольные наборы.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 02 · DNA TIMELINE ========== -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">02</div>
+      <div>
+        <h2>ДНК<br>истории</h2>
+        <p class="desc">Семь эпох России от 500 г. до 2126 г., разложенные по двойной спирали ДНК. Точки соединения — фигуры эпох. Между ними — паттерны, цвета, поколения, аудитории. <span class="accent">Это и есть генетический код проекта.</span></p>
+      </div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-scroll">
+        <svg class="timeline-svg" viewBox="0 0 1600 700" preserveAspectRatio="xMinYMid meet">
+          <defs>
+            <linearGradient id="dnaGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#b08a4c" stop-opacity="0.6"/>
+              <stop offset="20%" stop-color="#b08a4c"/>
+              <stop offset="40%" stop-color="#d85a1f"/>
+              <stop offset="60%" stop-color="#d85a1f"/>
+              <stop offset="80%" stop-color="#ff6b2c"/>
+              <stop offset="100%" stop-color="#ff6b2c" stop-opacity="0.6"/>
+            </linearGradient>
+            <radialGradient id="nodeGrad" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%" stop-color="#ff6b2c"/>
+              <stop offset="60%" stop-color="#d85a1f"/>
+              <stop offset="100%" stop-color="#b54716"/>
+            </radialGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <filter id="glowSmall" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- ===== DNA DOUBLE HELIX BACKBONE ===== -->
+          <!-- 7 nodes positioned at: x = 100, 320, 540, 760, 980, 1200, 1420, 1540 (8 points = 7 segments) -->
+          <!-- Y axis: 350 center, amplitude 110 -->
+          <!-- Top strand -->
+          <path d="M 100,350 Q 210,240 320,350 T 540,350 T 760,350 T 980,350 T 1200,350 T 1420,350 T 1540,350"
+                fill="none" stroke="url(#dnaGrad)" stroke-width="3" opacity="0.85"/>
+          <!-- Bottom strand -->
+          <path d="M 100,350 Q 210,460 320,350 T 540,350 T 760,350 T 980,350 T 1200,350 T 1420,350 T 1540,350"
+                fill="none" stroke="url(#dnaGrad)" stroke-width="3" opacity="0.85"/>
+
+          <!-- Crossbars between strands at intermediate points -->
+          <g stroke="rgba(176, 138, 76, 0.4)" stroke-width="1.2">
+            <line x1="155" y1="290" x2="155" y2="410"/>
+            <line x1="265" y1="410" x2="265" y2="290"/>
+            <line x1="375" y1="290" x2="375" y2="410"/>
+            <line x1="485" y1="410" x2="485" y2="290"/>
+            <line x1="595" y1="290" x2="595" y2="410"/>
+            <line x1="705" y1="410" x2="705" y2="290"/>
+            <line x1="815" y1="290" x2="815" y2="410"/>
+            <line x1="925" y1="410" x2="925" y2="290"/>
+            <line x1="1035" y1="290" x2="1035" y2="410"/>
+            <line x1="1145" y1="410" x2="1145" y2="290"/>
+            <line x1="1255" y1="290" x2="1255" y2="410"/>
+            <line x1="1365" y1="410" x2="1365" y2="290"/>
+            <line x1="1475" y1="290" x2="1475" y2="410"/>
+          </g>
+
+          <!-- Future segment fade overlay (for 2050 + 2126) -->
+          <rect x="1300" y="180" width="300" height="350" fill="url(#bg)" opacity="0"/>
+
+          <!-- ===== ERA NODES (7 epochs) ===== -->
+          <!-- Era 1: 500 г. -->
+          <g transform="translate(100 350)">
+            <circle r="22" fill="url(#nodeGrad)" filter="url(#glow)"/>
+            <circle r="10" fill="#0a0908"/>
+            <text x="0" y="-50" text-anchor="middle" fill="#d85a1f" font-family="Unbounded" font-weight="700" font-size="18">500</text>
+            <text x="0" y="-32" text-anchor="middle" fill="#b8aea3" font-family="Manrope" font-size="11" letter-spacing="2" text-transform="uppercase">ИСТОКИ</text>
+            <text x="0" y="80" text-anchor="middle" fill="#f5f1ec" font-family="Unbounded" font-weight="600" font-size="14" letter-spacing="-0.5">ДРЕВНЯЯ РУСЬ</text>
+            <text x="0" y="100" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="13">Род · Вера · Земля</text>
+            <text x="0" y="118" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="11">Невский</text>
+          </g>
+
+          <!-- Era 2: 1700 -->
+          <g transform="translate(320 350)">
+            <circle r="22" fill="url(#nodeGrad)" filter="url(#glow)"/>
+            <circle r="10" fill="#0a0908"/>
+            <text x="0" y="-50" text-anchor="middle" fill="#d85a1f" font-family="Unbounded" font-weight="700" font-size="18">1700</text>
+            <text x="0" y="-32" text-anchor="middle" fill="#b8aea3" font-family="Manrope" font-size="11" letter-spacing="2" text-transform="uppercase">ИМПЕРИЯ</text>
+            <text x="0" y="80" text-anchor="middle" fill="#f5f1ec" font-family="Unbounded" font-weight="600" font-size="14" letter-spacing="-0.5">ПЕТРОВСКАЯ</text>
+            <text x="0" y="100" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="13">Реформа · Флот · Окно</text>
+            <text x="0" y="118" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="11">Пётр I · Суворов</text>
+          </g>
+
+          <!-- Era 3: 1900 -->
+          <g transform="translate(540 350)">
+            <circle r="22" fill="url(#nodeGrad)" filter="url(#glow)"/>
+            <circle r="10" fill="#0a0908"/>
+            <text x="0" y="-50" text-anchor="middle" fill="#d85a1f" font-family="Unbounded" font-weight="700" font-size="18">1900</text>
+            <text x="0" y="-32" text-anchor="middle" fill="#b8aea3" font-family="Manrope" font-size="11" letter-spacing="2" text-transform="uppercase">СЛОМ</text>
+            <text x="0" y="80" text-anchor="middle" fill="#f5f1ec" font-family="Unbounded" font-weight="600" font-size="14" letter-spacing="-0.5">РЕВОЛЮЦИЯ</text>
+            <text x="0" y="100" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="13">Серебряный век · 1917</text>
+            <text x="0" y="118" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="11">Кутузов · Нахимов</text>
+          </g>
+
+          <!-- Era 4: 1941 -->
+          <g transform="translate(760 350)">
+            <circle r="26" fill="url(#nodeGrad)" filter="url(#glow)"/>
+            <circle r="12" fill="#0a0908"/>
+            <text x="0" y="-50" text-anchor="middle" fill="#d85a1f" font-family="Unbounded" font-weight="700" font-size="18">1941</text>
+            <text x="0" y="-32" text-anchor="middle" fill="#b8aea3" font-family="Manrope" font-size="11" letter-spacing="2" text-transform="uppercase">ПОБЕДА</text>
+            <text x="0" y="80" text-anchor="middle" fill="#f5f1ec" font-family="Unbounded" font-weight="600" font-size="14" letter-spacing="-0.5">9 МАЯ · СССР</text>
+            <text x="0" y="100" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="13">Великая Отечественная</text>
+            <text x="0" y="118" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="11">Жуков · Рокоссовский</text>
+          </g>
+
+          <!-- Era 5: 1991 -->
+          <g transform="translate(980 350)">
+            <circle r="22" fill="url(#nodeGrad)" filter="url(#glow)"/>
+            <circle r="10" fill="#0a0908"/>
+            <text x="0" y="-50" text-anchor="middle" fill="#d85a1f" font-family="Unbounded" font-weight="700" font-size="18">1991</text>
+            <text x="0" y="-32" text-anchor="middle" fill="#b8aea3" font-family="Manrope" font-size="11" letter-spacing="2" text-transform="uppercase">РАЗРЫВ</text>
+            <text x="0" y="80" text-anchor="middle" fill="#f5f1ec" font-family="Unbounded" font-weight="600" font-size="14" letter-spacing="-0.5">90-е · 2000-е</text>
+            <text x="0" y="100" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="13">Распад · Рынок · Поиск</text>
+            <text x="0" y="118" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="11">Гагарин-наследие</text>
+          </g>
+
+          <!-- Era 6: 2026 — NOW -->
+          <g transform="translate(1200 350)">
+            <circle r="32" fill="none" stroke="#ff6b2c" stroke-width="2" stroke-dasharray="3 3" class="pulse"/>
+            <circle r="24" fill="url(#nodeGrad)" filter="url(#glow)"/>
+            <circle r="11" fill="#0a0908"/>
+            <circle r="4" fill="#ff6b2c"/>
+            <text x="0" y="-58" text-anchor="middle" fill="#ff6b2c" font-family="Unbounded" font-weight="800" font-size="20">2026</text>
+            <text x="0" y="-38" text-anchor="middle" fill="#ff6b2c" font-family="Manrope" font-weight="700" font-size="11" letter-spacing="3" text-transform="uppercase">МЫ ЗДЕСЬ</text>
+            <text x="0" y="86" text-anchor="middle" fill="#f5f1ec" font-family="Unbounded" font-weight="700" font-size="14" letter-spacing="-0.5">ВОЗРОЖДЕНИЕ</text>
+            <text x="0" y="106" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="13">Суверенитет · Код</text>
+            <text x="0" y="124" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="11">Новые архитекторы</text>
+          </g>
+
+          <!-- Era 7: 2050 — FUTURE -->
+          <g transform="translate(1420 350)">
+            <circle r="22" fill="none" stroke="#b08a4c" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <circle r="14" fill="rgba(216, 90, 31, 0.3)" stroke="#d85a1f" stroke-width="1.5"/>
+            <circle r="6" fill="#d85a1f"/>
+            <text x="0" y="-50" text-anchor="middle" fill="#d85a1f" font-family="Unbounded" font-weight="700" font-size="18">2050</text>
+            <text x="0" y="-32" text-anchor="middle" fill="#b8aea3" font-family="Manrope" font-size="11" letter-spacing="2" text-transform="uppercase">ПРОГНОЗ</text>
+            <text x="0" y="80" text-anchor="middle" fill="#f5f1ec" font-family="Unbounded" font-weight="600" font-size="14" letter-spacing="-0.5">САМОИДЕНТ.</text>
+            <text x="0" y="100" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="13">Нейропоколение</text>
+            <text x="0" y="118" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="11">Архитекторы будущего</text>
+          </g>
+
+          <!-- Era 8: 2126 — DEEP FUTURE -->
+          <g transform="translate(1540 350)">
+            <circle r="18" fill="none" stroke="#b08a4c" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+            <circle r="10" fill="rgba(176, 138, 76, 0.2)" stroke="#b08a4c" stroke-width="1" opacity="0.7"/>
+            <circle r="3" fill="#b08a4c" opacity="0.8"/>
+            <text x="0" y="-46" text-anchor="middle" fill="#b08a4c" font-family="Unbounded" font-weight="700" font-size="16">2126</text>
+            <text x="0" y="-30" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="10" letter-spacing="2" text-transform="uppercase">МИРОЭРА</text>
+            <text x="0" y="80" text-anchor="middle" fill="#b8aea3" font-family="Unbounded" font-weight="600" font-size="13" letter-spacing="-0.5">НОВАЯ ИМПЕРИЯ</text>
+            <text x="0" y="100" text-anchor="middle" fill="#6b6359" font-family="'Old Standard TT'" font-style="italic" font-size="12">Культурная сила</text>
+            <text x="0" y="116" text-anchor="middle" fill="#6b6359" font-family="Manrope" font-size="10">Послание потомкам</text>
+          </g>
+
+          <!-- TIMELINE LABEL TOP -->
+          <text x="100" y="60" fill="#6b6359" font-family="Unbounded" font-weight="500" font-size="11" letter-spacing="3" text-transform="uppercase">⏤ ПРОШЛОЕ</text>
+          <text x="800" y="60" text-anchor="middle" fill="#d85a1f" font-family="Unbounded" font-weight="700" font-size="13" letter-spacing="3" text-transform="uppercase">ГЕНЕТИЧЕСКАЯ НИТЬ ИСТОРИИ</text>
+          <text x="1540" y="60" text-anchor="end" fill="#6b6359" font-family="Unbounded" font-weight="500" font-size="11" letter-spacing="3" text-transform="uppercase">БУДУЩЕЕ ⏤</text>
+
+          <!-- 1626 years span line -->
+          <text x="800" y="640" text-anchor="middle" fill="#6b6359" font-family="'Old Standard TT'" font-style="italic" font-size="14">1626 лет преемственности · «Я не потребитель — я звено в цепи»</text>
+        </svg>
+
+        <!-- ===== ERA CARDS (paired with timeline nodes) ===== -->
+        <div class="era-cards">
+          <div class="era-card">
+            <div class="era-years">500 — 1700</div>
+            <div class="era-name">Древняя<br>Русь</div>
+            <div class="era-figure">Александр Невский<br>Дмитрий Донской</div>
+            <div class="era-pattern"><strong>Паттерн</strong><br>Славянский ромб · Византийское плетение</div>
+            <div class="era-generation">Истоки рода</div>
+          </div>
+          <div class="era-card">
+            <div class="era-years">1700 — 1900</div>
+            <div class="era-name">Имперская<br>эпоха</div>
+            <div class="era-figure">Пётр I, Суворов<br>Кутузов, Нахимов</div>
+            <div class="era-pattern"><strong>Паттерн</strong><br>Меандр · Лавровый венок · Спираль</div>
+            <div class="era-generation">Дворянская элита</div>
+          </div>
+          <div class="era-card">
+            <div class="era-years">1900 — 1941</div>
+            <div class="era-name">Слом<br>и поиск</div>
+            <div class="era-figure">Серебряный век<br>Революция · Гражданская</div>
+            <div class="era-pattern"><strong>Паттерн</strong><br>Колосья · Звезда (зарождение)</div>
+            <div class="era-generation">Рождение красного кода</div>
+          </div>
+          <div class="era-card">
+            <div class="era-years">1941 — 1991</div>
+            <div class="era-name">Победа<br>и СССР</div>
+            <div class="era-figure">Жуков, Рокоссовский<br>Гагарин</div>
+            <div class="era-pattern"><strong>Паттерн</strong><br>Колосья · Звезда · Георгиевская лента</div>
+            <div class="era-generation">Бэби-бумеры</div>
+          </div>
+          <div class="era-card">
+            <div class="era-years">1991 — 2026</div>
+            <div class="era-name">Разрыв<br>и поиск</div>
+            <div class="era-figure">Транзит без героя<br>Капитализм · Рынок</div>
+            <div class="era-pattern"><strong>Паттерн</strong><br>Цепь со звеньями · Хаос пиксель</div>
+            <div class="era-generation">Миллениалы · Z</div>
+          </div>
+          <div class="era-card future">
+            <div class="era-years">2026 — 2050</div>
+            <div class="era-name">Возрождение</div>
+            <div class="era-figure">Технологический<br>суверенитет</div>
+            <div class="era-pattern"><strong>Паттерн</strong><br>ДНК · Соты · Новая каллиграфия</div>
+            <div class="era-generation">Альфа · Нейро</div>
+          </div>
+          <div class="era-card future">
+            <div class="era-years">2050 — 2126</div>
+            <div class="era-name">Мироэра</div>
+            <div class="era-figure">Новая Российская<br>Империя</div>
+            <div class="era-pattern"><strong>Паттерн</strong><br>Синтез всех кодов</div>
+            <div class="era-generation">Мира поколение</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background: var(--gold)"></span>Прошлое · золото-охра</div>
+      <div class="legend-item"><span class="legend-dot" style="background: var(--orange)"></span>Настоящее · кшатрий</div>
+      <div class="legend-item"><span class="legend-dot" style="background: var(--orange-bright)"></span>Точка «мы здесь» · 2026</div>
+      <div class="legend-item"><span class="legend-dot" style="background: var(--gold); opacity: 0.5"></span>Будущее · приглушённое золото</div>
+      <div class="legend-item" style="margin-left: auto;"><em style="font-style: italic; color: var(--gold)">Прокрутите вправо →</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 03 · GENERATIONS ========== -->
+<section id="generations">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">03</div>
+      <div>
+        <h2>Шесть<br>поколений</h2>
+        <p class="desc">От СССР до Мироэры. Каждое поколение — это <strong style="color:var(--fg)">отдельная целевая аудитория</strong> со своим способом восприятия истории, своим патриотическим кодом, своими паттернами одежды. Старшие поколения — лояльны напрямую. Молодые — через моду как троянский конь.</p>
+      </div>
+    </div>
+
+    <div class="generations">
+      <!-- Бэби-бумеры -->
+      <div class="gen-card">
+        <div class="gen-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- 5-point star (Soviet) -->
+            <path d="M30 8 L36 22 L52 22 L40 32 L44 48 L30 38 L16 48 L20 32 L8 22 L24 22 Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="gen-name">Бэби-<br>бумеры</div>
+        <div class="gen-years">1945 — 1964 · СССР</div>
+        <div class="gen-desc"><strong>Лоялы кода напрямую.</strong> Помнят СССР, дух 9 мая. Якорь — георгиевская лента, колосья, звезда. Не нужны медиаторы.<br><br>Канал: <strong style="color:var(--orange)">B2G ветераны · G-04</strong></div>
+      </div>
+
+      <!-- Поколение X -->
+      <div class="gen-card">
+        <div class="gen-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.8">
+            <!-- Wheat ear braided into wave -->
+            <path d="M5 30 Q15 18 25 30 T45 30 T55 30" />
+            <g fill="currentColor">
+              <ellipse cx="14" cy="22" rx="3" ry="1.4" transform="rotate(-30 14 22)"/>
+              <ellipse cx="20" cy="20" rx="3" ry="1.4" transform="rotate(30 20 20)"/>
+              <ellipse cx="34" cy="38" rx="3" ry="1.4" transform="rotate(-30 34 38)"/>
+              <ellipse cx="40" cy="40" rx="3" ry="1.4" transform="rotate(30 40 40)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="gen-name">X<br>(Старшие)</div>
+        <div class="gen-years">1965 — 1980</div>
+        <div class="gen-desc">Перестройка. Помнят и СССР, и слом. Уже семьями. Открыты к коллекционным артефактам с провенансом.<br><br>Канал: <strong style="color:var(--orange)">B2C-2 · B2B Фонды</strong></div>
+      </div>
+
+      <!-- Миллениалы -->
+      <div class="gen-card">
+        <div class="gen-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6">
+            <!-- Chain link -->
+            <ellipse cx="20" cy="30" rx="14" ry="9" transform="rotate(60 20 30)"/>
+            <ellipse cx="40" cy="30" rx="14" ry="9" transform="rotate(60 40 30)"/>
+          </svg>
+        </div>
+        <div class="gen-name">Миллениалы</div>
+        <div class="gen-years">1981 — 1996</div>
+        <div class="gen-desc">90-е. Между империями. Мост. Воспринимают через моду и стиль.<br><br>Канал: <strong style="color:var(--orange)">B2C-1 «Современный патриот» · B2C-3</strong></div>
+      </div>
+
+      <!-- Поколение Z -->
+      <div class="gen-card">
+        <div class="gen-icon">
+          <svg viewBox="0 0 60 60" fill="none">
+            <!-- Pixel grid -->
+            <rect x="8" y="8" width="10" height="10" fill="currentColor"/>
+            <rect x="22" y="8" width="10" height="10" fill="currentColor" opacity="0.3"/>
+            <rect x="42" y="8" width="10" height="10" fill="currentColor"/>
+            <rect x="8" y="22" width="10" height="10" fill="currentColor" opacity="0.3"/>
+            <rect x="22" y="22" width="10" height="10" fill="currentColor"/>
+            <rect x="36" y="22" width="10" height="10" fill="currentColor"/>
+            <rect x="8" y="36" width="10" height="10" fill="currentColor"/>
+            <rect x="22" y="36" width="10" height="10" fill="currentColor" opacity="0.3"/>
+            <rect x="42" y="36" width="10" height="10" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="gen-name">Z</div>
+        <div class="gen-years">1997 — 2012</div>
+        <div class="gen-desc">Цифровое детство. Клиповое мышление. Лекции не работают. Только мода + storytelling через QR.<br><br>Канал: <strong style="color:var(--orange)">B2C-3 «Молодой статусник»</strong></div>
+      </div>
+
+      <!-- Альфа -->
+      <div class="gen-card">
+        <div class="gen-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6">
+            <!-- DNA helix -->
+            <path d="M10 12 Q25 30 40 12 M10 30 Q25 48 40 30 M10 48 Q25 66 40 48" transform="translate(5 -6)"/>
+            <path d="M10 12 Q25 -6 40 12 M10 30 Q25 12 40 30" transform="translate(5 -6)" opacity="0.5"/>
+            <line x1="20" y1="9" x2="20" y2="21" stroke="currentColor" stroke-width="1"/>
+            <line x1="35" y1="9" x2="35" y2="21" stroke="currentColor" stroke-width="1"/>
+            <line x1="20" y1="27" x2="20" y2="39" stroke="currentColor" stroke-width="1"/>
+            <line x1="35" y1="27" x2="35" y2="39" stroke="currentColor" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="gen-name">Альфа</div>
+        <div class="gen-years">2013 — 2026</div>
+        <div class="gen-desc">Современное детство. Воспитываются на новой истории. Проект целит в их идентичность с 2026 года.<br><br>Канал: <strong style="color:var(--orange)">B2C через родителей</strong></div>
+      </div>
+
+      <!-- Нейропоколение -->
+      <div class="gen-card future">
+        <div class="gen-icon" style="opacity: 0.7">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+            <!-- Neuro: hexagon honeycomb compound -->
+            <polygon points="30,8 46,18 46,38 30,48 14,38 14,18" fill="none"/>
+            <polygon points="30,16 40,22 40,34 30,40 20,34 20,22" fill="currentColor" opacity="0.3"/>
+            <circle cx="30" cy="28" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="gen-name">Нейро ·<br>Мира</div>
+        <div class="gen-years">2027 — 2050+</div>
+        <div class="gen-desc">Нейропоколение. Те, кто построят Новую Российскую Империю в 2126 году. Программа Возрождения для них.<br><br>Канал: <strong style="color:var(--orange)">Будущее</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 04 · AUDIENCE × PATTERN ========== -->
+<section id="audiences">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">04</div>
+      <div>
+        <h2>Аудитория<br>× паттерн</h2>
+        <p class="desc">Каждая аудитория получает свой визуальный код — не для разделения, а для <strong style="color:var(--fg)">гармонизации каждого на его социальном месте</strong>. Лавровые венки — элите. Соты с пикселями — армии. ДНК-спираль — молодёжи. Колосья-волны — женщинам. Георгиевская лента — ветеранам. Один род, разные коды доступа.</p>
+      </div>
+    </div>
+
+    <div class="audiences">
+
+      <!-- 01 ВЫШКА / ЭЛИТА -->
+      <div class="aud-card">
+        <div class="aud-pattern-zone" style="color: var(--orange)">
+          <span class="aud-badge">01 / Элита</span>
+          <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(300 100)">
+              <!-- Big laurel wreath with star -->
+              <g>
+                <path d="M0,70 Q-90,40 -100,-30" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                <g fill="currentColor">
+                  <ellipse cx="-20" cy="68" rx="10" ry="4" transform="rotate(-30 -20 68)"/>
+                  <ellipse cx="-40" cy="58" rx="11" ry="4" transform="rotate(-40 -40 58)"/>
+                  <ellipse cx="-58" cy="45" rx="11" ry="4" transform="rotate(-50 -58 45)"/>
+                  <ellipse cx="-72" cy="30" rx="11" ry="4" transform="rotate(-60 -72 30)"/>
+                  <ellipse cx="-84" cy="12" rx="11" ry="4" transform="rotate(-70 -84 12)"/>
+                  <ellipse cx="-92" cy="-8" rx="11" ry="4" transform="rotate(-80 -92 -8)"/>
+                  <ellipse cx="-96" cy="-28" rx="11" ry="4" transform="rotate(-90 -96 -28)"/>
+                </g>
+              </g>
+              <g>
+                <path d="M0,70 Q90,40 100,-30" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                <g fill="currentColor">
+                  <ellipse cx="20" cy="68" rx="10" ry="4" transform="rotate(30 20 68)"/>
+                  <ellipse cx="40" cy="58" rx="11" ry="4" transform="rotate(40 40 58)"/>
+                  <ellipse cx="58" cy="45" rx="11" ry="4" transform="rotate(50 58 45)"/>
+                  <ellipse cx="72" cy="30" rx="11" ry="4" transform="rotate(60 72 30)"/>
+                  <ellipse cx="84" cy="12" rx="11" ry="4" transform="rotate(70 84 12)"/>
+                  <ellipse cx="92" cy="-8" rx="11" ry="4" transform="rotate(80 92 -8)"/>
+                  <ellipse cx="96" cy="-28" rx="11" ry="4" transform="rotate(90 96 -28)"/>
+                </g>
+              </g>
+              <path d="M0,-50 L9,-15 L46,-15 L17,7 L28,42 L0,20 L-28,42 L-17,7 L-46,-15 L-9,-15 Z" fill="currentColor"/>
+              <!-- Wheat ears flanking -->
+              <g transform="translate(-130 0)" opacity="0.6">
+                <line x1="0" y1="40" x2="0" y2="-40" stroke="currentColor" stroke-width="1.4"/>
+                <g fill="currentColor">
+                  <ellipse cx="-5" cy="32" rx="4" ry="1.6" transform="rotate(-25 -5 32)"/>
+                  <ellipse cx="5" cy="30" rx="4" ry="1.6" transform="rotate(25 5 30)"/>
+                  <ellipse cx="-5" cy="14" rx="4" ry="1.6" transform="rotate(-25 -5 14)"/>
+                  <ellipse cx="5" cy="12" rx="4" ry="1.6" transform="rotate(25 5 12)"/>
+                  <ellipse cx="-5" cy="-4" rx="4" ry="1.6" transform="rotate(-25 -5 -4)"/>
+                  <ellipse cx="5" cy="-6" rx="4" ry="1.6" transform="rotate(25 5 -6)"/>
+                </g>
+              </g>
+              <g transform="translate(130 0) scale(-1 1)" opacity="0.6">
+                <line x1="0" y1="40" x2="0" y2="-40" stroke="currentColor" stroke-width="1.4"/>
+                <g fill="currentColor">
+                  <ellipse cx="-5" cy="32" rx="4" ry="1.6" transform="rotate(-25 -5 32)"/>
+                  <ellipse cx="5" cy="30" rx="4" ry="1.6" transform="rotate(25 5 30)"/>
+                  <ellipse cx="-5" cy="14" rx="4" ry="1.6" transform="rotate(-25 -5 14)"/>
+                  <ellipse cx="5" cy="12" rx="4" ry="1.6" transform="rotate(25 5 12)"/>
+                  <ellipse cx="-5" cy="-4" rx="4" ry="1.6" transform="rotate(-25 -5 -4)"/>
+                  <ellipse cx="5" cy="-6" rx="4" ry="1.6" transform="rotate(25 5 -6)"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="aud-body">
+          <h3 class="aud-name">Вышка ·<br>Элита</h3>
+          <p class="aud-tagline">«Право отдавать приказы»</p>
+          <div class="aud-meta">
+            <div class="aud-meta-item">
+              <div class="label">Паттерн</div>
+              <div class="value"><strong>Лавровый венок · Колосья</strong></div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Канал</div>
+              <div class="value">B2G политика · Фонд Собянина</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Логика</div>
+              <div class="value">Венок как знак триумфа. Простому солдату не давать — иначе пойдёт в управление</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Цвет</div>
+              <div class="value">Кшатрий + золото-охра + чёрный</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 АРМИЯ -->
+      <div class="aud-card">
+        <div class="aud-pattern-zone" style="color: var(--orange)">
+          <span class="aud-badge">02 / Армия</span>
+          <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="hex-army" x="0" y="0" width="36" height="32" patternUnits="userSpaceOnUse">
+                <polygon points="18,2 32,10 32,24 18,32 4,24 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              </pattern>
+              <pattern id="pix-army" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                <rect x="2" y="2" width="6" height="6" fill="currentColor" opacity="0.5"/>
+                <rect x="14" y="14" width="6" height="6" fill="currentColor" opacity="0.3"/>
+                <rect x="30" y="6" width="6" height="6" fill="currentColor" opacity="0.4"/>
+                <rect x="42" y="22" width="6" height="6" fill="currentColor" opacity="0.5"/>
+                <rect x="8" y="36" width="6" height="6" fill="currentColor" opacity="0.3"/>
+                <rect x="38" y="46" width="6" height="6" fill="currentColor" opacity="0.4"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="200" fill="url(#hex-army)"/>
+            <rect width="600" height="200" fill="url(#pix-army)" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="aud-body">
+          <h3 class="aud-name">Армия ·<br>Бойцы</h3>
+          <p class="aud-tagline">«Я часть роя — энергозащита и связь»</p>
+          <div class="aud-meta">
+            <div class="aud-meta-item">
+              <div class="label">Паттерн</div>
+              <div class="value"><strong>Соты + Пиксели</strong></div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Канал</div>
+              <div class="value">B2A снабжение МО РФ</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Логика</div>
+              <div class="value">Гексагон стабилизирует психику в стрессе. Шарф-полотенце с карманом для мыла</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Цвет</div>
+              <div class="value">Графит + хаки + малое количество кшатрия</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 МОЛОДЁЖЬ -->
+      <div class="aud-card">
+        <div class="aud-pattern-zone" style="color: var(--orange)">
+          <span class="aud-badge">03 / Молодёжь</span>
+          <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="dna-youth" x="0" y="0" width="80" height="100" patternUnits="userSpaceOnUse">
+                <path d="M0,50 Q20,0 40,50 T80,50" fill="none" stroke="currentColor" stroke-width="2.4"/>
+                <path d="M0,50 Q20,100 40,50 T80,50" fill="none" stroke="currentColor" stroke-width="2.4" opacity="0.55"/>
+                <line x1="8" y1="34" x2="8" y2="66" stroke="currentColor" stroke-width="1.4"/>
+                <line x1="20" y1="22" x2="20" y2="78" stroke="currentColor" stroke-width="1.4"/>
+                <line x1="32" y1="34" x2="32" y2="66" stroke="currentColor" stroke-width="1.4"/>
+                <line x1="48" y1="34" x2="48" y2="66" stroke="currentColor" stroke-width="1.4"/>
+                <line x1="60" y1="22" x2="60" y2="78" stroke="currentColor" stroke-width="1.4"/>
+                <line x1="72" y1="34" x2="72" y2="66" stroke="currentColor" stroke-width="1.4"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="200" fill="url(#dna-youth)"/>
+          </svg>
+        </div>
+        <div class="aud-body">
+          <h3 class="aud-name">Молодёжь ·<br>Z и Альфа</h3>
+          <p class="aud-tagline">«Я — звено в цепи. Скорость и децентрализация»</p>
+          <div class="aud-meta">
+            <div class="aud-meta-item">
+              <div class="label">Паттерн</div>
+              <div class="value"><strong>ДНК-спираль + Пиксели</strong></div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Канал</div>
+              <div class="value">B2C-3 «Молодой статусник» через инфлюенсеров</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Логика</div>
+              <div class="value">Троянский конь моды. Носят не из-за патриотизма, а потому что стильно. QR → storytelling</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Цвет</div>
+              <div class="value">Графит + неон-кшатрий, без золота</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 ВЕТЕРАНЫ / СТАРАЯ ШКОЛА -->
+      <div class="aud-card">
+        <div class="aud-pattern-zone" style="color: var(--georgi)">
+          <span class="aud-badge">04 / Ветераны</span>
+          <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice">
+            <!-- Saint George ribbon stripes -->
+            <rect x="0" y="40" width="600" height="22" fill="#1a1410"/>
+            <rect x="0" y="62" width="600" height="22" fill="#c97a1a"/>
+            <rect x="0" y="84" width="600" height="22" fill="#1a1410"/>
+            <rect x="0" y="106" width="600" height="22" fill="#c97a1a"/>
+            <rect x="0" y="128" width="600" height="22" fill="#1a1410"/>
+            <rect x="0" y="150" width="600" height="22" fill="#c97a1a"/>
+            <!-- Star -->
+            <g transform="translate(300 100)">
+              <path d="M0,-32 L8,-10 L31,-10 L12,4 L19,28 L0,14 L-19,28 L-12,4 L-31,-10 L-8,-10 Z" fill="#d85a1f"/>
+            </g>
+          </svg>
+        </div>
+        <div class="aud-body">
+          <h3 class="aud-name">Ветераны ·<br>Политики СССР</h3>
+          <p class="aud-tagline">«81 год кода — якорь безопасности»</p>
+          <div class="aud-meta">
+            <div class="aud-meta-item">
+              <div class="label">Паттерн</div>
+              <div class="value"><strong>Георгиевская лента + Звезда</strong></div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Канал</div>
+              <div class="value">B2G капсула 9 мая · G-04</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Логика</div>
+              <div class="value">Не выдумывать. Дать в чистом виде то, что им нужно. Понятная система координат</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Цвет</div>
+              <div class="value">Чёрный + георгиевский (оранж-чёрный)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 ЖЕНЩИНЫ -->
+      <div class="aud-card">
+        <div class="aud-pattern-zone" style="color: var(--gold)">
+          <span class="aud-badge">05 / Женщины</span>
+          <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <!-- Wheat braided into wave + chain links -->
+              <pattern id="women-pat" x="0" y="0" width="120" height="80" patternUnits="userSpaceOnUse">
+                <!-- Wave braid -->
+                <path d="M0,40 Q30,15 60,40 T120,40" fill="none" stroke="currentColor" stroke-width="2"/>
+                <!-- Wheat decorations along the wave -->
+                <g fill="currentColor">
+                  <ellipse cx="20" cy="28" rx="4" ry="1.6" transform="rotate(-25 20 28)"/>
+                  <ellipse cx="40" cy="28" rx="4" ry="1.6" transform="rotate(-25 40 28)"/>
+                  <ellipse cx="80" cy="52" rx="4" ry="1.6" transform="rotate(25 80 52)"/>
+                  <ellipse cx="100" cy="52" rx="4" ry="1.6" transform="rotate(25 100 52)"/>
+                </g>
+              </pattern>
+              <!-- Chain link pattern bottom -->
+              <pattern id="chain-pat" x="0" y="0" width="60" height="40" patternUnits="userSpaceOnUse">
+                <ellipse cx="15" cy="20" rx="14" ry="9" transform="rotate(60 15 20)" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <ellipse cx="45" cy="20" rx="14" ry="9" transform="rotate(60 45 20)" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="100" fill="url(#women-pat)"/>
+            <rect y="100" width="600" height="100" fill="url(#chain-pat)" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="aud-body">
+          <h3 class="aud-name">Женщины ·<br>Премиум</h3>
+          <p class="aud-tagline">«Мать рода · преемственность · красота»</p>
+          <div class="aud-meta">
+            <div class="aud-meta-item">
+              <div class="label">Паттерн</div>
+              <div class="value"><strong>Колосья-волны + Цепь со звеньями</strong></div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Канал</div>
+              <div class="value">B2C-2 (партнёрши) · SKU-03 «Кадет»</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Логика</div>
+              <div class="value">Versace/Givenchy эстетика — премиальность считывается мгновенно</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Цвет</div>
+              <div class="value">Золото-охра + сепия + кшатрий</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 СПОРТ -->
+      <div class="aud-card">
+        <div class="aud-pattern-zone" style="color: var(--orange)">
+          <span class="aud-badge">06 / Спорт</span>
+          <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="hex-sport" x="0" y="0" width="44" height="38" patternUnits="userSpaceOnUse">
+                <polygon points="22,2 40,12 40,28 22,38 4,28 4,12" fill="none" stroke="currentColor" stroke-width="2"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="200" fill="url(#hex-sport)"/>
+            <!-- Big star center -->
+            <g transform="translate(300 100)">
+              <path d="M0,-50 L13,-15 L48,-15 L19,7 L30,42 L0,20 L-30,42 L-19,7 L-48,-15 L-13,-15 Z" fill="currentColor"/>
+            </g>
+          </svg>
+        </div>
+        <div class="aud-body">
+          <h3 class="aud-name">Спорт ·<br>VIP-абонемент</h3>
+          <p class="aud-tagline">«Структура победы · супер-сила»</p>
+          <div class="aud-meta">
+            <div class="aud-meta-item">
+              <div class="label">Паттерн</div>
+              <div class="value"><strong>Соты в спорт-стиле + Звезда</strong></div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Канал</div>
+              <div class="value">B2B Спортклубы · ЦСКА, Спартак, Зенит</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Логика</div>
+              <div class="value">Соты влияют на генетику, дают суперсилу. Эмблема клуба внутри звезды</div>
+            </div>
+            <div class="aud-meta-item">
+              <div class="label">Цвет</div>
+              <div class="value">Клубные цвета + чёрный + кшатрий-акцент</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== 05 · MASTER MATRIX ========== -->
+<section id="matrix">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">05</div>
+      <div>
+        <h2>Сводная<br>матрица</h2>
+        <p class="desc">Какой паттерн для какой аудитории. <span class="accent">★★★</span> — основной код · <span class="gold">★★</span> — поддерживающий · <span style="color:var(--fg-dim)">★</span> — допустимый · <span style="color:var(--fg-dim)">—</span> — не используется. <strong style="color:var(--fg)">Ключевая логика Тима:</strong> чёткая сегментация не разделяет, а гармонизирует каждого на его социальном месте.</p>
+      </div>
+    </div>
+
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th class="row-head">Паттерн ↓ / Аудитория →</th>
+            <th>Вышка<br>Элита</th>
+            <th>Армия<br>Бойцы</th>
+            <th>Молодёжь<br>Z·Альфа</th>
+            <th>Ветераны<br>Старшие</th>
+            <th>Женщины<br>Премиум</th>
+            <th>Спорт<br>VIP</th>
+            <th>B2B<br>Фонды</th>
+            <th>B2B<br>Банки</th>
+            <th>Korea<br>Юг·Север</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-head">Лавровый венок</td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s1">★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">Колосья + звезда</td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">Соты · Гексагон</td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">Пиксели · Хаки</td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s1">★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">ДНК-спираль</td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s3">★★★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">Георгиевская лента</td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">Колосья-волны / Цепь</td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s1">★</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s1">★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">Греческий меандр</td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star s2">★★</span></td>
+            <td><span class="star s3">★★★</span></td>
+            <td><span class="star s3">★★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3>Next<br>Action</h3>
+      <p style="color:var(--fg-muted); margin-top: 16px; max-width: 520px; line-height: 1.7;">
+        Документ — финальный визуальный референс для Midjourney-промптинга и работы с типографом-каллиграфом. Готов к презентации Иконову, Фонду Собянина и команде дизайна.
+      </p>
+    </div>
+    <div>
+      <div class="col-label">Что внутри v4</div>
+      <ul>
+        <li>Программа Возрождения · 4 столпа</li>
+        <li>ДНК-таймлайн · 7 эпох</li>
+        <li>Поколения · 6 ед. от СССР до Мироэры</li>
+        <li>Аудитория × паттерн · 6 карт</li>
+        <li>Сводная матрица · 8 × 9</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Зависимости</div>
+      <ul>
+        <li>v1.0 — Паспорт проекта</li>
+        <li>v2.0 — Архитектура продукта</li>
+        <li>v3.0 — Айдентика + концепт</li>
+        <li>v4.0 — Эта инфографика</li>
+        <li>v4.1 — Midjourney prompts <span style="color:var(--orange)">(next)</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>COMPASS · Программа Возрождения · v4.0</span>
+    <span>LOO Systems · Апрель 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>

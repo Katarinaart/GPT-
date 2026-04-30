@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMPASS — Архитектура айдентики v3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908;
+    --bg-2: #141210;
+    --bg-3: #1f1c19;
+    --fg: #f5f1ec;
+    --fg-muted: #b8aea3;
+    --fg-dim: #6b6359;
+    --orange: #d85a1f;
+    --orange-deep: #b54716;
+    --gold: #b08a4c;
+    --line: rgba(245, 241, 236, 0.12);
+    --line-strong: rgba(245, 241, 236, 0.28);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Manrope', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* === DISPLAY TYPOGRAPHY === */
+  .display {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  .display-sm { font-family: 'Unbounded', sans-serif; font-weight: 600; letter-spacing: 0; line-height: 1.1; text-transform: uppercase; }
+  .serif { font-family: 'Old Standard TT', serif; }
+  .mono { font-family: 'Manrope', sans-serif; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; font-size: 11px; color: var(--fg-muted); }
+
+  .accent { color: var(--orange); }
+  .gold { color: var(--gold); }
+
+  /* === HEADER / HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px 32px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 30%, rgba(216, 90, 31, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+    z-index: 1;
+  }
+  .hero-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-mark svg { width: 56px; height: 56px; }
+  .hero-mark-text { font-family: 'Unbounded'; font-weight: 700; font-size: 18px; letter-spacing: 0.08em; }
+
+  .hero-meta {
+    text-align: right;
+    font-size: 11px;
+    color: var(--fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .hero-title {
+    z-index: 1;
+    margin-top: auto;
+  }
+  .hero-title h1 {
+    font-family: 'Unbounded';
+    font-weight: 900;
+    font-size: clamp(60px, 14vw, 200px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .hero-title .subtitle {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: clamp(18px, 2.4vw, 28px);
+    color: var(--fg-muted);
+    margin-top: 24px;
+    max-width: 720px;
+  }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+    z-index: 1;
+  }
+  .hero-stat .num {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 48px;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin-top: 8px;
+  }
+
+  /* === SECTION SHELL === */
+  section { padding: 120px 0; border-bottom: 1px solid var(--line); position: relative; }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: start;
+  }
+  .section-head .num {
+    font-family: 'Unbounded';
+    font-weight: 800;
+    font-size: 88px;
+    color: var(--orange);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .section-head h2 {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .section-head .desc {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 22px;
+    color: var(--fg-muted);
+    margin-top: 24px;
+    max-width: 620px;
+  }
+
+  /* === RENAISSANCE PROGRAM === */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--line-strong);
+  }
+  .pillar {
+    padding: 56px 48px;
+    border-right: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    position: relative;
+    background: var(--bg-2);
+    transition: background 0.4s ease;
+  }
+  .pillar:nth-child(2n) { border-right: none; }
+  .pillar:nth-child(n+3) { border-bottom: none; }
+  .pillar:hover { background: var(--bg-3); }
+
+  .pillar-num {
+    font-family: 'Unbounded';
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--orange);
+    letter-spacing: 0.2em;
+    margin-bottom: 32px;
+  }
+  .pillar-title {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 44px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .pillar-glyph {
+    font-family: 'Old Standard TT';
+    font-size: 16px;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .pillar-body {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--fg-muted);
+  }
+  .pillar-body strong { color: var(--fg); font-weight: 600; }
+
+  /* === EPOCHS TIMELINE === */
+  .epoch {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 80px;
+    padding: 80px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .epoch:first-child { border-top: 1px solid var(--line-strong); }
+
+  .epoch-meta .years {
+    font-family: 'Unbounded';
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--orange);
+    letter-spacing: 0;
+    margin-bottom: 16px;
+  }
+  .epoch-meta .name {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+  .epoch-meta .figure {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    line-height: 1.4;
+  }
+  .epoch-meta .audience {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin-bottom: 8px;
+  }
+  .epoch-meta .audience-tag {
+    display: inline-block;
+    border: 1px solid var(--line-strong);
+    padding: 6px 14px;
+    margin: 4px 6px 4px 0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  .epoch-meta .audience-tag.primary { background: var(--orange); border-color: var(--orange); color: var(--bg); }
+
+  .epoch-visual {
+    background: var(--bg-2);
+    border: 1px solid var(--line-strong);
+    aspect-ratio: 16/10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+  }
+  .epoch-pattern-zone {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    overflow: hidden;
+  }
+  .epoch-pattern-zone svg { width: 100%; height: 100%; display: block; }
+
+  .epoch-product {
+    padding: 24px 32px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .epoch-product .left {
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .epoch-product .right {
+    font-size: 12px;
+    color: var(--fg-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .epoch-narrative {
+    margin-top: 24px;
+    font-size: 15px;
+    color: var(--fg-muted);
+    line-height: 1.7;
+  }
+  .epoch-narrative strong { color: var(--fg); font-weight: 600; }
+
+  /* === PATTERNS LIBRARY === */
+  .patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  .pattern-card {
+    background: var(--bg);
+    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .pattern-preview {
+    aspect-ratio: 16/7;
+    background: var(--bg-2);
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .pattern-preview svg { width: 100%; height: 100%; display: block; }
+
+  .pattern-body {
+    padding: 36px 40px 24px;
+  }
+  .pattern-num {
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--orange);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+  .pattern-name {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 32px;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .pattern-name-en {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .pattern-meaning {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--fg-muted);
+    margin-bottom: 20px;
+  }
+  .pattern-meaning strong { color: var(--fg); font-weight: 600; }
+
+  .pattern-meta {
+    padding: 0 40px 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    font-size: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+  .pattern-meta .label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+    font-size: 10px;
+  }
+  .pattern-meta .value {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* === MATRIX TABLE === */
+  .matrix-wrap { overflow-x: auto; border: 1px solid var(--line-strong); }
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 920px;
+    font-size: 13px;
+  }
+  .matrix th, .matrix td {
+    padding: 16px 12px;
+    text-align: center;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .matrix th {
+    background: var(--bg-2);
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .matrix th.row-head, .matrix td.row-head {
+    text-align: left;
+    padding-left: 24px;
+    background: var(--bg-2);
+    font-weight: 600;
+    color: var(--fg);
+    border-right: 1px solid var(--line-strong);
+    font-family: 'Unbounded';
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .matrix .star { color: var(--orange); font-weight: 700; font-size: 16px; letter-spacing: -1px; }
+  .matrix .star-3 { color: var(--orange); }
+  .matrix .star-2 { color: var(--gold); }
+  .matrix .star-1 { color: var(--fg-dim); }
+  .matrix .dash { color: var(--fg-dim); }
+
+  /* === COLLECTION CONCEPT CARDS === */
+  .collection-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  .collection-card {
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 380px 1fr 1fr;
+    gap: 0;
+  }
+  .col-channel {
+    background: var(--bg-2);
+    padding: 48px 40px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+  }
+  .col-channel .badge {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--bg);
+    padding: 6px 14px;
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    align-self: flex-start;
+    margin-bottom: 24px;
+  }
+  .col-channel.b2c .badge { background: var(--orange); }
+  .col-channel.b2b .badge { background: var(--gold); color: var(--bg); }
+  .col-channel.b2g .badge { background: var(--fg); color: var(--bg); }
+  .col-channel.korea .badge { background: transparent; color: var(--fg); border: 1px solid var(--fg); }
+
+  .col-channel .avatar-name {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .col-channel .avatar-desc {
+    font-family: 'Old Standard TT';
+    font-style: italic;
+    font-size: 15px;
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+
+  .col-design {
+    padding: 48px 40px;
+    border-right: 1px solid var(--line);
+  }
+  .col-design h4 {
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+  .col-design ul { list-style: none; }
+  .col-design li {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--fg);
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--line);
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+  }
+  .col-design li:last-child { border-bottom: none; }
+  .col-design li .lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-dim);
+    padding-top: 4px;
+  }
+  .col-design li .val { color: var(--fg-muted); font-size: 14px; }
+  .col-design li .val strong { color: var(--fg); font-weight: 600; }
+
+  .col-mockup {
+    padding: 0;
+    background: var(--bg-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 320px;
+    position: relative;
+  }
+  .col-mockup svg { width: 100%; height: 100%; display: block; }
+
+  /* === SCARF MOCKUP === */
+  .scarf-mock {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    position: relative;
+  }
+
+  /* === FOOTER === */
+  footer {
+    padding: 80px 32px 48px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  footer .footer-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+  footer h3 {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  footer ul { list-style: none; }
+  footer li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--fg-muted);
+    border-bottom: 1px solid var(--line);
+  }
+  footer .col-label {
+    font-family: 'Unbounded';
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  footer .footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-dim);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 920px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 32px 20px; }
+    .hero-bottom { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .hero-stat .num { font-size: 32px; }
+    .section-head { grid-template-columns: 1fr; gap: 32px; margin-bottom: 56px; }
+    .section-head h2 { font-size: 36px; }
+    .section-head .num { font-size: 56px; }
+    .section-head .desc { font-size: 18px; }
+    section { padding: 80px 0; }
+    .pillars { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid var(--line-strong); }
+    .pillar:last-child { border-bottom: none; }
+    .pillar-title { font-size: 32px; }
+    .pillar { padding: 40px 28px; }
+    .epoch { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
+    .epoch-meta .name { font-size: 28px; }
+    .patterns-grid { grid-template-columns: 1fr; }
+    .pattern-name { font-size: 26px; }
+    .pattern-body, .pattern-meta { padding-left: 28px; padding-right: 28px; }
+    .collection-card { grid-template-columns: 1fr; }
+    .col-channel, .col-design, .col-mockup { border-right: none; border-bottom: 1px solid var(--line); }
+    .col-mockup { min-height: 240px; }
+    footer .footer-grid { grid-template-columns: 1fr; }
+    footer h3 { font-size: 24px; }
+  }
+
+  /* Animation */
+  @keyframes slowDrift {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-6%); }
+  }
+  .pattern-preview svg { animation: slowDrift 24s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <div class="hero-top">
+    <div class="hero-mark">
+      <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="30" cy="30" r="28"/>
+        <path d="M30 4 L34 30 L30 56 L26 30 Z" fill="currentColor"/>
+        <path d="M4 30 L30 26 L56 30 L30 34 Z" fill="none"/>
+        <circle cx="30" cy="30" r="3" fill="#d85a1f" stroke="none"/>
+        <path d="M30 12 L32 18 L38 18 L33 22 L35 28 L30 24 L25 28 L27 22 L22 18 L28 18 Z" fill="#d85a1f" stroke="none" transform="translate(0 -2)"/>
+      </svg>
+      <span class="hero-mark-text">COMPASS</span>
+    </div>
+    <div class="hero-meta">
+      Архитектура айдентики · v3.0<br>
+      Production-ready visual artifact<br>
+      Кураторы: Тим Витер · Катерина Арт<br>
+      Апрель 2026
+    </div>
+  </div>
+
+  <div class="hero-title">
+    <div class="mono accent">⏤ Программа возрождения · 15 постулатов · 8 паттернов · 6 эпох</div>
+    <h1 style="margin-top: 32px;">Эпохи<br><span class="accent">России</span><br>в нити</h1>
+    <p class="subtitle">Каждая эпоха — это паттерн. Каждый паттерн — это аудитория. Каждая аудитория — это шарф, в котором носят свой исторический код.</p>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-stat"><div class="num">15</div><div class="label">постулатов · ядро бренда</div></div>
+    <div class="hero-stat"><div class="num">08</div><div class="label">визуальных паттернов</div></div>
+    <div class="hero-stat"><div class="num">06</div><div class="label">эпох России</div></div>
+    <div class="hero-stat"><div class="num">04</div><div class="label">канала продаж</div></div>
+  </div>
+</header>
+
+<!-- ========== 01 · RENAISSANCE PROGRAM ========== -->
+<section id="renaissance">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">01</div>
+      <div>
+        <h2>Программа<br>возрождения</h2>
+        <p class="desc">Не модный бренд. Не сувенирная лавка. <strong style="color:var(--fg)">COMPASS</strong> — это материальный носитель цивилизационного кода, разложенный на четыре столпа возрождения. Каждый шарф — фрагмент этой программы, который человек носит на теле.</p>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">— I —</div>
+        <h3 class="pillar-title">Память</h3>
+        <p class="pillar-glyph">Возрождение исторической глубины</p>
+        <p class="pillar-body">От <strong>Древней Руси</strong> до <strong>Современности</strong> — шесть эпох на одной нити. Полководцы как фигуры эпох: Невский, Донской, Пётр, Суворов, Кутузов, Жуков. Не музей, а живая преемственность. Память — это не назад, это <strong>фундамент вперёд</strong>.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">— II —</div>
+        <h3 class="pillar-title">Технология</h3>
+        <p class="pillar-glyph">Возрождение технологического суверенитета</p>
+        <p class="pillar-body">Микрофибра уровня люкса, двусторонняя сублимационная печать, био-полимерные тубусы. ДНК-спираль и сотовая структура — визуальные коды <strong>русского технологического кода</strong>. Не догоняем — задаём фактуру. Шлейф МиГ-31 как графический манифест.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">— III —</div>
+        <h3 class="pillar-title">Код</h3>
+        <p class="pillar-glyph">Возрождение культурного языка</p>
+        <p class="pillar-body">Кириллическая каллиграфия в основе — <strong>уставная типографика в футуристическом исполнении</strong>. 15 постулатов как смысловой каркас. Знак Компас + Звезда как печать принадлежности. Носить шарф = носить код. Узнают свои.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">— IV —</div>
+        <h3 class="pillar-title">Масштаб</h3>
+        <p class="pillar-glyph">Возрождение цивилизационной рамки</p>
+        <p class="pillar-body">Не Россия — а <strong>Империя</strong>. Не нация — а <strong>Континент</strong>. От Корсаков до Сеула. Korea Bridge, делегационные дары, протокольные наборы. Масштаб — это когда твой код читается на двух языках, не теряя глубины.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 02 · EPOCHS TIMELINE ========== -->
+<section id="epochs">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">02</div>
+      <div>
+        <h2>Шесть<br>эпох</h2>
+        <p class="desc">Каждая эпоха несёт собственный визуальный код, цвет, фигуру, аудиторию. Шарф «Канон» содержит все шесть. Капсульные SKU фокусируются на одной эпохе.</p>
+      </div>
+    </div>
+
+    <!-- EPOCH 1 -->
+    <div class="epoch">
+      <div class="epoch-meta">
+        <div class="years">IX–XIII вв.</div>
+        <div class="name">Древняя<br>Русь</div>
+        <div class="figure">«Кто с мечом к нам войдёт — от меча и погибнет»<br><span style="color:var(--fg-muted);font-style:normal;font-size:14px;">— Александр Невский</span></div>
+        <div class="audience">Целевые сегменты</div>
+        <div>
+          <span class="audience-tag primary">B2C-1 Патриот</span>
+          <span class="audience-tag">B2C-2 Коллекционер</span>
+          <span class="audience-tag">B2G Москва</span>
+        </div>
+        <p class="epoch-narrative">Эпоха <strong>родового кода</strong>. Дохристианский орнамент, рунические засечки, ромб как символ возделанного поля. Цвет: земля, охра, тёмная медь. Это самый глубокий слой ДНК — то, что было до букв.</p>
+      </div>
+      <div class="epoch-visual">
+        <div class="epoch-pattern-zone" style="color: #b08a4c">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="slav-pat" x="0" y="0" width="60" height="40" patternUnits="userSpaceOnUse">
+                <polygon points="30,4 56,20 30,36 4,20" fill="none" stroke="currentColor" stroke-width="1.4"/>
+                <polygon points="30,12 48,20 30,28 12,20" fill="currentColor" opacity="0.6"/>
+                <circle cx="30" cy="20" r="2" fill="#0a0908"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="240" fill="url(#slav-pat)"/>
+          </svg>
+        </div>
+        <div class="epoch-product">
+          <span class="left">Паттерн · Славянский ромб-лист</span>
+          <span class="right">SKU-06.1 «Корни»</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EPOCH 2 -->
+    <div class="epoch">
+      <div class="epoch-meta">
+        <div class="years">XIV–XVII вв.</div>
+        <div class="name">Московское<br>Царство</div>
+        <div class="figure">«Не в силе Бог, а в правде»<br><span style="color:var(--fg-muted);font-style:normal;font-size:14px;">— Дмитрий Донской</span></div>
+        <div class="audience">Целевые сегменты</div>
+        <div>
+          <span class="audience-tag primary">B2C-2 Коллекционер</span>
+          <span class="audience-tag">B2B Фонды</span>
+          <span class="audience-tag">B2G Москва</span>
+        </div>
+        <p class="epoch-narrative">Эпоха <strong>византийского наследства</strong>. Кельтско-византийское плетение как метафора связей: рода, государства, веры. Бесконечный узел без начала и конца. Глубина и узор уже не плоские, а с архитектурой.</p>
+      </div>
+      <div class="epoch-visual">
+        <div class="epoch-pattern-zone" style="color: #d85a1f">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="celt-pat" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M0,40 Q20,0 40,40 T80,40" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M0,40 Q20,80 40,40 T80,40" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M40,0 Q0,20 40,40 T40,80" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <circle cx="40" cy="40" r="3" fill="currentColor"/>
+                <circle cx="0" cy="40" r="2" fill="currentColor"/>
+                <circle cx="80" cy="40" r="2" fill="currentColor"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="240" fill="url(#celt-pat)"/>
+          </svg>
+        </div>
+        <div class="epoch-product">
+          <span class="left">Паттерн · Византийское плетение</span>
+          <span class="right">SKU-06.2 «Узел»</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EPOCH 3 -->
+    <div class="epoch">
+      <div class="epoch-meta">
+        <div class="years">XVIII в.</div>
+        <div class="name">Имперская<br>Петровская</div>
+        <div class="figure">«Я Государь, но у меня на руках мозоли»<br><span style="color:var(--fg-muted);font-style:normal;font-size:14px;">— Пётр I</span></div>
+        <div class="audience">Целевые сегменты</div>
+        <div>
+          <span class="audience-tag primary">B2B Банки</span>
+          <span class="audience-tag primary">B2G Москва</span>
+          <span class="audience-tag">Korea (Юг)</span>
+          <span class="audience-tag">B2C-3 Статусник</span>
+        </div>
+        <p class="epoch-narrative">Эпоха <strong>классицизма</strong>. Греческий меандр как универсальный имперский знак — Петербург, Зимний, фасады. Рамка вечности. Самый «дипломатический» паттерн: читается в Корее, Лондоне, Москве как код власти и порядка.</p>
+      </div>
+      <div class="epoch-visual">
+        <div class="epoch-pattern-zone" style="color: #d85a1f">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="meander-pat" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
+                <path d="M0,30 L0,10 L20,10 L20,22 L8,22 L8,30 L40,30 L40,10 L60,10 L60,22 L48,22 L48,30 L80,30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="240" fill="url(#meander-pat)"/>
+          </svg>
+        </div>
+        <div class="epoch-product">
+          <span class="left">Паттерн · Греческий меандр</span>
+          <span class="right">SKU-06.3 «Зимний»</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EPOCH 4 -->
+    <div class="epoch">
+      <div class="epoch-meta">
+        <div class="years">XIX в.</div>
+        <div class="name">Имперская<br>Александровская</div>
+        <div class="figure">«Война есть дело, святое для всех народных масс»<br><span style="color:var(--fg-muted);font-style:normal;font-size:14px;">— М. И. Кутузов</span></div>
+        <div class="audience">Целевые сегменты</div>
+        <div>
+          <span class="audience-tag primary">B2C-2 Коллекционер</span>
+          <span class="audience-tag primary">B2G МО</span>
+          <span class="audience-tag">B2B Банки</span>
+        </div>
+        <p class="epoch-narrative">Эпоха <strong>триумфа</strong>. Лавровый венок — символ полководцев, вернувшихся с победой. Спираль античности как преемственность от Рима к Третьему Риму. Это слой 1812 года, Наварина, Севастополя.</p>
+      </div>
+      <div class="epoch-visual">
+        <div class="epoch-pattern-zone" style="color: #d85a1f">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(200 120)">
+              <!-- Левая ветвь -->
+              <g>
+                <path d="M0,80 Q-90,40 -100,-30" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                <g fill="currentColor">
+                  <ellipse cx="-20" cy="78" rx="10" ry="4" transform="rotate(-30 -20 78)"/>
+                  <ellipse cx="-40" cy="68" rx="11" ry="4" transform="rotate(-40 -40 68)"/>
+                  <ellipse cx="-58" cy="55" rx="11" ry="4" transform="rotate(-50 -58 55)"/>
+                  <ellipse cx="-72" cy="40" rx="11" ry="4" transform="rotate(-60 -72 40)"/>
+                  <ellipse cx="-84" cy="22" rx="11" ry="4" transform="rotate(-70 -84 22)"/>
+                  <ellipse cx="-92" cy="2" rx="11" ry="4" transform="rotate(-80 -92 2)"/>
+                  <ellipse cx="-96" cy="-18" rx="11" ry="4" transform="rotate(-90 -96 -18)"/>
+                </g>
+              </g>
+              <!-- Правая ветвь -->
+              <g>
+                <path d="M0,80 Q90,40 100,-30" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                <g fill="currentColor">
+                  <ellipse cx="20" cy="78" rx="10" ry="4" transform="rotate(30 20 78)"/>
+                  <ellipse cx="40" cy="68" rx="11" ry="4" transform="rotate(40 40 68)"/>
+                  <ellipse cx="58" cy="55" rx="11" ry="4" transform="rotate(50 58 55)"/>
+                  <ellipse cx="72" cy="40" rx="11" ry="4" transform="rotate(60 72 40)"/>
+                  <ellipse cx="84" cy="22" rx="11" ry="4" transform="rotate(70 84 22)"/>
+                  <ellipse cx="92" cy="2" rx="11" ry="4" transform="rotate(80 92 2)"/>
+                  <ellipse cx="96" cy="-18" rx="11" ry="4" transform="rotate(90 96 -18)"/>
+                </g>
+              </g>
+              <!-- Звезда в центре -->
+              <path d="M0,-50 L8,-25 L34,-25 L13,-9 L21,16 L0,0 L-21,16 L-13,-9 L-34,-25 L-8,-25 Z" fill="currentColor"/>
+              <!-- Лента -->
+              <rect x="-20" y="80" width="40" height="6" fill="currentColor" opacity="0.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="epoch-product">
+          <span class="left">Паттерн · Лавровый венок + звезда</span>
+          <span class="right">SKU-06.4 «Триумф»</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EPOCH 5 -->
+    <div class="epoch">
+      <div class="epoch-meta">
+        <div class="years">1917–1991</div>
+        <div class="name">Советская<br>Эпоха</div>
+        <div class="figure">«Мы за ценой не постоим»<br><span style="color:var(--fg-muted);font-style:normal;font-size:14px;">— Г. К. Жуков</span></div>
+        <div class="audience">Целевые сегменты</div>
+        <div>
+          <span class="audience-tag primary">B2G МО</span>
+          <span class="audience-tag primary">B2B Спортклубы</span>
+          <span class="audience-tag">B2C-1 Патриот</span>
+        </div>
+        <p class="epoch-narrative">Эпоха <strong>колоссального масштаба</strong>. Колосья и звезда с герба, индустриальная мощь, космос, 9 Мая. Это не идеология — это <strong>память о коллективном подвиге</strong>. Самый сильный массовый сегмент.</p>
+      </div>
+      <div class="epoch-visual">
+        <div class="epoch-pattern-zone" style="color: #d85a1f">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(200 120)">
+              <!-- Звезда в центре -->
+              <path d="M0,-70 L16,-22 L66,-22 L26,8 L42,56 L0,28 L-42,56 L-26,8 L-66,-22 L-16,-22 Z" fill="currentColor"/>
+              <!-- Колосья слева -->
+              <g transform="translate(-90 0)">
+                <line x1="0" y1="80" x2="0" y2="-50" stroke="currentColor" stroke-width="2"/>
+                <g fill="currentColor">
+                  <ellipse cx="-7" cy="60" rx="6" ry="2.5" transform="rotate(-25 -7 60)"/>
+                  <ellipse cx="7" cy="58" rx="6" ry="2.5" transform="rotate(25 7 58)"/>
+                  <ellipse cx="-8" cy="40" rx="6" ry="2.5" transform="rotate(-25 -8 40)"/>
+                  <ellipse cx="8" cy="38" rx="6" ry="2.5" transform="rotate(25 8 38)"/>
+                  <ellipse cx="-8" cy="20" rx="6" ry="2.5" transform="rotate(-25 -8 20)"/>
+                  <ellipse cx="8" cy="18" rx="6" ry="2.5" transform="rotate(25 8 18)"/>
+                  <ellipse cx="-7" cy="0" rx="6" ry="2.5" transform="rotate(-25 -7 0)"/>
+                  <ellipse cx="7" cy="-2" rx="6" ry="2.5" transform="rotate(25 7 -2)"/>
+                  <ellipse cx="-6" cy="-20" rx="6" ry="2.5" transform="rotate(-25 -6 -20)"/>
+                  <ellipse cx="6" cy="-22" rx="6" ry="2.5" transform="rotate(25 6 -22)"/>
+                  <ellipse cx="-4" cy="-40" rx="5" ry="2.2" transform="rotate(-25 -4 -40)"/>
+                  <ellipse cx="4" cy="-42" rx="5" ry="2.2" transform="rotate(25 4 -42)"/>
+                </g>
+              </g>
+              <!-- Колосья справа -->
+              <g transform="translate(90 0) scale(-1 1)">
+                <line x1="0" y1="80" x2="0" y2="-50" stroke="currentColor" stroke-width="2"/>
+                <g fill="currentColor">
+                  <ellipse cx="-7" cy="60" rx="6" ry="2.5" transform="rotate(-25 -7 60)"/>
+                  <ellipse cx="7" cy="58" rx="6" ry="2.5" transform="rotate(25 7 58)"/>
+                  <ellipse cx="-8" cy="40" rx="6" ry="2.5" transform="rotate(-25 -8 40)"/>
+                  <ellipse cx="8" cy="38" rx="6" ry="2.5" transform="rotate(25 8 38)"/>
+                  <ellipse cx="-8" cy="20" rx="6" ry="2.5" transform="rotate(-25 -8 20)"/>
+                  <ellipse cx="8" cy="18" rx="6" ry="2.5" transform="rotate(25 8 18)"/>
+                  <ellipse cx="-7" cy="0" rx="6" ry="2.5" transform="rotate(-25 -7 0)"/>
+                  <ellipse cx="7" cy="-2" rx="6" ry="2.5" transform="rotate(25 7 -2)"/>
+                  <ellipse cx="-6" cy="-20" rx="6" ry="2.5" transform="rotate(-25 -6 -20)"/>
+                  <ellipse cx="6" cy="-22" rx="6" ry="2.5" transform="rotate(25 6 -22)"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="epoch-product">
+          <span class="left">Паттерн · Колосья и звезда</span>
+          <span class="right">SKU-06.5 «Победа»</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EPOCH 6 -->
+    <div class="epoch">
+      <div class="epoch-meta">
+        <div class="years">XXI в.</div>
+        <div class="name">Современная<br>Россия</div>
+        <div class="figure">«Технологический суверенитет — это не выбор, это условие выживания»<br><span style="color:var(--fg-muted);font-style:normal;font-size:14px;">— Эпоха ответа</span></div>
+        <div class="audience">Целевые сегменты</div>
+        <div>
+          <span class="audience-tag primary">B2C-3 Статусник</span>
+          <span class="audience-tag primary">B2G МО</span>
+          <span class="audience-tag">B2B Спорт</span>
+          <span class="audience-tag">Korea (Юг)</span>
+        </div>
+        <p class="epoch-narrative">Эпоха <strong>возрождения суверенитета</strong>. ДНК-спираль = код жизни и наследие, прочитанное современно. Сотовая структура = технология, армия, коллективный разум. Шлейф МиГ-31 = графический манифест скорости и мощи.</p>
+      </div>
+      <div class="epoch-visual">
+        <div class="epoch-pattern-zone" style="color: #d85a1f">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="dna-pat" x="0" y="0" width="60" height="80" patternUnits="userSpaceOnUse">
+                <path d="M0,40 Q15,0 30,40 T60,40" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M0,40 Q15,80 30,40 T60,40" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
+                <line x1="6" y1="28" x2="6" y2="52" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+                <line x1="15" y1="20" x2="15" y2="60" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+                <line x1="24" y1="28" x2="24" y2="52" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+                <line x1="36" y1="28" x2="36" y2="52" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+                <line x1="45" y1="20" x2="45" y2="60" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+                <line x1="54" y1="28" x2="54" y2="52" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="240" fill="url(#dna-pat)"/>
+          </svg>
+        </div>
+        <div class="epoch-product">
+          <span class="left">Паттерн · ДНК-спираль + Соты</span>
+          <span class="right">SKU-06.6 «Код»</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== 03 · PATTERNS LIBRARY ========== -->
+<section id="patterns">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">03</div>
+      <div>
+        <h2>Каталог<br>паттернов</h2>
+        <p class="desc">Восемь визуальных кодов, на которых строится вся коллекция. Каждый паттерн — это смысловой носитель, привязанный к конкретной эпохе и целевой аудитории. Это рабочий референс для производства и Midjourney-промптинга.</p>
+      </div>
+    </div>
+
+    <div class="patterns-grid">
+      <!-- Pattern 01 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #b08a4c">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="p1-slav" x="0" y="0" width="50" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="25,4 46,18 25,32 4,18" fill="none" stroke="currentColor" stroke-width="1.4"/>
+                <polygon points="25,10 40,18 25,26 10,18" fill="currentColor" opacity="0.6"/>
+                <circle cx="25" cy="18" r="1.6" fill="#0a0908"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="140" fill="url(#p1-slav)"/>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—01</div>
+          <h3 class="pattern-name">Славянский<br>ромб-лист</h3>
+          <p class="pattern-name-en">Slavic rhombus-leaf · pre-Christian Rus' ornament</p>
+          <p class="pattern-meaning">Дохристианский <strong>родовой код</strong>. Ромб = возделанное поле, плодородие, родовая земля. Самый глубокий слой ДНК — то, что было до букв. Носитель архаической памяти.</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Древняя Русь · IX–XIII</div></div>
+          <div><div class="label">Применение</div><div class="value">Бордюр, кайма шарфа</div></div>
+          <div><div class="label">Цвет</div><div class="value">Земля, охра, медь</div></div>
+          <div><div class="label">ЦА</div><div class="value">B2C-1, B2G Москва</div></div>
+        </div>
+      </div>
+
+      <!-- Pattern 02 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #d85a1f">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="p2-celt" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M0,40 Q20,0 40,40 T80,40" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M0,40 Q20,80 40,40 T80,40" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="40" cy="40" r="3" fill="currentColor"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="140" fill="url(#p2-celt)"/>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—02</div>
+          <h3 class="pattern-name">Византийское<br>плетение</h3>
+          <p class="pattern-name-en">Byzantine interlace · endless knot</p>
+          <p class="pattern-meaning">Узел без начала и конца. Метафора <strong>преемственности и связей</strong>: рода, государства, веры. Третий Рим как наследник Византии. Эстетика московского царства и древнерусских евангелий.</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Московское царство</div></div>
+          <div><div class="label">Применение</div><div class="value">Вертикальные ленты, узлы</div></div>
+          <div><div class="label">Цвет</div><div class="value">Тёмная медь, сепия</div></div>
+          <div><div class="label">ЦА</div><div class="value">B2B Фонды, B2C-2</div></div>
+        </div>
+      </div>
+
+      <!-- Pattern 03 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #d85a1f">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="p3-meander" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
+                <path d="M0,30 L0,10 L20,10 L20,22 L8,22 L8,30 L40,30 L40,10 L60,10 L60,22 L48,22 L48,30 L80,30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="140" fill="url(#p3-meander)"/>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—03</div>
+          <h3 class="pattern-name">Греческий<br>меандр</h3>
+          <p class="pattern-name-en">Greek key · imperial classicism</p>
+          <p class="pattern-meaning">Универсальный <strong>имперский знак</strong>. Бесконечная лента порядка. Петербургский классицизм, Зимний дворец, фасады Росси и Монферрана. Самый «дипломатический» паттерн — читается одинаково в Москве, Сеуле, Лондоне.</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Имп. Петровская XVIII</div></div>
+          <div><div class="label">Применение</div><div class="value">Кайма, рамка, бордюр</div></div>
+          <div><div class="label">Цвет</div><div class="value">Кшатрий, чёрный, белый</div></div>
+          <div><div class="label">ЦА</div><div class="value">B2B Банки, B2G, Korea</div></div>
+        </div>
+      </div>
+
+      <!-- Pattern 04 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #d85a1f">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="p4-spiral" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M30,30 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 m-3,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0 m-3,0 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0 m-3,0 a11,11 0 1,1 22,0 a11,11 0 1,1 -22,0 m-3,0 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="140" fill="url(#p4-spiral)"/>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—04</div>
+          <h3 class="pattern-name">Античная<br>спираль</h3>
+          <p class="pattern-name-en">Antique spiral · cyclical continuity</p>
+          <p class="pattern-meaning"><strong>Цикличность развития</strong>. Минойские, греческие, скифские мотивы. Знак вечного возвращения и преемственности. От Античности к Византии к Руси — единая нить. Ключевой паттерн для Korea-bridge.</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Античность–Византия</div></div>
+          <div><div class="label">Применение</div><div class="value">Акцентные точки, медальон</div></div>
+          <div><div class="label">Цвет</div><div class="value">Кшатрий, золото-охра</div></div>
+          <div><div class="label">ЦА</div><div class="value">Korea, B2C-2</div></div>
+        </div>
+      </div>
+
+      <!-- Pattern 05 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #d85a1f">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(160 70)">
+              <g>
+                <path d="M0,50 Q-70,25 -78,-22" fill="none" stroke="currentColor" stroke-width="2"/>
+                <g fill="currentColor">
+                  <ellipse cx="-15" cy="48" rx="7" ry="2.6" transform="rotate(-30 -15 48)"/>
+                  <ellipse cx="-30" cy="40" rx="8" ry="2.6" transform="rotate(-40 -30 40)"/>
+                  <ellipse cx="-44" cy="30" rx="8" ry="2.6" transform="rotate(-50 -44 30)"/>
+                  <ellipse cx="-56" cy="18" rx="8" ry="2.6" transform="rotate(-60 -56 18)"/>
+                  <ellipse cx="-66" cy="3" rx="8" ry="2.6" transform="rotate(-70 -66 3)"/>
+                  <ellipse cx="-72" cy="-12" rx="8" ry="2.6" transform="rotate(-80 -72 -12)"/>
+                </g>
+              </g>
+              <g>
+                <path d="M0,50 Q70,25 78,-22" fill="none" stroke="currentColor" stroke-width="2"/>
+                <g fill="currentColor">
+                  <ellipse cx="15" cy="48" rx="7" ry="2.6" transform="rotate(30 15 48)"/>
+                  <ellipse cx="30" cy="40" rx="8" ry="2.6" transform="rotate(40 30 40)"/>
+                  <ellipse cx="44" cy="30" rx="8" ry="2.6" transform="rotate(50 44 30)"/>
+                  <ellipse cx="56" cy="18" rx="8" ry="2.6" transform="rotate(60 56 18)"/>
+                  <ellipse cx="66" cy="3" rx="8" ry="2.6" transform="rotate(70 66 3)"/>
+                  <ellipse cx="72" cy="-12" rx="8" ry="2.6" transform="rotate(80 72 -12)"/>
+                </g>
+              </g>
+              <path d="M0,-32 L6,-15 L24,-15 L9,-4 L15,12 L0,2 L-15,12 L-9,-4 L-24,-15 L-6,-15 Z" fill="currentColor"/>
+            </g>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—05</div>
+          <h3 class="pattern-name">Лавровый<br>венок</h3>
+          <p class="pattern-name-en">Laurel wreath · imperial triumph</p>
+          <p class="pattern-meaning">Знак <strong>триумфа полководца</strong>. От Цезаря до Кутузова. Используется как обрамляющий элемент вокруг ключевого знака (Звезда / Компас / номер тиража). Сильнейший наградной код.</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Имп. Александровская XIX</div></div>
+          <div><div class="label">Применение</div><div class="value">Обрамление центр. знака</div></div>
+          <div><div class="label">Цвет</div><div class="value">Кшатрий, золото, чёрный</div></div>
+          <div><div class="label">ЦА</div><div class="value">B2G МО, B2B все</div></div>
+        </div>
+      </div>
+
+      <!-- Pattern 06 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #d85a1f">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(160 70)">
+              <path d="M0,-58 L13,-18 L55,-18 L21,7 L34,46 L0,22 L-34,46 L-21,7 L-55,-18 L-13,-18 Z" fill="currentColor"/>
+              <g transform="translate(-78 0)">
+                <line x1="0" y1="60" x2="0" y2="-40" stroke="currentColor" stroke-width="1.8"/>
+                <g fill="currentColor">
+                  <ellipse cx="-6" cy="48" rx="5" ry="2.2" transform="rotate(-25 -6 48)"/>
+                  <ellipse cx="6" cy="46" rx="5" ry="2.2" transform="rotate(25 6 46)"/>
+                  <ellipse cx="-6" cy="32" rx="5" ry="2.2" transform="rotate(-25 -6 32)"/>
+                  <ellipse cx="6" cy="30" rx="5" ry="2.2" transform="rotate(25 6 30)"/>
+                  <ellipse cx="-6" cy="16" rx="5" ry="2.2" transform="rotate(-25 -6 16)"/>
+                  <ellipse cx="6" cy="14" rx="5" ry="2.2" transform="rotate(25 6 14)"/>
+                  <ellipse cx="-6" cy="0" rx="5" ry="2.2" transform="rotate(-25 -6 0)"/>
+                  <ellipse cx="6" cy="-2" rx="5" ry="2.2" transform="rotate(25 6 -2)"/>
+                  <ellipse cx="-5" cy="-16" rx="5" ry="2.2" transform="rotate(-25 -5 -16)"/>
+                  <ellipse cx="5" cy="-18" rx="5" ry="2.2" transform="rotate(25 5 -18)"/>
+                  <ellipse cx="-3" cy="-32" rx="4" ry="2" transform="rotate(-25 -3 -32)"/>
+                  <ellipse cx="3" cy="-34" rx="4" ry="2" transform="rotate(25 3 -34)"/>
+                </g>
+              </g>
+              <g transform="translate(78 0) scale(-1 1)">
+                <line x1="0" y1="60" x2="0" y2="-40" stroke="currentColor" stroke-width="1.8"/>
+                <g fill="currentColor">
+                  <ellipse cx="-6" cy="48" rx="5" ry="2.2" transform="rotate(-25 -6 48)"/>
+                  <ellipse cx="6" cy="46" rx="5" ry="2.2" transform="rotate(25 6 46)"/>
+                  <ellipse cx="-6" cy="32" rx="5" ry="2.2" transform="rotate(-25 -6 32)"/>
+                  <ellipse cx="6" cy="30" rx="5" ry="2.2" transform="rotate(25 6 30)"/>
+                  <ellipse cx="-6" cy="16" rx="5" ry="2.2" transform="rotate(-25 -6 16)"/>
+                  <ellipse cx="6" cy="14" rx="5" ry="2.2" transform="rotate(25 6 14)"/>
+                  <ellipse cx="-6" cy="0" rx="5" ry="2.2" transform="rotate(-25 -6 0)"/>
+                  <ellipse cx="6" cy="-2" rx="5" ry="2.2" transform="rotate(25 6 -2)"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—06</div>
+          <h3 class="pattern-name">Колосья<br>и звезда</h3>
+          <p class="pattern-name-en">Wheat ears & star · Soviet heritage</p>
+          <p class="pattern-meaning">Геральдика <strong>советской эпохи</strong>. Колосья = плодородие земли, звезда = пятиконечный знак победы и пути. Память о коллективном подвиге, 9 Мая, индустриальный масштаб. Самый сильный массовый код.</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Советская 1917–1991</div></div>
+          <div><div class="label">Применение</div><div class="value">Центральная композиция</div></div>
+          <div><div class="label">Цвет</div><div class="value">Чёрный, кшатрий, золото</div></div>
+          <div><div class="label">ЦА</div><div class="value">B2G МО, B2B Спорт</div></div>
+        </div>
+      </div>
+
+      <!-- Pattern 07 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #d85a1f">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="p7-dna" x="0" y="0" width="60" height="80" patternUnits="userSpaceOnUse">
+                <path d="M0,40 Q15,0 30,40 T60,40" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M0,40 Q15,80 30,40 T60,40" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
+                <line x1="6" y1="28" x2="6" y2="52" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="15" y1="20" x2="15" y2="60" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="24" y1="28" x2="24" y2="52" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="36" y1="28" x2="36" y2="52" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="45" y1="20" x2="45" y2="60" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="54" y1="28" x2="54" y2="52" stroke="currentColor" stroke-width="1.2"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="140" fill="url(#p7-dna)"/>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—07</div>
+          <h3 class="pattern-name">ДНК<br>спираль</h3>
+          <p class="pattern-name-en">DNA helix · code of life</p>
+          <p class="pattern-meaning"><strong>Код жизни и наследия</strong>. Современное прочтение преемственности — не музейная, а биологическая. Связь поколений, технологический язык, разговор с XXI веком. Можно вплести 15 постулатов как «гены».</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Современность XXI</div></div>
+          <div><div class="label">Применение</div><div class="value">Вертикальная ось шарфа</div></div>
+          <div><div class="label">Цвет</div><div class="value">Чёрный, кшатрий</div></div>
+          <div><div class="label">ЦА</div><div class="value">B2C-1, B2C-2, B2B Фонды</div></div>
+        </div>
+      </div>
+
+      <!-- Pattern 08 -->
+      <div class="pattern-card">
+        <div class="pattern-preview" style="color: #d85a1f">
+          <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="p8-hex" x="0" y="0" width="48" height="42" patternUnits="userSpaceOnUse">
+                <polygon points="24,2 44,12 44,32 24,42 4,32 4,12" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <polygon points="0,32 4,32 4,12 0,12" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <polygon points="48,32 44,32 44,12 48,12" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="140" fill="url(#p8-hex)"/>
+          </svg>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-num">P—08</div>
+          <h3 class="pattern-name">Соты ·<br>гексагон</h3>
+          <p class="pattern-name-en">Honeycomb · structure & technology</p>
+          <p class="pattern-meaning"><strong>Тактический и технологический код</strong>. Армейский подтекст (камуфляж + соты-фактура), биологическая сила (улей = коллективный разум), архитектура устойчивости. Современный «индустриальный» паттерн.</p>
+        </div>
+        <div class="pattern-meta">
+          <div><div class="label">Эпоха</div><div class="value">Современность XXI</div></div>
+          <div><div class="label">Применение</div><div class="value">Фактура ткани, фон</div></div>
+          <div><div class="label">Цвет</div><div class="value">Графит, тёмно-синий, хаки</div></div>
+          <div><div class="label">ЦА</div><div class="value">B2G МО, B2B Спорт, B2C-3</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== 04 · MATRIX ========== -->
+<section id="matrix">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">04</div>
+      <div>
+        <h2>Матрица<br>применения</h2>
+        <p class="desc">Какой паттерн для какой целевой аудитории. <span class="accent">★★★</span> — основной код. <span class="gold">★★</span> — поддерживающий. <span style="color:var(--fg-dim)">★</span> — допустимый. <span style="color:var(--fg-dim)">—</span> — не используется.</p>
+      </div>
+    </div>
+
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th class="row-head">Паттерн ↓ ЦА →</th>
+            <th>B2C-1<br>Патриот</th>
+            <th>B2C-2<br>Коллектор</th>
+            <th>B2C-3<br>Статусник</th>
+            <th>B2B<br>Фонды</th>
+            <th>B2B<br>Спорт</th>
+            <th>B2B<br>Банки</th>
+            <th>B2G<br>Москва</th>
+            <th>B2G<br>МО РФ</th>
+            <th>Korea<br>Юг</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-head">P-01 Славянский ромб</td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-1">★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">P-02 Византийское плетение</td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-2">★★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">P-03 Греческий меандр</td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">P-04 Античная спираль</td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">P-05 Лавровый венок</td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-1">★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">P-06 Колосья и звезда</td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">P-07 ДНК спираль</td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td class="row-head">P-08 Соты · гексагон</td>
+            <td><span class="star star-2">★★</span></td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="dash">—</span></td>
+            <td><span class="star star-1">★</span></td>
+            <td><span class="star star-3">★★★</span></td>
+            <td><span class="star star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 05 · COLLECTION CONCEPT ========== -->
+<section id="collection">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">05</div>
+      <div>
+        <h2>Концепт<br>коллекции</h2>
+        <p class="desc">Девять капсул для девяти аудиторий. Каждая карточка — это смысл, паттерны, цвет и визуал шарфа, готовый к Midjourney-промптингу.</p>
+      </div>
+    </div>
+
+    <div class="collection-grid">
+
+      <!-- B2C-1 -->
+      <div class="collection-card">
+        <div class="col-channel b2c">
+          <div>
+            <span class="badge">B2C-1</span>
+            <h4 class="avatar-name">Современный<br>патриот</h4>
+            <p class="avatar-desc">Думающий мужчина 32–48. Носит код, не лозунг. Узнают свои.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">SKU-01 «Канон» / SKU-02 «Постулат»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val">P-01 Славянский ромб (бордюр) + <strong>P-07 ДНК-спираль</strong> (центральная ось) + P-03 Меандр (узкая кайма)</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Свобода» / «Мужчина» / «Развитие» — выбор покупателя</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Чёрный (90%) + кшатрий (8%) + охра (2%)</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Шерсть-микрофибра 70/30, 180×35 см</span></li>
+            <li><span class="lbl">Каллиграфия</span><span class="val">Уставная кириллица «Компас Футур», крупная вертикаль</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m1-dna" x="0" y="0" width="40" height="55" patternUnits="userSpaceOnUse">
+                <path d="M0,28 Q10,0 20,28 T40,28" fill="none" stroke="#d85a1f" stroke-width="1.4"/>
+                <path d="M0,28 Q10,55 20,28 T40,28" fill="none" stroke="#d85a1f" stroke-width="1.4" opacity="0.55"/>
+                <line x1="4" y1="20" x2="4" y2="36" stroke="#d85a1f" stroke-width="0.8"/>
+                <line x1="10" y1="14" x2="10" y2="42" stroke="#d85a1f" stroke-width="0.8"/>
+                <line x1="16" y1="20" x2="16" y2="36" stroke="#d85a1f" stroke-width="0.8"/>
+                <line x1="24" y1="20" x2="24" y2="36" stroke="#d85a1f" stroke-width="0.8"/>
+                <line x1="30" y1="14" x2="30" y2="42" stroke="#d85a1f" stroke-width="0.8"/>
+                <line x1="36" y1="20" x2="36" y2="36" stroke="#d85a1f" stroke-width="0.8"/>
+              </pattern>
+              <pattern id="m1-meander" x="0" y="0" width="32" height="14" patternUnits="userSpaceOnUse">
+                <path d="M0,11 L0,3 L8,3 L8,8 L3,8 L3,11 L16,11 L16,3 L24,3 L24,8 L19,8 L19,11 L32,11" stroke="#d85a1f" stroke-width="1" fill="none"/>
+              </pattern>
+            </defs>
+            <!-- Шарф -->
+            <rect x="80" y="20" width="140" height="280" fill="#0a0908" stroke="#d85a1f" stroke-width="0.5"/>
+            <!-- Бордюр меандр сверху -->
+            <rect x="80" y="22" width="140" height="14" fill="url(#m1-meander)"/>
+            <rect x="80" y="284" width="140" height="14" fill="url(#m1-meander)"/>
+            <!-- Центральный ДНК-узор -->
+            <rect x="100" y="50" width="100" height="220" fill="url(#m1-dna)" opacity="0.85"/>
+            <!-- Знак Компас + Звезда в центре -->
+            <g transform="translate(150 160)">
+              <circle r="22" fill="#0a0908" stroke="#d85a1f" stroke-width="1"/>
+              <path d="M0,-22 L3,0 L0,22 L-3,0 Z" fill="#d85a1f"/>
+              <path d="M-22,0 L0,-3 L22,0 L0,3 Z" fill="#d85a1f"/>
+              <path d="M0,-12 L3,-4 L11,-4 L4,2 L7,10 L0,5 L-7,10 L-4,2 L-11,-4 L-3,-4 Z" fill="#f5f1ec"/>
+            </g>
+            <!-- Каллиграфический постулат -->
+            <text x="150" y="280" text-anchor="middle" fill="#d85a1f" font-family="'Old Standard TT'" font-style="italic" font-size="11" letter-spacing="2">СВОБОДА</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- B2C-2 -->
+      <div class="collection-card">
+        <div class="col-channel b2c">
+          <div>
+            <span class="badge">B2C-2</span>
+            <h4 class="avatar-name">Коллекционер<br>артефактов</h4>
+            <p class="avatar-desc">38–58, наследие, нумерация, провенанс. В кабинете рядом с часами и иконами.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">SKU-04 «10 Полководцев» / SKU-06 «Эпохи»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-05 Лавровый венок</strong> (вокруг лица полководца) + P-02 Византия (фон) + P-04 Спираль (медальон с номером)</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Империя» / «Дети» / «Семья» — по фигуре полководца</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Глубокая медь + кшатрий + золото-охра</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Шёлк-кашемир 60/40, 180×40 см, нумерация 001/100</span></li>
+            <li><span class="lbl">Каллиграфия</span><span class="val">Имя полководца уставом + цитата полууставом</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m2-celt" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                <path d="M0,25 Q12,0 25,25 T50,25" fill="none" stroke="#b08a4c" stroke-width="1" opacity="0.5"/>
+                <path d="M0,25 Q12,50 25,25 T50,25" fill="none" stroke="#b08a4c" stroke-width="1" opacity="0.5"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#1a1410"/>
+            <rect x="80" y="20" width="140" height="280" fill="url(#m2-celt)"/>
+            <!-- Лавровый венок крупно -->
+            <g transform="translate(150 160)">
+              <g>
+                <path d="M0,55 Q-55,28 -60,-22" fill="none" stroke="#d85a1f" stroke-width="1.6"/>
+                <g fill="#d85a1f">
+                  <ellipse cx="-12" cy="52" rx="6" ry="2.2" transform="rotate(-30 -12 52)"/>
+                  <ellipse cx="-25" cy="42" rx="7" ry="2.2" transform="rotate(-40 -25 42)"/>
+                  <ellipse cx="-37" cy="30" rx="7" ry="2.2" transform="rotate(-50 -37 30)"/>
+                  <ellipse cx="-47" cy="16" rx="7" ry="2.2" transform="rotate(-60 -47 16)"/>
+                  <ellipse cx="-55" cy="0" rx="7" ry="2.2" transform="rotate(-70 -55 0)"/>
+                  <ellipse cx="-58" cy="-14" rx="7" ry="2.2" transform="rotate(-80 -58 -14)"/>
+                </g>
+              </g>
+              <g>
+                <path d="M0,55 Q55,28 60,-22" fill="none" stroke="#d85a1f" stroke-width="1.6"/>
+                <g fill="#d85a1f">
+                  <ellipse cx="12" cy="52" rx="6" ry="2.2" transform="rotate(30 12 52)"/>
+                  <ellipse cx="25" cy="42" rx="7" ry="2.2" transform="rotate(40 25 42)"/>
+                  <ellipse cx="37" cy="30" rx="7" ry="2.2" transform="rotate(50 37 30)"/>
+                  <ellipse cx="47" cy="16" rx="7" ry="2.2" transform="rotate(60 47 16)"/>
+                  <ellipse cx="55" cy="0" rx="7" ry="2.2" transform="rotate(70 55 0)"/>
+                  <ellipse cx="58" cy="-14" rx="7" ry="2.2" transform="rotate(80 58 -14)"/>
+                </g>
+              </g>
+              <!-- Силуэт-портрет -->
+              <circle cx="0" cy="-5" r="22" fill="none" stroke="#f5f1ec" stroke-width="0.8" opacity="0.6"/>
+              <text x="0" y="2" text-anchor="middle" fill="#f5f1ec" font-family="'Old Standard TT'" font-size="9" letter-spacing="1">КУТУЗОВ</text>
+              <text x="0" y="14" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="6">№ 042/100</text>
+            </g>
+            <text x="150" y="290" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="9">«ИМПЕРИЯ»</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- B2C-3 -->
+      <div class="collection-card">
+        <div class="col-channel b2c">
+          <div>
+            <span class="badge">B2C-3</span>
+            <h4 class="avatar-name">Молодой<br>статусник</h4>
+            <p class="avatar-desc">24–34, креатив/IT/финансы. Знает Stone Island. Хочет русское без лубка.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">SKU-05 «Постулат-Mini» / SKU-02</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-08 Соты</strong> (фактура всей ткани) + P-03 Меандр (короткая кайма) + знак Компас крупно</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Свобода» / «Прогресс» / «Развитие»</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Графит + неон-кшатрий, без охры</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Тех-микрофибра с выпуклой сотовой фактурой</span></li>
+            <li><span class="lbl">Каллиграфия</span><span class="val">Минималистичная sans-кириллица + знак Компас как logo-block</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m3-hex" x="0" y="0" width="24" height="21" patternUnits="userSpaceOnUse">
+                <polygon points="12,1 22,6 22,16 12,21 2,16 2,6" fill="none" stroke="#3a3530" stroke-width="0.9"/>
+              </pattern>
+              <pattern id="m3-meander" x="0" y="0" width="22" height="10" patternUnits="userSpaceOnUse">
+                <path d="M0,8 L0,2 L6,2 L6,5 L2,5 L2,8 L11,8 L11,2 L17,2 L17,5 L13,5 L13,8 L22,8" stroke="#d85a1f" stroke-width="0.8" fill="none"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#1a1815"/>
+            <rect x="80" y="20" width="140" height="280" fill="url(#m3-hex)"/>
+            <rect x="80" y="22" width="140" height="10" fill="url(#m3-meander)"/>
+            <rect x="80" y="288" width="140" height="10" fill="url(#m3-meander)"/>
+            <!-- Большой знак Компас в нижней трети -->
+            <g transform="translate(150 200)">
+              <circle r="38" fill="none" stroke="#d85a1f" stroke-width="2"/>
+              <path d="M0,-38 L4,0 L0,38 L-4,0 Z" fill="#d85a1f"/>
+              <path d="M-38,0 L0,-4 L38,0 L0,4 Z" fill="#d85a1f"/>
+              <path d="M0,-18 L4,-6 L17,-6 L7,3 L11,15 L0,7 L-11,15 L-7,3 L-17,-6 L-4,-6 Z" fill="#f5f1ec"/>
+            </g>
+            <text x="150" y="80" text-anchor="middle" fill="#f5f1ec" font-family="'Unbounded'" font-weight="700" font-size="14" letter-spacing="3">COMPASS</text>
+            <text x="150" y="270" text-anchor="middle" fill="#d85a1f" font-family="'Unbounded'" font-weight="500" font-size="9" letter-spacing="3">ПРОГРЕСС</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- B2B Фонды -->
+      <div class="collection-card">
+        <div class="col-channel b2b">
+          <div>
+            <span class="badge">B2B · ФОНДЫ</span>
+            <h4 class="avatar-name">Корпоративный<br>фонд</h4>
+            <p class="avatar-desc">Капсула для попечителей и партнёров. Усилитель миссии фонда.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">B2B-01 «Капсула фонда»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-02 Византия</strong> (бесконечный узел = непрерывность миссии) + P-05 Лавр (вокруг знака фонда)</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">Выбирается с фондом из 15: чаще «Семья» / «Дети» / «Развитие»</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Глубокая медь + кшатрий, либо бренд фонда</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Шерсть-кашемир, 170×30 см</span></li>
+            <li><span class="lbl">Кастом</span><span class="val">Знак фонда вписан в каллиграфическую вязь рядом с Компасом</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m4-celt" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                <path d="M0,25 Q12,0 25,25 T50,25" fill="none" stroke="#b08a4c" stroke-width="1.2"/>
+                <path d="M0,25 Q12,50 25,25 T50,25" fill="none" stroke="#b08a4c" stroke-width="1.2"/>
+                <circle cx="25" cy="25" r="2" fill="#b08a4c"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#0e0c0a"/>
+            <rect x="80" y="20" width="140" height="280" fill="url(#m4-celt)" opacity="0.7"/>
+            <!-- Двойная "печать": знак Компаса + место для знака фонда -->
+            <g transform="translate(110 160)">
+              <circle r="22" fill="#0a0908" stroke="#d85a1f" stroke-width="1.2"/>
+              <path d="M0,-22 L3,0 L0,22 L-3,0 Z" fill="#d85a1f"/>
+              <path d="M-22,0 L0,-3 L22,0 L0,3 Z" fill="#d85a1f"/>
+            </g>
+            <text x="150" y="164" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-size="14">×</text>
+            <g transform="translate(190 160)">
+              <rect x="-22" y="-22" width="44" height="44" fill="none" stroke="#b08a4c" stroke-width="1" stroke-dasharray="2 3"/>
+              <text x="0" y="3" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-size="7" font-style="italic">Логотип фонда</text>
+            </g>
+            <text x="150" y="240" text-anchor="middle" fill="#d85a1f" font-family="'Unbounded'" font-weight="500" font-size="8" letter-spacing="2">CAPSULE EDITION</text>
+            <text x="150" y="280" text-anchor="middle" fill="#f5f1ec" font-family="'Old Standard TT'" font-style="italic" font-size="10">«Семья · Целостность»</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- B2B Спорт -->
+      <div class="collection-card">
+        <div class="col-channel b2b">
+          <div>
+            <span class="badge">B2B · СПОРТ</span>
+            <h4 class="avatar-name">Спортивный<br>клуб</h4>
+            <p class="avatar-desc">VIP-абонементы и пост-матчевая лимитка. ЦСКА, Спартак, Зенит.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">B2B-04 «Дресс-код победителя»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-06 Колосья и звезда</strong> (центр) + <strong>P-08 Соты</strong> (бордюр-фактура) + P-05 Лавр (рамка)</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Прогресс» / «Развитие» / «Мужчина»</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Клубные цвета + чёрный + кшатрий</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Тех-микрофибра с сотовой фактурой, 200×30 см</span></li>
+            <li><span class="lbl">Кастом</span><span class="val">Эмблема клуба внутри лаврового венка; финальный счёт матча — в подкладке</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m5-hex" x="0" y="0" width="20" height="17" patternUnits="userSpaceOnUse">
+                <polygon points="10,1 18,5 18,13 10,17 2,13 2,5" fill="none" stroke="#3a3530" stroke-width="0.7"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#0a0908"/>
+            <rect x="80" y="20" width="140" height="40" fill="url(#m5-hex)" opacity="0.8"/>
+            <rect x="80" y="260" width="140" height="40" fill="url(#m5-hex)" opacity="0.8"/>
+            <!-- Звезда + колосья + лавр -->
+            <g transform="translate(150 160)">
+              <!-- Лавр снаружи -->
+              <g opacity="0.7">
+                <path d="M0,55 Q-50,30 -55,-15" fill="none" stroke="#d85a1f" stroke-width="1.2"/>
+                <path d="M0,55 Q50,30 55,-15" fill="none" stroke="#d85a1f" stroke-width="1.2"/>
+                <g fill="#d85a1f">
+                  <ellipse cx="-15" cy="50" rx="5" ry="2" transform="rotate(-35 -15 50)"/>
+                  <ellipse cx="-30" cy="38" rx="5" ry="2" transform="rotate(-45 -30 38)"/>
+                  <ellipse cx="-42" cy="22" rx="5" ry="2" transform="rotate(-60 -42 22)"/>
+                  <ellipse cx="-50" cy="2" rx="5" ry="2" transform="rotate(-75 -50 2)"/>
+                  <ellipse cx="15" cy="50" rx="5" ry="2" transform="rotate(35 15 50)"/>
+                  <ellipse cx="30" cy="38" rx="5" ry="2" transform="rotate(45 30 38)"/>
+                  <ellipse cx="42" cy="22" rx="5" ry="2" transform="rotate(60 42 22)"/>
+                  <ellipse cx="50" cy="2" rx="5" ry="2" transform="rotate(75 50 2)"/>
+                </g>
+              </g>
+              <!-- Звезда -->
+              <path d="M0,-40 L9,-12 L38,-12 L15,5 L24,32 L0,16 L-24,32 L-15,5 L-38,-12 L-9,-12 Z" fill="#d85a1f"/>
+              <text x="0" y="6" text-anchor="middle" fill="#0a0908" font-family="'Unbounded'" font-weight="800" font-size="10">CSKA</text>
+            </g>
+            <text x="150" y="285" text-anchor="middle" fill="#d85a1f" font-family="'Unbounded'" font-weight="600" font-size="9" letter-spacing="3">CHAMPIONS · 2026</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- B2B Банки -->
+      <div class="collection-card">
+        <div class="col-channel b2b">
+          <div>
+            <span class="badge">B2B · БАНКИ</span>
+            <h4 class="avatar-name">Премиальный<br>банк</h4>
+            <p class="avatar-desc">Private banking. Подарок ТОП-клиенту, который запомнится дольше ужина.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">B2B-02 «VIP-набор клиента»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-03 Греческий меандр</strong> (главный, кайма по всему периметру) + P-05 Лавр (вокруг персональной гравировки)</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Свобода» / «Развитие» — нейтральные универсальные</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Чёрный + золото-охра, без оранжевого</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Шёлк-кашемир премиум, 180×35 см</span></li>
+            <li><span class="lbl">Кастом</span><span class="val">Имя клиента + дата на тубусе и сертификате</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m6-meander" x="0" y="0" width="28" height="14" patternUnits="userSpaceOnUse">
+                <path d="M0,11 L0,3 L8,3 L8,8 L3,8 L3,11 L14,11 L14,3 L22,3 L22,8 L17,8 L17,11 L28,11" stroke="#b08a4c" stroke-width="1" fill="none"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#0a0908"/>
+            <rect x="80" y="22" width="140" height="14" fill="url(#m6-meander)"/>
+            <rect x="80" y="284" width="140" height="14" fill="url(#m6-meander)"/>
+            <rect x="82" y="36" width="14" height="248" fill="url(#m6-meander)" transform="rotate(90 82 36) translate(0 -14)"/>
+            <!-- Лавр + персональная гравировка -->
+            <g transform="translate(150 160)">
+              <g>
+                <path d="M0,40 Q-40,20 -45,-15" fill="none" stroke="#b08a4c" stroke-width="1.2"/>
+                <path d="M0,40 Q40,20 45,-15" fill="none" stroke="#b08a4c" stroke-width="1.2"/>
+                <g fill="#b08a4c">
+                  <ellipse cx="-10" cy="36" rx="4" ry="1.6" transform="rotate(-30 -10 36)"/>
+                  <ellipse cx="-22" cy="26" rx="5" ry="1.6" transform="rotate(-45 -22 26)"/>
+                  <ellipse cx="-32" cy="12" rx="5" ry="1.6" transform="rotate(-60 -32 12)"/>
+                  <ellipse cx="-40" cy="-4" rx="5" ry="1.6" transform="rotate(-75 -40 -4)"/>
+                  <ellipse cx="10" cy="36" rx="4" ry="1.6" transform="rotate(30 10 36)"/>
+                  <ellipse cx="22" cy="26" rx="5" ry="1.6" transform="rotate(45 22 26)"/>
+                  <ellipse cx="32" cy="12" rx="5" ry="1.6" transform="rotate(60 32 12)"/>
+                  <ellipse cx="40" cy="-4" rx="5" ry="1.6" transform="rotate(75 40 -4)"/>
+                </g>
+              </g>
+              <text x="0" y="-2" text-anchor="middle" fill="#f5f1ec" font-family="'Old Standard TT'" font-size="11" letter-spacing="1">А.В. ИВАНОВ</text>
+              <text x="0" y="14" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="7">04.2026 · Sber Private</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- B2G Москва -->
+      <div class="collection-card">
+        <div class="col-channel b2g">
+          <div>
+            <span class="badge">B2G · МОСКВА</span>
+            <h4 class="avatar-name">Протокольный<br>дар Москвы</h4>
+            <p class="avatar-desc">Фонд Собянина. От главы региона до посла иностранного государства.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">G-01 «Протокольный набор “Москва”»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-03 Меандр</strong> (имперская рамка) + P-01 Славянский ромб (кайма) + центр: <strong>картографическая графика Москвы</strong></span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Империя» / «Развитие» / «Семья»</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Чёрный + кшатрий + слоновая кость</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Шерсть-микрофибра, 180×35 см</span></li>
+            <li><span class="lbl">Содержание</span><span class="val">Карта Москвы со знаковыми точками: Кремль, Поклонная, ВДНХ, Сити, Останкино, Зарядье</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m7-meander" x="0" y="0" width="28" height="14" patternUnits="userSpaceOnUse">
+                <path d="M0,11 L0,3 L8,3 L8,8 L3,8 L3,11 L14,11 L14,3 L22,3 L22,8 L17,8 L17,11 L28,11" stroke="#d85a1f" stroke-width="1" fill="none"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#f5f1ec"/>
+            <rect x="80" y="22" width="140" height="14" fill="url(#m7-meander)"/>
+            <rect x="80" y="284" width="140" height="14" fill="url(#m7-meander)"/>
+            <!-- Стилизованная карта Москвы -->
+            <g transform="translate(150 165)" stroke="#0a0908" fill="none" stroke-width="1">
+              <!-- Кольцевые дороги -->
+              <circle r="55" stroke-dasharray="2 2" opacity="0.4"/>
+              <circle r="38" stroke-dasharray="2 2" opacity="0.5"/>
+              <circle r="22" stroke-dasharray="2 2" opacity="0.6"/>
+              <!-- Радиальные -->
+              <line x1="-55" y1="0" x2="55" y2="0" stroke-width="0.6" opacity="0.4"/>
+              <line x1="0" y1="-55" x2="0" y2="55" stroke-width="0.6" opacity="0.4"/>
+              <line x1="-39" y1="-39" x2="39" y2="39" stroke-width="0.6" opacity="0.4"/>
+              <line x1="-39" y1="39" x2="39" y2="-39" stroke-width="0.6" opacity="0.4"/>
+              <!-- Ключевые точки -->
+              <circle cx="0" cy="0" r="3" fill="#d85a1f" stroke="none"/>
+              <text x="6" y="3" font-family="'Old Standard TT'" font-size="6" fill="#0a0908">Кремль</text>
+              <circle cx="-22" cy="-15" r="2" fill="#d85a1f" stroke="none"/>
+              <text x="-50" y="-13" font-family="'Old Standard TT'" font-size="5" fill="#0a0908">Поклонная</text>
+              <circle cx="20" cy="-25" r="2" fill="#d85a1f" stroke="none"/>
+              <text x="24" y="-23" font-family="'Old Standard TT'" font-size="5" fill="#0a0908">ВДНХ</text>
+              <circle cx="-35" cy="10" r="2" fill="#d85a1f" stroke="none"/>
+              <text x="-58" y="14" font-family="'Old Standard TT'" font-size="5" fill="#0a0908">Сити</text>
+              <circle cx="15" cy="20" r="2" fill="#d85a1f" stroke="none"/>
+              <text x="19" y="24" font-family="'Old Standard TT'" font-size="5" fill="#0a0908">Зарядье</text>
+            </g>
+            <text x="150" y="80" text-anchor="middle" fill="#0a0908" font-family="'Unbounded'" font-weight="700" font-size="14" letter-spacing="3">МОСКВА</text>
+            <text x="150" y="92" text-anchor="middle" fill="#d85a1f" font-family="'Old Standard TT'" font-style="italic" font-size="8">875 лет</text>
+            <text x="150" y="270" text-anchor="middle" fill="#0a0908" font-family="'Old Standard TT'" font-style="italic" font-size="9">«ИМПЕРИЯ»</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- B2G МО -->
+      <div class="collection-card">
+        <div class="col-channel b2g">
+          <div>
+            <span class="badge">B2G · МО РФ</span>
+            <h4 class="avatar-name">Наградной<br>комплект</h4>
+            <p class="avatar-desc">Министерство Обороны. Артефакт, который вешают рядом с орденами.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">G-02 «Полководец»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-06 Колосья и звезда</strong> (центральная композиция) + <strong>P-05 Лавр</strong> (вокруг имени) + P-08 Соты (фактура)</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Империя» / «Мужчина» / «Дети»</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Чёрный + кшатрий + золото; кант георгиевский (для 9 мая)</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Шерсть, 180×35 см, в комплекте с грамотой на льне</span></li>
+            <li><span class="lbl">Кастом</span><span class="val">Имя награждаемого + номер тиража + полководец-эпонимат</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m8-hex" x="0" y="0" width="18" height="16" patternUnits="userSpaceOnUse">
+                <polygon points="9,1 16,4 16,12 9,15 2,12 2,4" fill="none" stroke="#2a2520" stroke-width="0.6"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#0a0908"/>
+            <rect x="80" y="20" width="140" height="280" fill="url(#m8-hex)"/>
+            <!-- Георгиевский кант -->
+            <g>
+              <rect x="80" y="20" width="140" height="3" fill="#d85a1f"/>
+              <rect x="80" y="23" width="140" height="3" fill="#0a0908"/>
+              <rect x="80" y="26" width="140" height="3" fill="#d85a1f"/>
+              <rect x="80" y="29" width="140" height="3" fill="#0a0908"/>
+              <rect x="80" y="32" width="140" height="3" fill="#d85a1f"/>
+              <rect x="80" y="288" width="140" height="3" fill="#d85a1f"/>
+              <rect x="80" y="291" width="140" height="3" fill="#0a0908"/>
+              <rect x="80" y="294" width="140" height="3" fill="#d85a1f"/>
+              <rect x="80" y="297" width="140" height="3" fill="#0a0908"/>
+              <rect x="80" y="300" width="140" height="3" fill="#d85a1f"/>
+            </g>
+            <!-- Звезда + колосья + лавр -->
+            <g transform="translate(150 165)">
+              <g opacity="0.85">
+                <path d="M0,55 Q-50,30 -55,-15" fill="none" stroke="#d85a1f" stroke-width="1.4"/>
+                <path d="M0,55 Q50,30 55,-15" fill="none" stroke="#d85a1f" stroke-width="1.4"/>
+                <g fill="#d85a1f">
+                  <ellipse cx="-15" cy="50" rx="5" ry="2" transform="rotate(-35 -15 50)"/>
+                  <ellipse cx="-30" cy="38" rx="5" ry="2" transform="rotate(-45 -30 38)"/>
+                  <ellipse cx="-42" cy="22" rx="5" ry="2" transform="rotate(-60 -42 22)"/>
+                  <ellipse cx="-50" cy="2" rx="5" ry="2" transform="rotate(-75 -50 2)"/>
+                  <ellipse cx="15" cy="50" rx="5" ry="2" transform="rotate(35 15 50)"/>
+                  <ellipse cx="30" cy="38" rx="5" ry="2" transform="rotate(45 30 38)"/>
+                  <ellipse cx="42" cy="22" rx="5" ry="2" transform="rotate(60 42 22)"/>
+                  <ellipse cx="50" cy="2" rx="5" ry="2" transform="rotate(75 50 2)"/>
+                </g>
+              </g>
+              <path d="M0,-50 L11,-15 L48,-15 L19,7 L30,42 L0,20 L-30,42 L-19,7 L-48,-15 L-11,-15 Z" fill="#d85a1f"/>
+              <text x="0" y="9" text-anchor="middle" fill="#0a0908" font-family="'Old Standard TT'" font-size="9" font-weight="700" letter-spacing="1">ЖУКОВ</text>
+            </g>
+            <text x="150" y="270" text-anchor="middle" fill="#f5f1ec" font-family="'Old Standard TT'" font-size="9">майору А. С. ПЕТРОВУ</text>
+            <text x="150" y="282" text-anchor="middle" fill="#b08a4c" font-family="'Old Standard TT'" font-style="italic" font-size="6">за служение Отечеству · № 037/100</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- KOREA -->
+      <div class="collection-card">
+        <div class="col-channel korea">
+          <div>
+            <span class="badge">KOREA BRIDGE</span>
+            <h4 class="avatar-name">Eurasian<br>Manifesto</h4>
+            <p class="avatar-desc">Сеульская D2C-капсула + дипломатический подарок (Север). Универсальный евразийский код.</p>
+          </div>
+          <div class="mono accent" style="margin-top:24px">K-01 «Silk Road» / K-02 «Eurasian Manifesto»</div>
+        </div>
+        <div class="col-design">
+          <h4>Архитектура шарфа</h4>
+          <ul>
+            <li><span class="lbl">Паттерны</span><span class="val"><strong>P-03 Меандр</strong> + <strong>P-04 Античная спираль</strong> + P-07 ДНК; БЕЗ Колосьев и Звезды (политический фильтр)</span></li>
+            <li><span class="lbl">Постулат</span><span class="val">«Человек» / «Развитие» / «Свобода» — универсальные, без «Империя»</span></li>
+            <li><span class="lbl">Цвет</span><span class="val">Чёрный + слоновая кость + золото; БЕЗ кшатрийского оранжевого</span></li>
+            <li><span class="lbl">Материал</span><span class="val">Шёлк-кашемир премиум, 180×40 см</span></li>
+            <li><span class="lbl">Каллиграфия</span><span class="val">Трилингва: кириллица + хангыль + латиница; кириллица как графический артефакт</span></li>
+          </ul>
+        </div>
+        <div class="col-mockup">
+          <svg viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="m9-meander" x="0" y="0" width="28" height="14" patternUnits="userSpaceOnUse">
+                <path d="M0,11 L0,3 L8,3 L8,8 L3,8 L3,11 L14,11 L14,3 L22,3 L22,8 L17,8 L17,11 L28,11" stroke="#b08a4c" stroke-width="1" fill="none"/>
+              </pattern>
+            </defs>
+            <rect x="80" y="20" width="140" height="280" fill="#f5f1ec"/>
+            <rect x="80" y="22" width="140" height="14" fill="url(#m9-meander)"/>
+            <rect x="80" y="284" width="140" height="14" fill="url(#m9-meander)"/>
+            <!-- Карта Шёлкового пути -->
+            <g transform="translate(150 130)">
+              <path d="M-55,0 Q-30,-15 0,-5 Q30,5 55,-10" stroke="#0a0908" stroke-width="1" fill="none" stroke-dasharray="3 2"/>
+              <circle cx="-55" cy="0" r="3" fill="#d85a1f"/>
+              <text x="-55" y="-8" text-anchor="middle" fill="#0a0908" font-family="'Old Standard TT'" font-size="6">МОСКВА</text>
+              <circle cx="0" cy="-5" r="2" fill="#0a0908"/>
+              <text x="0" y="6" text-anchor="middle" fill="#0a0908" font-family="'Old Standard TT'" font-size="5" font-style="italic">Самарканд</text>
+              <circle cx="55" cy="-10" r="3" fill="#d85a1f"/>
+              <text x="55" y="-18" text-anchor="middle" fill="#0a0908" font-family="'Old Standard TT'" font-size="6">SEOUL</text>
+            </g>
+            <!-- Спираль -->
+            <g transform="translate(150 200)" stroke="#b08a4c" stroke-width="1" fill="none">
+              <circle r="4"/><circle r="9"/><circle r="14"/><circle r="19"/>
+            </g>
+            <!-- Трилингва -->
+            <text x="150" y="260" text-anchor="middle" fill="#0a0908" font-family="'Old Standard TT'" font-style="italic" font-size="11">Развитие</text>
+            <text x="150" y="272" text-anchor="middle" fill="#0a0908" font-family="'Old Standard TT'" font-size="10">발전</text>
+            <text x="150" y="282" text-anchor="middle" fill="#b08a4c" font-family="'Unbounded'" font-weight="500" font-size="7" letter-spacing="2">DEVELOPMENT</text>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3>Next<br>Action</h3>
+      <p style="color:var(--fg-muted); margin-top: 16px; max-width: 480px; line-height: 1.7;">
+        Документ — производственный референс для следующих шагов: разработка шрифта «Компас Футур», тендер поставщиков текстиля, генерация Midjourney-визуала для каждого SKU и подготовка первой капсулы «Эпохи».
+      </p>
+    </div>
+    <div>
+      <div class="col-label">Артефакты v3.0</div>
+      <ul>
+        <li>Программа Возрождения · 4 столпа</li>
+        <li>Каталог паттернов · 8 ед.</li>
+        <li>Эпохи России · 6 ед.</li>
+        <li>Концепт коллекции · 9 капсул</li>
+        <li>Матрица применения · 8×9</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Зависимости</div>
+      <ul>
+        <li>v1.0 — Паспорт проекта</li>
+        <li>v2.0 — Архитектура продукта</li>
+        <li>v3.1 — Midjourney-промпты <span style="color:var(--orange)">(в работе)</span></li>
+        <li>v3.2 — Шрифт «Компас Футур»</li>
+        <li>v3.3 — Tech-pack производства</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>COMPASS · Архитектура айдентики v3.0</span>
+    <span>LOO Systems · Апрель 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
