@@ -1634,85 +1634,194 @@ body.light-theme .edit-hint{background:rgba(30,16,64,.90)!important;backdrop-fil
 
 
 <style id="lt-nuclear-v1">
-html body.light-theme{background:radial-gradient(ellipse 80vw 60vh at 10% 0%,rgba(139,92,246,.28) 0%,transparent 60%),radial-gradient(ellipse 60vw 50vh at 90% 10%,rgba(99,102,241,.22) 0%,transparent 55%),radial-gradient(ellipse 50vw 40vh at 50% 100%,rgba(167,139,250,.20) 0%,transparent 50%),#ece9f7!important;background-attachment:fixed!important;}
-html body.light-theme .canvas{background:rgba(255,255,255,.55)!important;backdrop-filter:blur(48px) saturate(180%)!important;-webkit-backdrop-filter:blur(48px) saturate(180%)!important;box-shadow:0 0 0 1px rgba(255,255,255,.70) inset!important;}
-html body.light-theme .ndb-left{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;border:1px solid rgba(255,255,255,.85)!important;}
-html body.light-theme .ndb-title{color:#1a1523!important;}
-html body.light-theme .ndb-desc{color:#1a1523!important;}
-html body.light-theme .ndb-syntax{background:rgba(245,243,255,.90)!important;}
-html body.light-theme .ndb-syntax-label{color:#6d28d9!important;}
-html body.light-theme .ndb-syntax-code{color:#4c1d95!important;}
-html body.light-theme .no-demo-block{background:transparent!important;border:1px solid rgba(255,255,255,.80)!important;overflow:hidden!important;}
-html body.light-theme .bugs-intro{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;border:1px solid rgba(255,255,255,.85)!important;border-left:3px solid #7c3aed!important;}
-html body.light-theme .bugs-intro p{color:#1a1523!important;}
-html body.light-theme .bugs-intro strong{color:#0f0a1a!important;}
-html body.light-theme .bugs-cat-header{background:rgba(245,243,255,.85)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;border-color:rgba(139,92,246,.15)!important;}
-html body.light-theme .constructor-wrap{background:linear-gradient(160deg,rgba(60,30,120,.88),rgba(80,40,160,.85))!important;border:1px solid rgba(196,181,253,.35)!important;box-shadow:0 16px 56px rgba(0,0,0,.18)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;}
-html body.light-theme .constructor-wrap .con-title{color:#f5f0ff!important;font-weight:800!important;}
-html body.light-theme .constructor-wrap .con-subtitle{color:#ddd6fe!important;}
-html body.light-theme .constructor-wrap .section-label{color:#c4b5fd!important;}
-html body.light-theme .constructor-wrap .con-block{background:rgba(255,255,255,.10)!important;border:1px solid rgba(255,255,255,.18)!important;}
-html body.light-theme .constructor-wrap .btn-option,html body.light-theme .constructor-wrap .con-opt{background:rgba(255,255,255,.15)!important;color:#f0e8ff!important;border:1px solid rgba(255,255,255,.22)!important;}
-html body.light-theme .constructor-wrap .btn-option.active,html body.light-theme .constructor-wrap .con-opt.selected{background:rgba(167,139,250,.85)!important;color:#fff!important;border-color:rgba(255,255,255,.40)!important;box-shadow:0 0 16px rgba(139,92,246,.40)!important;}
-html body.light-theme .constructor-wrap .con-mode-btn{color:#ddd6fe!important;background:transparent!important;}
-html body.light-theme .constructor-wrap .con-mode-btn.active{background:rgba(167,139,250,.80)!important;color:#fff!important;}
-html body.light-theme .constructor-wrap textarea{background:rgba(255,255,255,.18)!important;color:#f5f0ff!important;border:1px solid rgba(255,255,255,.25)!important;}
-html body.light-theme .constructor-wrap .c-output,html body.light-theme .constructor-wrap .con-output,html body.light-theme .constructor-wrap .con-result,html body.light-theme .constructor-wrap .con-bottom,html body.light-theme .constructor-wrap .output-wrap{background:rgba(20,8,50,.88)!important;color:#f5f0ff!important;border:1px solid rgba(196,181,253,.28)!important;}
-html body.light-theme .constructor-wrap *{color:#f0e8ff!important;}
-html body.light-theme .constructor-wrap .c-output *,html body.light-theme .constructor-wrap .con-output *{color:#f5f0ff!important;}
-html body.light-theme .no-ex-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;border:1px solid rgba(255,255,255,.85)!important;}
-html body.light-theme .nec-header{background:rgba(245,243,255,.88)!important;border-bottom-color:rgba(139,92,246,.12)!important;}
-html body.light-theme .nec-category{color:#1a1523!important;font-weight:600!important;}
-html body.light-theme .nec-use{color:#4c3b72!important;}
-html body.light-theme .nec-prompt{background:rgba(245,243,255,.85)!important;color:#4c1d95!important;}
-html body.light-theme .nec-result{color:#14532d!important;}
-html body.light-theme .cam-slide-row{background:rgba(255,255,255,.55)!important;border-color:rgba(255,255,255,.72)!important;}
-html body.light-theme .cat-card,html body.light-theme .param-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-top:2px solid #7c3aed!important;}
-html body.light-theme .tool-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-top:2px solid #7c3aed!important;}
-html body.light-theme .law-card,html body.light-theme .path-card,html body.light-theme .checklist-card,html body.light-theme .ws-step,html body.light-theme .level-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-top:2px solid #d97706!important;}
-html body.light-theme .style-card,html body.light-theme .dna-stage,html body.light-theme .update-card,html body.light-theme .formula-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-top:2px solid #16a34a!important;}
-html body.light-theme .fh-card,html body.light-theme .compare-card,html body.light-theme .anchor-card,html body.light-theme .nt-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-top:2px solid #64748b!important;}
-html body.light-theme .mp-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-top:2px solid #6d28d9!important;}
-html body.light-theme .neg-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-top:2px solid #e11d48!important;}
-html body.light-theme .section-note{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;border-left:3px solid #7c3aed!important;}
-html body.light-theme .yt-embed-card{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important;border:1px solid rgba(255,255,255,.85)!important;box-shadow:0 4px 20px rgba(109,40,217,.08),0 1px 0 rgba(255,255,255,.95) inset!important;}
-html body.light-theme .bug-cell{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;border:1px solid rgba(255,255,255,.85)!important;}
-html body.light-theme .bug-cell.problem{background:rgba(255,241,242,.80)!important;border-left:3px solid #e11d48!important;}
-html body.light-theme .bug-cell.problem .bug-name{color:#881337!important;}
-html body.light-theme .bug-cell.problem p,html body.light-theme .bug-cell.problem .bug-desc{color:#4c1d35!important;}
-html body.light-theme .bug-cell.cause{background:rgba(255,247,237,.80)!important;border-left:3px solid #d97706!important;}
-html body.light-theme .bug-cell.cause .bug-name{color:#78350f!important;}
-html body.light-theme .bug-cell.cause p{color:#451e08!important;}
-html body.light-theme .bug-cell.solution{background:rgba(240,253,244,.80)!important;border-left:3px solid #16a34a!important;}
-html body.light-theme .bug-cell.solution .bug-name{color:#14532d!important;}
-html body.light-theme .bug-cell.solution p{color:#1a3d26!important;}
-html body.light-theme p{color:#1a1523!important;}
-html body.light-theme li{color:#1a1523!important;}
-html body.light-theme p strong{color:#0f0a1a!important;}
-html body.light-theme .section-title,html body.light-theme h2.section-title{color:#0f0a1a!important;text-shadow:none!important;}
-html body.light-theme h3.subsection{color:#1a1523!important;}
-html body.light-theme .cat-title,html body.light-theme .param-title{color:#4c1d95!important;}
-html body.light-theme .law-title,html body.light-theme .path-title,html body.light-theme .ws-title,html body.light-theme .lvl-title{color:#78350f!important;}
-html body.light-theme .style-name,html body.light-theme .dna-title,html body.light-theme .upd-title{color:#14532d!important;}
-html body.light-theme .tool-info .tool-name{color:#4c1d95!important;}
-html body.light-theme .tool-info .tool-role,html body.light-theme .tool-info .tool-desc{color:#1a1523!important;}
-html body.light-theme .cam-name{color:#1a1523!important;font-weight:600!important;}
-html body.light-theme .cam-sub{color:#4c3b72!important;}
-html body.light-theme .cam-effect{color:#1a1523!important;}
-html body.light-theme .cat-desc,html body.light-theme .tool-desc,html body.light-theme .law-desc,html body.light-theme .upd-desc,html body.light-theme .fh-desc,html body.light-theme .ab-desc{color:#1a1523!important;}
-html body.light-theme .neg-card .neg-title{color:#881337!important;}
-html body.light-theme .neg-card .neg-desc{color:#4c1d35!important;}
-html body.light-theme code,html body.light-theme .code-inline{background:rgba(245,243,255,.90)!important;color:#4c1d95!important;border:1px solid rgba(139,92,246,.18)!important;}
-html body.light-theme .ct-code,html body.light-theme .bug-code,html body.light-theme .anc-syntax,html body.light-theme .fc-ex{background:rgba(245,243,255,.85)!important;color:#4c1d95!important;}
-html body.light-theme .neg-prompt{background:rgba(245,243,255,.85)!important;color:#4c1d95!important;border-left:3px solid #7c3aed!important;}
-html body.light-theme .compare-prompt{background:rgba(245,243,255,.82)!important;color:#4c1d95!important;}
-html body.light-theme .mp-prompt,html body.light-theme .mp-example,html body.light-theme .param-tip{background:rgba(40,20,80,.88)!important;color:#e9d5ff!important;border-left:3px solid #a78bfa!important;}
-html body.light-theme [style*='background:rgba(6,15,30'],html body.light-theme [style*='background:rgba(3,8,18'],html body.light-theme [style*='background:rgba(3,10,22'],html body.light-theme [style*='background:rgba(5,12,25'],html body.light-theme [style*='background:rgba(8,18,35'],html body.light-theme [style*='background:rgba(2,16,34']{background:rgba(255,255,255,.72)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;}
-html body.light-theme [style*='color:#e2e8f0'],html body.light-theme [style*='color:#c8d8f0'],html body.light-theme [style*='color:rgba(180,200,230']{color:#1a1523!important;}
-html body.light-theme [style*='color:#7df9ff'],html body.light-theme [style*='color:#00d4ff']{color:#4c1d95!important;}
-html body.light-theme .level-dot.green{background:#16a34a!important;box-shadow:0 0 8px rgba(22,163,74,.40)!important;}
-html body.light-theme .level-dot.yellow{background:#d97706!important;box-shadow:0 0 8px rgba(217,119,6,.35)!important;}
-html body.light-theme .level-dot.red{background:#e11d48!important;box-shadow:0 0 8px rgba(225,29,72,.32)!important;}
+/* Light theme 2026 reboot — clean aurora glass concept */
+html body.light-theme{
+  --ink:#122b46;
+  --muted:#335a80;
+  --gold:#2a78be;
+  --gold-light:#6aaeff;
+  background:
+    radial-gradient(1200px 620px at 8% -8%,rgba(112,148,255,.24),transparent 62%),
+    radial-gradient(980px 560px at 92% 4%,rgba(131,232,255,.16),transparent 58%),
+    radial-gradient(860px 520px at 56% 110%,rgba(196,142,255,.14),transparent 56%),
+    linear-gradient(148deg,#edf3ff 0%,#e8f2ff 52%,#e5ebff 100%) !important;
+  background-attachment:fixed !important;
+}
+html body.light-theme::before{
+  background-image:
+    linear-gradient(rgba(112,156,223,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(112,156,223,.06) 1px,transparent 1px) !important;
+  opacity:.42 !important;
+}
+html body.light-theme::after{
+  content:'' !important;
+  opacity:.26 !important;
+  height:3px !important;
+  background:linear-gradient(90deg,transparent,rgba(88,174,255,.92),rgba(156,124,255,.88),transparent) !important;
+  animation:scanline 7.2s linear infinite !important;
+}
+
+html body.light-theme .canvas{
+  width:min(100%,1560px) !important;
+  margin:0 auto !important;
+  background:linear-gradient(155deg,rgba(255,255,255,.54),rgba(246,250,255,.44)) !important;
+  border:1px solid rgba(255,255,255,.82) !important;
+  box-shadow:0 34px 90px rgba(58,88,154,.16),0 0 0 1px rgba(141,221,255,.22) inset !important;
+  backdrop-filter:blur(24px) saturate(145%) !important;
+  -webkit-backdrop-filter:blur(24px) saturate(145%) !important;
+}
+
+html body.light-theme .doc-header,
+html body.light-theme .module-divider,
+html body.light-theme .breadcrumb,
+html body.light-theme .architect-banner,
+html body.light-theme .section-note,
+html body.light-theme .cat-card,
+html body.light-theme .tool-card,
+html body.light-theme .level-card,
+html body.light-theme .param-card,
+html body.light-theme .style-card,
+html body.light-theme .law-card,
+html body.light-theme .path-card,
+html body.light-theme .checklist-card,
+html body.light-theme .bug-cell,
+html body.light-theme .bugs-intro,
+html body.light-theme .compare-card,
+html body.light-theme .fh-card,
+html body.light-theme .mp-card,
+html body.light-theme .ws-step,
+html body.light-theme .dna-stage,
+html body.light-theme .yt-embed-card,
+html body.light-theme .constructor-wrap,
+html body.light-theme .con-block,
+html body.light-theme .con-output,
+html body.light-theme .con-prompt-display,
+html body.light-theme .con-prompt-plain{
+  position:relative;
+  border-radius:14px !important;
+  background:
+    radial-gradient(140% 110% at 12% -18%,rgba(98,176,255,.16),transparent 44%),
+    radial-gradient(120% 96% at 90% 108%,rgba(174,129,255,.14),transparent 48%),
+    linear-gradient(160deg,rgba(255,255,255,.68),rgba(241,247,255,.56)) !important;
+  border:1px solid rgba(255,255,255,.86) !important;
+  box-shadow:0 14px 36px rgba(52,82,144,.12),inset 0 1px 0 rgba(255,255,255,.84) !important;
+}
+
+html body.light-theme .doc-title,
+html body.light-theme .module-divider .mod-title,
+html body.light-theme .section-title,
+html body.light-theme .lead-left{color:#0d2f52 !important;}
+html body.light-theme p,
+html body.light-theme li,
+html body.light-theme .lead-right,
+html body.light-theme .tool-desc,
+html body.light-theme .cat-desc,
+html body.light-theme .law-desc,
+html body.light-theme .style-desc,
+html body.light-theme .cl-text,
+html body.light-theme .bug-desc,
+html body.light-theme .param-body{color:#1e3f63 !important;}
+
+html body.light-theme code,
+html body.light-theme .code-inline,
+html body.light-theme .ct-code,
+html body.light-theme .fc-ex,
+html body.light-theme .bug-code,
+html body.light-theme .compare-prompt{
+  background:rgba(214,233,255,.58) !important;
+  color:#0f4c7e !important;
+  border:1px solid rgba(102,173,235,.3) !important;
+}
+
+/* remove dark leftovers */
+html body.light-theme .dark-row,
+html body.light-theme .cam-row.dark-row,
+html body.light-theme .neg-card,
+html body.light-theme .ndb-left,
+html body.light-theme .ndb-syntax,
+html body.light-theme .no-ex-card,
+html body.light-theme .nec-header,
+html body.light-theme .video-tabs,
+html body.light-theme .pull-quote,
+html body.light-theme .weight-table .wt-row.header,
+html body.light-theme .pt-row.header{
+  background:linear-gradient(160deg,rgba(255,255,255,.78),rgba(236,245,255,.66)) !important;
+  border:1px solid rgba(255,255,255,.84) !important;
+}
+html body.light-theme .dark-row *,
+html body.light-theme .cam-row.dark-row *,
+html body.light-theme .neg-card *,
+html body.light-theme .ndb-left *,
+html body.light-theme .ndb-syntax *,
+html body.light-theme .no-ex-card *,
+html body.light-theme .nec-header *,
+html body.light-theme .video-tabs *,
+html body.light-theme .pull-quote *{color:#1c3f63 !important;}
+
+/* Constructor color layers */
+html body.light-theme .constructor-wrap .con-output *,
+html body.light-theme .constructor-wrap .c-output *{color:inherit !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.mode{color:#0f5083 !important;background:rgba(151,222,255,.34) !important;border-color:rgba(65,146,213,.36) !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.subject{color:#3273df !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.action{color:#5f57dd !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.space{color:#2989c9 !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.light{color:#4f73ff !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.camera{color:#8a4fd7 !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.style{color:#665ce0 !important;}
+html body.light-theme .constructor-wrap .con-prompt-display .seg.negative{color:#cf316b !important;}
+
+/* Hero: AI-brain neural network concept (glowing neon synapses) */
+html body.light-theme .hero-screen{
+  background:
+    radial-gradient(circle at 16% 20%,rgba(84,184,255,.24),transparent 40%),
+    radial-gradient(circle at 84% 80%,rgba(170,120,255,.18),transparent 46%),
+    linear-gradient(145deg,rgba(255,255,255,.74),rgba(238,247,255,.80)) !important;
+}
+.hero-neural-svg{
+  mix-blend-mode:screen !important;
+  opacity:.97 !important;
+  transform:perspective(1900px) rotateX(24deg) rotateY(-8deg) scale(1.16) !important;
+  filter:drop-shadow(0 20px 42px rgba(8,32,62,.62));
+}
+.hero-neural-svg .neural-link{
+  fill:none;
+  stroke:url(#linkNeon) !important;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  animation:synapseFlow 5.8s linear infinite;
+  filter:drop-shadow(0 0 9px rgba(93,165,255,.46));
+}
+.hero-neural-svg .neural-link.back{stroke-width:1.0;opacity:.28;}
+.hero-neural-svg .neural-link.mid{stroke-width:1.6;opacity:.56;}
+.hero-neural-svg .neural-link.front{stroke-width:2.2;opacity:.88;}
+.hero-neural-svg .neural-node{
+  fill:url(#nodeCore);
+  filter:drop-shadow(0 0 12px rgba(110,193,255,.72));
+  opacity:.98;
+}
+.hero-neural-svg .neural-node.new{
+  fill:url(#nodeBloom);
+  filter:drop-shadow(0 0 14px rgba(255,166,136,.92));
+  animation:newNodePulse 3.2s ease-in-out infinite;
+}
+.hero-neural-svg .neural-bokeh{fill:rgba(122,205,255,.88);filter:blur(1.3px);}
+@keyframes synapseFlow{0%{stroke-dashoffset:0;}100%{stroke-dashoffset:-72;}}
+@keyframes newNodePulse{0%,100%{transform:scale(1);opacity:.85;}50%{transform:scale(1.32);opacity:1;}}
+
+html body.light-theme .hero-neural-svg{mix-blend-mode:multiply !important;opacity:.88 !important;filter:drop-shadow(0 12px 22px rgba(33,72,122,.30));}
+html body.light-theme .hero-neural-svg .neural-link.back{opacity:.22;}
+html body.light-theme .hero-neural-svg .neural-link.mid{opacity:.44;}
+html body.light-theme .hero-neural-svg .neural-link.front{opacity:.7;}
+/* first intro block should be borderless in light mode */
+html body.light-theme .content:first-of-type .chapter-intro{
+  background:transparent !important;
+  border:none !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  border-radius:0 !important;
+}
+html body.light-theme .content:first-of-type .chapter-intro::before{display:none !important;content:none !important;}
 </style>
 </head>
 <body>
@@ -4357,76 +4466,130 @@ document.addEventListener('DOMContentLoaded', function() {
     var NS = 'http://www.w3.org/2000/svg';
     var width = 1600, height = 520;
 
-    function project(x,y,z){
-      var depth = 1 + (z * 0.75);
-      return { x: x / depth + width*0.11, y: y / depth + height*0.07, z:z, depth:depth };
+    function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+    function dist2(a,b){ var dx=a.x-b.x, dy=a.y-b.y; return dx*dx+dy*dy; }
+
+    function defs(){
+      var d=document.createElementNS(NS,'defs');
+      d.innerHTML='        <linearGradient id="linkNeon" x1="0" y1="0" x2="1" y2="1">          <stop offset="0%" stop-color="rgba(88,198,255,0.12)"/>          <stop offset="26%" stop-color="rgba(114,216,255,0.78)"/>          <stop offset="58%" stop-color="rgba(171,120,255,0.86)"/>          <stop offset="100%" stop-color="rgba(255,176,134,0.84)"/>        </linearGradient>        <radialGradient id="nodeCore" cx="40%" cy="35%" r="72%">          <stop offset="0%" stop-color="rgba(236,248,255,0.98)"/>          <stop offset="62%" stop-color="rgba(116,198,255,0.95)"/>          <stop offset="100%" stop-color="rgba(55,118,188,0.78)"/>        </radialGradient>        <radialGradient id="nodeBloom" cx="48%" cy="38%" r="72%">          <stop offset="0%" stop-color="rgba(255,241,225,1)"/>          <stop offset="60%" stop-color="rgba(255,177,138,0.96)"/>          <stop offset="100%" stop-color="rgba(209,106,80,0.78)"/>        </radialGradient>';
+      return d;
     }
 
-    function makeNodes(){
+    function makeNeurons(){
       var nodes=[];
-      for(var l=0;l<6;l++){
-        for(var i=0;i<13;i++){
-          var x = 120 + l*230 + (Math.random()*70-35);
-          var y = 70 + i*30 + (Math.random()*22-11);
-          var z = (Math.sin((i+l)*0.6)+1)/2;
-          nodes.push(project(x,y,z));
+      var branches=8;
+      for(var b=0;b<branches;b++){
+        var t=b/(branches-1);
+        var count=18;
+        for(var i=0;i<count;i++){
+          var p=i/(count-1);
+          var x=90 + p*1420 + Math.sin(p*8 + b*0.7)*(28 + (1-t)*14) + (Math.random()*20-10);
+          var y=90 + t*320 + Math.cos(p*6 - b*0.55)*(22 + p*18) + (Math.random()*16-8);
+          var z=clamp(1-Math.abs(0.5-t)*1.2 + (Math.random()*0.18-0.09),0.15,1);
+          nodes.push({x:x,y:y,z:z,branch:b});
         }
       }
       return nodes;
     }
 
-    function nearest(arr, idx, count){
-      var n=arr[idx];
-      return arr.map(function(v,j){
-        var dx=v.x-n.x, dy=v.y-n.y;
-        return {j:j,d:dx*dx+dy*dy};
-      }).filter(function(o){return o.j!==idx;}).sort(function(a,b){return a.d-b.d}).slice(0,count).map(function(o){return arr[o.j];});
-    }
+    function buildSynapses(nodes){
+      var links=[];
+      var used={};
+      function key(a,b){ return a<b ? a+'-'+b : b+'-'+a; }
 
-    function defs(){
-      var d=document.createElementNS(NS,'defs');
-      d.innerHTML='        <linearGradient id="linkMetal" x1="0" y1="0" x2="1" y2="1">          <stop offset="0%" stop-color="rgba(130,160,190,0.46)"/>          <stop offset="45%" stop-color="rgba(110,220,255,0.52)"/>          <stop offset="100%" stop-color="rgba(120,140,170,0.42)"/>        </linearGradient>        <radialGradient id="nodeMetal" cx="40%" cy="30%" r="70%">          <stop offset="0%" stop-color="rgba(205,220,238,0.86)"/>          <stop offset="55%" stop-color="rgba(124,150,179,0.72)"/>          <stop offset="100%" stop-color="rgba(58,86,120,0.68)"/>        </radialGradient>        <radialGradient id="coreGlow" cx="50%" cy="50%" r="60%">          <stop offset="0%" stop-color="rgba(148,245,255,0.58)"/>          <stop offset="65%" stop-color="rgba(90,180,220,0.34)"/>          <stop offset="100%" stop-color="rgba(0,120,170,0)"/>        </radialGradient>';
-      return d;
+      for(var i=0;i<nodes.length;i++){
+        var n=nodes[i], candidates=[];
+        for(var j=0;j<nodes.length;j++){
+          if(i===j) continue;
+          var m=nodes[j];
+          var d2=dist2(n,m);
+          if(d2<24000 && Math.abs(n.branch-m.branch)<=2) candidates.push({j:j,d2:d2});
+        }
+        candidates.sort(function(a,b){return a.d2-b.d2;});
+        var take=Math.min(4,candidates.length);
+        for(var k=0;k<take;k++){
+          var jj=candidates[k].j;
+          var kk=key(i,jj);
+          if(!used[kk]){ used[kk]=1; links.push({a:i,b:jj,d2:candidates[k].d2}); }
+        }
+      }
+
+      // additional long synapses for brain-like mesh
+      for(var r=0;r<65;r++){
+        var a=Math.floor(Math.random()*nodes.length), b=Math.floor(Math.random()*nodes.length);
+        if(a===b) continue;
+        var d2=dist2(nodes[a],nodes[b]);
+        if(d2<18000 || d2>76000) continue;
+        if(Math.abs(nodes[a].branch-nodes[b].branch)>3) continue;
+        var kk=key(a,b);
+        if(!used[kk]){ used[kk]=1; links.push({a:a,b:b,d2:d2}); }
+      }
+      return links;
     }
 
     function draw(){
-      var nodes=makeNodes();
       svg.innerHTML='';
       svg.appendChild(defs());
+      var nodes=makeNeurons();
+      var links=buildSynapses(nodes);
 
-      nodes.forEach(function(n,idx){
-        nearest(nodes,idx,4).forEach(function(t){
-          if(idx < nodes.indexOf(t)){
-            var line = document.createElementNS(NS,'line');
-            line.setAttribute('x1',n.x); line.setAttribute('y1',n.y);
-            line.setAttribute('x2',t.x); line.setAttribute('y2',t.y);
-            line.setAttribute('class','neural-link');
-            line.style.opacity = (0.18 + (1-(n.z+t.z)/2)*0.35).toFixed(2);
-            svg.appendChild(line);
-          }
-        });
+      for(var bi=0;bi<24;bi++){
+        var bk=document.createElementNS(NS,'circle');
+        bk.setAttribute('cx', 45 + Math.random()*1510);
+        bk.setAttribute('cy', 26 + Math.random()*466);
+        bk.setAttribute('r', 1.0 + Math.random()*2.8);
+        bk.setAttribute('class','neural-bokeh');
+        bk.style.opacity=(0.14+Math.random()*0.32).toFixed(2);
+        svg.appendChild(bk);
+      }
+
+      links.forEach(function(link,idx){
+        var a=nodes[link.a], b=nodes[link.b];
+        var depth=(a.z+b.z)/2;
+        var dx=b.x-a.x, dy=b.y-a.y, d=Math.sqrt(dx*dx+dy*dy)||1;
+        var nx=-dy/d, ny=dx/d;
+        var bend=(d*0.09)*(Math.random()>0.5?1:-1);
+        var cx=(a.x+b.x)/2 + nx*bend;
+        var cy=(a.y+b.y)/2 + ny*bend;
+        var path=document.createElementNS(NS,'path');
+        path.setAttribute('d','M '+a.x.toFixed(2)+' '+a.y.toFixed(2)+' Q '+cx.toFixed(2)+' '+cy.toFixed(2)+' '+b.x.toFixed(2)+' '+b.y.toFixed(2));
+        var cls = depth>0.72 ? 'front' : (depth>0.42 ? 'mid' : 'back');
+        path.setAttribute('class','neural-link '+cls);
+        path.style.strokeDasharray=(15+Math.random()*16).toFixed(1)+' '+(18+Math.random()*22).toFixed(1);
+        path.style.animationDelay=((idx%12)*0.2).toFixed(2)+'s';
+        svg.appendChild(path);
       });
 
+      // base nodes
       nodes.forEach(function(n,i){
         var c=document.createElementNS(NS,'circle');
-        c.setAttribute('cx',n.x); c.setAttribute('cy',n.y);
-        c.setAttribute('r',1.3 + (1-n.z)*2.2);
+        c.setAttribute('cx',n.x.toFixed(2));
+        c.setAttribute('cy',n.y.toFixed(2));
+        c.setAttribute('r',(1.05+n.z*1.9).toFixed(2));
         c.setAttribute('class','neural-node');
         svg.appendChild(c);
-        if(i%5===0){
-          var p=document.createElementNS(NS,'circle');
-          p.setAttribute('cx',n.x); p.setAttribute('cy',n.y);
-          p.setAttribute('r',2.8 + (1-n.z)*2.4);
-          p.setAttribute('class','neural-pulse');
-          p.style.animationDelay=((i%9)*0.33)+'s';
-          svg.appendChild(p);
-        }
       });
-    }
-    draw();
-    setInterval(draw, 4200);
-  }
 
+      // emergent glowing nodes from synapse junction centers
+      for(var m=0;m<42;m++){
+        var l=links[Math.floor(Math.random()*links.length)];
+        if(!l) continue;
+        var a=nodes[l.a], b=nodes[l.b];
+        var jx=(a.x+b.x)/2 + (Math.random()*12-6);
+        var jy=(a.y+b.y)/2 + (Math.random()*12-6);
+        var j=document.createElementNS(NS,'circle');
+        j.setAttribute('cx',jx.toFixed(2));
+        j.setAttribute('cy',jy.toFixed(2));
+        j.setAttribute('r',(1.2+Math.random()*2.4).toFixed(2));
+        j.setAttribute('class','neural-node new');
+        j.style.animationDelay=(Math.random()*2.4).toFixed(2)+'s';
+        svg.appendChild(j);
+      }
+    }
+
+    draw();
+    setInterval(draw, 5000);
+  }
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', initHeroNeural);
   } else {
